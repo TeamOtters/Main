@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382873379161574}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.04, y: -4.82, z: -4.32}
+  m_LocalPosition: {x: 0, y: 0, z: -5.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,9 +115,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_projectile: {fileID: 1924454597101522, guid: 8787e24c271ab2b4cbf7713eebf44579,
     type: 2}
-  speed: 6
-  jumpSpeed: 8
-  gravity: 20
+  speed: 14
+  jumpSpeed: 26
+  gravity: 60
   forceX: 60
   forceY: 20
   projectileSpeed: 70
