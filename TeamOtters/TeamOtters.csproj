@@ -299,11 +299,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Assets\Code\TestScriptableObject.cs" />
     <Compile Include="Assets\Code\Unity101.cs" />
     <Compile Include="Assets\Code\Unity1010PublicObjects.cs" />
     <Compile Include="Assets\ValkyrieAnimController.cs" />
     <Compile Include="Assets\ValkyrieMovementController.cs" />
+=======
+    <Compile Include="Assets\Code\DebugScripts\ControllerSetupTest.cs" />
+    <Compile Include="Assets\Code\ExampleScripts\TestScriptableObject.cs" />
+    <Compile Include="Assets\Code\ExampleScripts\Unity101.cs" />
+    <Compile Include="Assets\Code\ExampleScripts\Unity1010PublicObjects.cs" />
+>>>>>>> e5dc3d797af56d17c9fa3cd9ed33b00dc429438c
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\SFHSK\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
