@@ -7,12 +7,12 @@ public class ValkyrieAnimController : MonoBehaviour {
     public float m_speed = 2.0f;
     public float force = 300;
 
-    private Rigidbody2D m_character;
+    private Rigidbody m_character;
 
 	// Use this for initialization
 	void Start () {
 
-        m_character = GetComponent<Rigidbody2D>();
+        m_character = GetComponent<Rigidbody>();
         m_character.velocity = Vector2.up * m_speed;
 	}
 	
@@ -20,7 +20,7 @@ public class ValkyrieAnimController : MonoBehaviour {
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * force);
+            GetComponent<Rigidbody>().AddForce(Vector2.up * force);
         }
 		
 	}
