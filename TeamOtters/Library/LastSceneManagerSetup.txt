@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/SampleScene.unity
-=======
-- path: Assets/Scenes/ValkyrieScene.unity
->>>>>>> be1e9e78454b03e1f54d9b98cbb7b6211a482329
+- path: Assets/Scenes/MainGame.unity
   isLoaded: 1
   isActive: 1
