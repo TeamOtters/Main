@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamOtters", "TeamOtters.csproj", "{732A308E-408E-7303-B015-0C23743B3557}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamOtters.Editor", "TeamOtters.Editor.csproj", "{328179B3-1750-622B-FB0C-756C16B7B454}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamOtters.Editor", "TeamOtters.Editor.csproj", "{328179B3-1750-622B-FB0C-756C16B7B454}"
@@ -11,6 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{732A308E-408E-7303-B015-0C23743B3557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{732A308E-408E-7303-B015-0C23743B3557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{732A308E-408E-7303-B015-0C23743B3557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{732A308E-408E-7303-B015-0C23743B3557}.Release|Any CPU.Build.0 = Release|Any CPU
 		{328179B3-1750-622B-FB0C-756C16B7B454}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{328179B3-1750-622B-FB0C-756C16B7B454}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{328179B3-1750-622B-FB0C-756C16B7B454}.Release|Any CPU.ActiveCfg = Release|Any CPU
