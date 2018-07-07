@@ -311,11 +311,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Assets\Code\SceneChanger.cs" />
     <Compile Include="Assets\Code\TestScriptableObject.cs" />
     <Compile Include="Assets\Code\Unity101.cs" />
     <Compile Include="Assets\Code\Unity1010PublicObjects.cs" />
     <Compile Include="Assets\ValkyrieMovement.cs" />
+=======
+    <Compile Include="Assets\Code\TestScriptableObject.cs" />
+    <Compile Include="Assets\Code\Unity101.cs" />
+    <Compile Include="Assets\Code\Unity1010PublicObjects.cs" />
+    <Compile Include="Assets\Code\ValkyrieAnimController.cs" />
+    <Compile Include="Assets\Code\ValkyrieMovementController.cs" />
+>>>>>>> be1e9e78454b03e1f54d9b98cbb7b6211a482329
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\SFHSK\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
