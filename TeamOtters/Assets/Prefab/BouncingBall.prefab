@@ -187,10 +187,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 54364957211304194}
-  XBounceSpeed: 6
-  YBounceSpeed: 6
-  startHealth: 100
-  healthBar: {fileID: 114171429578610716}
+  m_XBounceSpeed: 4
+  m_YBounceSpeed: 4
+  m_startHealth: 100
+  m_healthBar: {fileID: 114171429578610716}
 --- !u!114 &114998900373305518
 MonoBehaviour:
   m_ObjectHideFlags: 1
