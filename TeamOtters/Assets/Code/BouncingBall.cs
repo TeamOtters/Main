@@ -4,10 +4,10 @@ using UnityEngine.UI;
 public class BouncingBall : MonoBehaviour {
 
     public Rigidbody rb;
+
+    //Making the ball bounce diagonally
     public float XBounceSpeed = 0f;
     public float YBounceSpeed = 0f;
-
-
 
     public float startHealth = 100;
     private float health; 
@@ -38,7 +38,7 @@ public class BouncingBall : MonoBehaviour {
 
         if (health <= 0)
         {
-            Die();
+            Destroy(gameObject);
         }
     }
 }
