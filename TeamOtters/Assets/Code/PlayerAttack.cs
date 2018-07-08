@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour {
 
     //Amount of damage dealt. This script should be placed on axe projectiles, not the players. 
-    public float enemyDamage = 25f; 
+    public float m_enemyDamage = 10; 
 
     void OnCollisionEnter(Collision collisionInfo)
     {
@@ -14,7 +14,7 @@ public class PlayerAttack : MonoBehaviour {
             Debug.Log("damage dealt");
 
             //Calling script on BouncingBall to drain HP
-            collisionInfo.gameObject.GetComponent<BouncingBall>().TakeDamage(enemyDamage);
+            collisionInfo.gameObject.GetComponent<BouncingBall>().TakeDamage(m_enemyDamage);
         }
     }
 

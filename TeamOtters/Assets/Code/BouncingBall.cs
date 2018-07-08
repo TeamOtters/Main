@@ -6,38 +6,45 @@ public class BouncingBall : MonoBehaviour {
     public Rigidbody rb;
 
     //Making the ball bounce diagonally
-    public float XBounceSpeed = 0f;
-    public float YBounceSpeed = 0f;
+    public float m_XBounceSpeed = 20f;
+    public float m_YBounceSpeed = 20f;
 
     //Health on BouncingBall enemy
-    public float startHealth = 100;
-    private float health;
+    public float m_startHealth = 100;
+    private float m_health;
 
     //Image used for decreasing heltbar. Might not be used in final game.
-    public Image healthBar; 
+    public Image m_healthBar;
 
     void Start()
     {
-        rb.velocity = new Vector2(XBounceSpeed, YBounceSpeed);
-        health = startHealth;
+        rb.velocity = new Vector2(m_XBounceSpeed, m_YBounceSpeed);
+        m_health = m_startHealth;
     }
 
     void OnCollisionEnter(Collision collisionInfo)
      {
-     if (collisionInfo.gameObject.CompareTag ("Axe"))
+     if (collisionInfo.gameObject.CompareTag ("Player"))
        {
-          Debug.Log(collisionInfo.gameObject.tag);
+            Debug.Log("Ball took damage");
             rb.AddForce(0, 200, 0 * Time.deltaTime);
-       }
+
+            //Collects the players index number. 
+            int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
+
+            //Adds 10 points to the player when hitting ball. 
+            collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore +=10;
+            
+        }
      }
 
     public void TakeDamage(float amount)
     {
-        health -= amount;
+        m_health -= amount;
 
-        healthBar.fillAmount = health / startHealth;
+        m_healthBar.fillAmount = m_health / m_startHealth;
 
-        if (health <= 0)
+        if (m_health <= 0)
         {
            Destroy(gameObject);
         }
