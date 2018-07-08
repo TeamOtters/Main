@@ -9,11 +9,11 @@ public class BouncingBall : MonoBehaviour {
     public float XBounceSpeed = 0f;
     public float YBounceSpeed = 0f;
 
+    //Health on BouncingBall enemy
     public float startHealth = 100;
-    private float health; 
-    public int worth = 50;
-    public GameObject deathEffect;
+    private float health;
 
+    //Image used for decreasing heltbar. Might not be used in final game.
     public Image healthBar; 
 
     void Start()
@@ -27,6 +27,7 @@ public class BouncingBall : MonoBehaviour {
      if (collisionInfo.gameObject.CompareTag ("Axe"))
        {
           Debug.Log(collisionInfo.gameObject.tag);
+            rb.AddForce(0, 200, 0 * Time.deltaTime);
        }
      }
 
@@ -38,7 +39,7 @@ public class BouncingBall : MonoBehaviour {
 
         if (health <= 0)
         {
-            Destroy(gameObject);
+           Destroy(gameObject);
         }
     }
 }
