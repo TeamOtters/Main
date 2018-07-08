@@ -8,16 +8,19 @@ public class VikingValkyrieSwitch : MonoBehaviour {
 
     private GameObject m_vikingCharacter;
     private GameObject m_valkyrieCharacter;
-    
+    private PlayerData m_playerData;
     private bool m_isValkyrie;
+    private bool m_shouldSwitch = false;
 
 	// Use this for initialization
 	void Start ()
     {
+        //initialize all components
         m_vikingCharacter = GetComponentInChildren<VikingController>().gameObject;
         m_valkyrieCharacter = GetComponentInChildren<ValkyrieAnimController>().gameObject;
+        m_playerData = GetComponent<PlayerData>();
 
-        //sets viking at start
+        //sets starting state according to startViking variable
         if (m_startViking)
         {
             SwitchToViking();
@@ -39,7 +42,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     void SwitchConditionListener()
     {
         //condition for switch
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (m_playerData.m_score > 5 && m_shouldSwitch)
         {
             // check which switch function to use
            if (m_isValkyrie)
@@ -57,6 +60,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     void SwitchToViking()
     {
         Debug.Log("I am a Viking!");
+        m_shouldSwitch = false;
 
         //Activating viking, childing valkyrie to viking and deactivating valkyrie
         m_isValkyrie = false;
@@ -70,6 +74,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     void SwitchToValkyrie()
     {
         Debug.Log("I am a Valkyrie!");
+        m_shouldSwitch = false;
 
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
