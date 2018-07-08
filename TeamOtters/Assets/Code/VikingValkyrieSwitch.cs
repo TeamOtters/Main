@@ -10,7 +10,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     private GameObject m_valkyrieCharacter;
     private PlayerData m_playerData;
     private bool m_isValkyrie;
-    private bool m_shouldSwitch = false;
+    private bool m_shouldSwitch = true;
 
 	// Use this for initialization
 	void Start ()
@@ -30,7 +30,10 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         {
             SwitchToValkyrie();
         }
-	}
+
+        //initializing shouldSwitch variable
+        m_shouldSwitch = true;
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -57,7 +60,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     }
 
     // Switch to Viking
-    void SwitchToViking()
+    public void SwitchToViking()
     {
         Debug.Log("I am a Viking!");
         m_shouldSwitch = false;
@@ -65,13 +68,12 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //Activating viking, childing valkyrie to viking and deactivating valkyrie
         m_isValkyrie = false;
         m_vikingCharacter.SetActive(true);
-        m_vikingCharacter.transform.parent = this.gameObject.transform;
         m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
         m_valkyrieCharacter.SetActive(false);
     }
 
     // Switch to Valkyrie
-    void SwitchToValkyrie()
+    public void SwitchToValkyrie()
     {
         Debug.Log("I am a Valkyrie!");
         m_shouldSwitch = false;
@@ -82,5 +84,10 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         m_valkyrieCharacter.transform.parent = this.gameObject.transform;
         m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
         m_vikingCharacter.SetActive(false);
+    }
+
+    void ResetSwitch()
+    {
+        m_shouldSwitch = true;
     }
 }
