@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 114306959818896632}
   - component: {fileID: 114840385211345792}
   m_Layer: 0
-  m_Name: Player 1
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -297,8 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c983d71dd6d94049a8e246c73174bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_vikingCharacter: {fileID: 1389495126593390}
-  m_valkyrieCharacter: {fileID: 1426374832836246}
+  m_startViking: 1
 --- !u!136 &136904992223252304
 CapsuleCollider:
   m_ObjectHideFlags: 1
