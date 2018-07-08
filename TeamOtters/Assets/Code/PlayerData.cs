@@ -19,7 +19,11 @@ public class PlayerData : MonoBehaviour
     void Update ()
     {
         scoreText.text = m_CurrentScore.ToString();
-
-        Debug.Log("Player " + m_PlayerIndex + " - Current Score : " + m_CurrentScore);
 	}
+
+    void AddToScore(int points)
+    {
+        m_CurrentScore += points;
+        Debug.Log("Player " + m_PlayerIndex + " - Current Score : " + m_CurrentScore);
+    }
 }

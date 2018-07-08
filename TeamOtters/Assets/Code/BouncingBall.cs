@@ -35,17 +35,22 @@ public class BouncingBall : MonoBehaviour
 
     void OnCollisionEnter(Collision collisionInfo)
      {
-     if (collisionInfo.gameObject.CompareTag ("Player"))
-       {
-          Debug.Log(collisionInfo.gameObject.tag);
+        if (collisionInfo.gameObject.CompareTag("Axe"))
+        {
+            Debug.Log(collisionInfo.gameObject.tag);
             rb.AddForce(0, 200, 0 * Time.deltaTime);
 
             //Collects the players index number. 
-            int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
+           // int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
 
             //Adds 10 points to the player when hitting ball. 
-            collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore +=m_bouncePoints;
-            
+          //  collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore += m_bouncePoints;
+
+        }
+
+        else
+        {
+            Debug.Log("didn't hit but hit "+ collisionInfo.gameObject.tag);
         }
        }
 
