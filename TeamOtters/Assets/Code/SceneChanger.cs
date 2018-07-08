@@ -18,7 +18,7 @@ public class SceneChanger : MonoBehaviour
             SceneManager.LoadScene("MainGame", LoadSceneMode.Single);
         }
 
-        else if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainGame"))
+        else if (SceneManager.GetActiveScene() != SceneManager.GetSceneByName("Menu_Screen"))
         {
             SceneManager.LoadScene("Menu_Screen", LoadSceneMode.Single);
         }
