@@ -6,41 +6,21 @@ public class ValkyrieController : MonoBehaviour {
 
     public float m_speed = 2.0f;
     public float m_flightForce = 300;
-    public Transform m_boundaryHolder;
+    public GameController m_gameController;
 
     private int m_playerIndex;
+    private Rigidbody m_character;
+    private BoundaryHolder m_boundaryHolder;
     private Vector3 m_playerSize;
-    private Rigidbody m_character;    
 
-    Boundary m_playerBoundary;
-
-    struct Boundary
-    {
-        public float Down, Up, Left, Right;
-
-        public Boundary(float down, float up, float left, float right)
-        {
-            Down = down; Up = up; Left = left; Right = right;
-        }
-    }
 
     // Use this for initialization
     void Start ()
     {
-        m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
-        m_character   = GetComponent<Rigidbody>();
-        m_playerSize  = GetComponent<SpriteRenderer>().bounds.extents;
-
-        m_playerBoundary = new Boundary(m_boundaryHolder.GetChild(0).position.y + m_playerSize.y,  //down
-                                        m_boundaryHolder.GetChild(1).position.y - m_playerSize.y,  //up
-                                        m_boundaryHolder.GetChild(2).position.x + m_playerSize.x,  //left
-                                        m_boundaryHolder.GetChild(3).position.x - m_playerSize.x); //right
-
-        /*Debug.Log("Boundary Index 0: " + m_playerBoundary.Down + " should be Down");
-        Debug.Log("Boundary Index 1: " + m_playerBoundary.Up + " should be Up");
-        Debug.Log("Boundary Index 2: " + m_playerBoundary.Left + " should be Left");
-        Debug.Log("Boundary Index 3: " + m_playerBoundary.Right + " should be Right");*/        
-
+        m_playerIndex          = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
+        m_character            = GetComponent<Rigidbody>();
+        m_boundaryHolder       = m_gameController.boundaryHolder;
+        m_playerSize           = GetComponent<SpriteRenderer>().bounds.extents;
     }
 	
 	// Update is called once per frame
@@ -57,33 +37,27 @@ public class ValkyrieController : MonoBehaviour {
         }
         
         // Clamp movement
-        if (transform.position.x < m_playerBoundary.Left)
+        if (transform.position.x < m_boundaryHolder.playerBoundary.Left + m_playerSize.x)
         {
-            Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_playerBoundary.Left);
-            transform.position = new Vector3(m_playerBoundary.Left, transform.position.y, transform.position.z);
+            Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_boundaryHolder.playerBoundary.Left);
+            transform.position = new Vector3(m_boundaryHolder.playerBoundary.Left + m_playerSize.x, transform.position.y, transform.position.z);
         }
-        if (transform.position.x > m_playerBoundary.Right)
+        if (transform.position.x > m_boundaryHolder.playerBoundary.Right - m_playerSize.x)
         {
-            Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_playerBoundary.Right);
-            transform.position = new Vector3(m_playerBoundary.Right, transform.position.y, transform.position.z);
+            Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_boundaryHolder.playerBoundary.Right);
+            transform.position = new Vector3(m_boundaryHolder.playerBoundary.Right - m_playerSize.x, transform.position.y, transform.position.z);
         }
-        if (transform.position.y < m_playerBoundary.Down)
+        if (transform.position.y < m_boundaryHolder.playerBoundary.Down + m_playerSize.y)
         {
-            Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_playerBoundary.Down);
-            transform.position = new Vector3(transform.position.x, m_playerBoundary.Down, transform.position.z);
+            Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_boundaryHolder.playerBoundary.Down);
+            transform.position = new Vector3(transform.position.x, m_boundaryHolder.playerBoundary.Down + m_playerSize.y, transform.position.z);
         }
-        if (transform.position.y > m_playerBoundary.Up)
+        if (transform.position.y > m_boundaryHolder.playerBoundary.Up - m_playerSize.y)
         {
-            Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_playerBoundary.Up);
-            transform.position = new Vector3(transform.position.x, m_playerBoundary.Up, transform.position.z);
+            Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_boundaryHolder.playerBoundary.Up);
+            transform.position = new Vector3(transform.position.x, m_boundaryHolder.playerBoundary.Up - m_playerSize.y, transform.position.z);
         }
-
-        // Clamp valkyrie movement within bounds of screen
-        /*Vector2 clampedScreenPos = new Vector2(Mathf.Clamp(x, m_playerBoundary.Left,
-                                                              m_playerBoundary.Right),
-                                               Mathf.Clamp(y, m_playerBoundary.Down,
-                                                              m_playerBoundary.Up));*/
-
+        
         // Move
         transform.Translate(x, y, transform.position.z);		
     }
