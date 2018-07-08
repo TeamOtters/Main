@@ -14,36 +14,30 @@ public class ProjectileBehaviour : MonoBehaviour {
     void Start ()
     {
         m_rigidBody = GetComponent<Rigidbody>();
-        EnableRagdoll();
         m_collider = GetComponent<Collider>();
-       
+        EnableRagdoll();
+
     }
 
     private void Update()
     {
-
         //transform.rotation = Quaternion.Euler(50 * Time.deltaTime,0, 0);
         if(!m_hit)
             transform.Rotate(0, 0, m_rotationSpeed * Time.deltaTime, Space.Self);
 
-        // transform.Rotate(new Vector3(1, 0, 0));
     }
     
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.collider.CompareTag("Player"))
+        if (!collision.collider.CompareTag("Viking") && !collision.collider.CompareTag("Valkyrie"))
         {
             DisableRagdoll();
-           
-            //    Physics.IgnoreCollision(collision.collider, this.transform.GetComponent<Collider>());
-
-
         }
 
-        if(collision.collider.CompareTag("Player"))
+        if(collision.collider.CompareTag("Viking"))
         {
-            if (collision.collider.gameObject.GetComponent<PlayerData>().myPlayerIndex == m_playerID)
+            if (collision.collider.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex == m_playerID)
                 Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
         }
 

@@ -27,6 +27,7 @@ public class VikingController : MonoBehaviour {
     public float m_stunnedCoolDown = 1f;
 
     private int m_thisPlayerIndex;
+    private string m_playerIndexString;
 
 
     // Use this for initialization
@@ -34,11 +35,11 @@ public class VikingController : MonoBehaviour {
 
         m_vikingcCharacterController = GetComponent<CharacterController>();
         m_playerData = GetComponentInParent<PlayerData>();
-        if(m_playerData == null)
-         m_playerData = GetComponent<PlayerData>();
 
         if (m_playerData != null)
-            m_thisPlayerIndex = m_playerData.myPlayerIndex;
+            m_thisPlayerIndex = m_playerData.m_PlayerIndex;
+
+        m_playerIndexString = m_thisPlayerIndex.ToString();
     }
 
     // Update is called once per frame
@@ -63,21 +64,18 @@ public class VikingController : MonoBehaviour {
         if(collision.gameObject.CompareTag("Projectile"))
         {
             if(collision.gameObject.GetComponent<ProjectileBehaviour>().m_playerID != m_thisPlayerIndex)
-             SetStunned();
-
-            
+             SetStunned();   
         }
     }
 
     private void VikingFire ()
     {
-
-        Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P1"), Input.GetAxis("Vertical_P1"), 0.0f);
-        var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P1"), Input.GetAxis("Vertical_P1")) * Mathf.Rad2Deg;
+        Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
+        var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
         //  Debug.Log(angle);
 
         //Fire Projectile
-        if (Input.GetButtonDown("Fire1_P1"))
+        if (Input.GetButtonDown("Fire1_P" + m_playerIndexString))
         {
             if (m_fireCooldownOn)
                 return;
@@ -165,21 +163,36 @@ public class VikingController : MonoBehaviour {
 
     private void VikingMovement ()
     {
+        Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
+        var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
+
         if (m_vikingcCharacterController.isGrounded)
         {
-            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P1"), 0, 0);
+            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), 0, 0);
             m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
             m_vikingMoveDirection *= m_vikingMovementSpeed;
 
-            if (Input.GetButtonDown("Jump_P1"))
+            if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
                 m_vikingMoveDirection.y = m_vikingJumpSpeed;
 
         }
 
-        // m_hand.transform.Translate(new Vector3 (angle, 0, 0) * 10f * Time.deltaTime);
-        //m_hand.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+        //Right
+        if (Mathf.Clamp(angle, 10, 170) == angle)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
 
-        m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
+        //Left
+        else if (Mathf.Clamp(angle, -170, -10) == angle)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+            // m_hand.transform.Translate(new Vector3 (angle, 0, 0) * 10f * Time.deltaTime);
+            //m_hand.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+            m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
         m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
     }
 
