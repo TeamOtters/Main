@@ -50,7 +50,7 @@ public class PhaseManager : MonoBehaviour {
 
         foreach(PlayerData player in m_players)
         {
-            int currentPlayerScore = player.m_score;
+            int currentPlayerScore = player.m_CurrentScore;
             m_playerScores.Add(currentPlayerScore);
         }
 
