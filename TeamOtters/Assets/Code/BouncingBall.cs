@@ -47,7 +47,7 @@ public class BouncingBall : MonoBehaviour
 
         if (m_health <= 0)
         {
-           Destroy(gameObject);
+           gameObject.SetActive (false);
         }
     }
 }

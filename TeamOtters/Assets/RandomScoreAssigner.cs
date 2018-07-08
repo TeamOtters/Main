@@ -17,7 +17,7 @@ public class RandomScoreAssigner : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Space))
         {
             int indexToReward = Random.Range(0, 3);
-            m_players[indexToReward].m_score = m_players[indexToReward].m_score + 1;
+            m_players[indexToReward].m_CurrentScore = m_players[indexToReward].m_CurrentScore + 1;
         }
 	}
 }

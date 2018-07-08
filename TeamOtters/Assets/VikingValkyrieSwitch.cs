@@ -42,7 +42,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     void SwitchConditionListener()
     {
         //condition for switch
-        if (m_playerData.m_score > 5 && m_shouldSwitch)
+        if (m_playerData.m_CurrentScore > 5 && m_shouldSwitch)
         {
             // check which switch function to use
            if (m_isValkyrie)
