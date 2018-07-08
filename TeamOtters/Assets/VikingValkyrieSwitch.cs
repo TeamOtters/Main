@@ -45,13 +45,25 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     void SwitchToViking()
     {
         Debug.Log("I am a Viking!");
+
+        //Activating viking, childing valkyrie to viking and deactivating valkyrie
         m_isValkyrie = false;
+        m_vikingCharacter.SetActive(true);
+        m_vikingCharacter.transform.parent = this.gameObject.transform;
+        m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
+        m_valkyrieCharacter.SetActive(false);
     }
 
     // Switch to Valkyrie
     void SwitchToValkyrie()
     {
         Debug.Log("I am a Valkyrie!");
+
+        //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
+        m_valkyrieCharacter.SetActive(true);
+        m_valkyrieCharacter.transform.parent = this.gameObject.transform;
+        m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
+        m_vikingCharacter.SetActive(false);
     }
 }
