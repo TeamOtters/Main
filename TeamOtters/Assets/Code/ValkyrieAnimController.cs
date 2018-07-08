@@ -22,7 +22,7 @@ public class ValkyrieAnimController : MonoBehaviour {
 	void Update ()
     {        
         // basic movement
-        var x = Input.GetAxis("Horizontal_P1") * m_speed * Time.deltaTime;
+        var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
         var y = Input.GetAxis("Vertical_P"   + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
 
         transform.Translate(x, y, 0);
