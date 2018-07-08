@@ -13,7 +13,8 @@ public class VikingValkyrieSwitch : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-		
+        //sets viking at start
+        SwitchToViking();
 	}
 	
 	// Update is called once per frame
@@ -44,11 +45,13 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     void SwitchToViking()
     {
         Debug.Log("I am a Viking!");
+        m_isValkyrie = false;
     }
 
     // Switch to Valkyrie
     void SwitchToValkyrie()
     {
         Debug.Log("I am a Valkyrie!");
+        m_isValkyrie = true;
     }
 }
