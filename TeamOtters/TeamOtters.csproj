@@ -231,6 +231,9 @@
     <Reference Include="Unity.Locator">
       <HintPath>Library\UnityAssemblies\Unity.Locator.dll</HintPath>
     </Reference>
+    <Reference Include="Vuforia.UnityExtensions">
+      <HintPath>Library\UnityAssemblies\Vuforia.UnityExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -260,6 +263,15 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>Library\UnityAssemblies\UnityEngine.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>Library\UnityAssemblies\mscorlib.dll</HintPath>
@@ -299,11 +311,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Code\DetectPickup.cs" />
+    <Compile Include="Assets\Code\PlayerData.cs" />
+    <Compile Include="Assets\Code\SceneChanger.cs" />
     <Compile Include="Assets\Code\TestScriptableObject.cs" />
     <Compile Include="Assets\Code\Unity101.cs" />
     <Compile Include="Assets\Code\Unity1010PublicObjects.cs" />
     <Compile Include="Assets\Code\ValkyrieAnimController.cs" />
     <Compile Include="Assets\Code\ValkyrieMovementController.cs" />
+    <Compile Include="Assets\Code\VikingController.cs" />
+    <Compile Include="Assets\Code\VikingProjectiles.cs" />
+    <Compile Include="Assets\Code\VikingWeaponManager.cs" />
+    <Compile Include="Assets\ValkyrieMovement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="C:\Users\SFHSK\AppData\Local\Unity\cache\packages\packages.unity.com\com.unity.package-manager-ui@1.8.8\Editor\Resources\Styles\Main_Dark.uss" />
