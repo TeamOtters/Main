@@ -13,7 +13,7 @@ public class ValkyrieAnimController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        m_playerIndex = GetComponent<PlayerData>().myPlayerIndex;
+        m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
         m_character = GetComponent<Rigidbody>();
         //m_character.velocity = Vector2.up * m_speed;
 	}
@@ -26,9 +26,6 @@ public class ValkyrieAnimController : MonoBehaviour {
         var y = Input.GetAxis("Vertical_P"   + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
 
         transform.Translate(x, y, 0);
-
-        Debug.Log("x: " + x);
-        Debug.Log("y: " + y);
 
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
         {

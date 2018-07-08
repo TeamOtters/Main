@@ -21,26 +21,28 @@ public class VikingController : MonoBehaviour {
 
     private float m_rapidFireSpeed = 0.2f;
     private bool m_fireCooldownOn;
+    private int m_playerIndex;
 
 
     // Use this for initialization
     void Start () {
 
         m_vikingcCharacterController = GetComponent<CharacterController>();
+        m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
     }
 	
 	// Update is called once per frame
 	void Update () {
 
 
-        if (Input.GetButtonDown("Fire1_P1"))
+        if (Input.GetButtonDown("Fire1_P" + m_playerIndex))
         {
             if (m_fireCooldownOn)
                 return;
 
                var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3 (transform.position.x + 0.4f, transform.position.y +0.4f, transform.position.z), transform.rotation) as GameObject;
 
-            float angle = Mathf.Atan2(Input.GetAxis("Horizontal_P1"), Input.GetAxis("Vertical_P1"));
+            float angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndex), Input.GetAxis("Vertical_P" + m_playerIndex));
             //char.transform.eulerAngles = new vector3(char.transform.eulerAngles.x, Mathf.atan2(x, y) * Mathf.rad2deg, char.transform.eulerAngles.z);
             projectile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed);
@@ -65,11 +67,11 @@ public class VikingController : MonoBehaviour {
 
         if (m_vikingcCharacterController.isGrounded)
         {
-            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P1"), 0,0);
+            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndex), 0,0);
             m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
             m_vikingMoveDirection *= m_vikingMovementSpeed;
 
-            if (Input.GetButtonDown("Jump_P1"))
+            if (Input.GetButtonDown("Jump_P" + m_playerIndex))
                 m_vikingMoveDirection.y = m_vikingJumpSpeed;
 
         }

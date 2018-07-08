@@ -4,17 +4,29 @@ using UnityEngine;
 
 public class VikingValkyrieSwitch : MonoBehaviour {
 
-    
-    public GameObject m_vikingCharacter;
-    public GameObject m_valkyrieCharacter;
+    public bool m_startViking = true;
+
+    private GameObject m_vikingCharacter;
+    private GameObject m_valkyrieCharacter;
     
     private bool m_isValkyrie;
 
 	// Use this for initialization
 	void Start ()
     {
+        m_vikingCharacter = GetComponentInChildren<VikingController>().gameObject;
+        m_valkyrieCharacter = GetComponentInChildren<ValkyrieAnimController>().gameObject;
+
         //sets viking at start
-        SwitchToViking();
+        if (m_startViking)
+        {
+            SwitchToViking();
+
+        }
+        else
+        {
+            SwitchToValkyrie();
+        }
 	}
 	
 	// Update is called once per frame

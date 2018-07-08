@@ -39,7 +39,6 @@ GameObject:
   - component: {fileID: 114184967774371322}
   - component: {fileID: 54945505741322880}
   - component: {fileID: 65828799121857528}
-  - component: {fileID: 114999394562198202}
   m_Layer: 0
   m_Name: ValkyriePlayer
   m_TagString: Valkyrie
@@ -132,18 +131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 2
   m_flightForce: 300
---- !u!114 &114999394562198202
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1624163314470624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d23cd5101e83c94e90db2e577cc2486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myPlayerIndex: 1
 --- !u!212 &212718005720008498
 SpriteRenderer:
   m_ObjectHideFlags: 1
