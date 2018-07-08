@@ -26,8 +26,9 @@ public class BouncingBall : MonoBehaviour {
      {
      if (collisionInfo.gameObject.CompareTag ("Player"))
        {
-            Debug.Log("Ball took damage");
+          Debug.Log(collisionInfo.gameObject.tag);
             rb.AddForce(0, 200, 0 * Time.deltaTime);
+<<<<<<< HEAD
 
             //Collects the players index number. 
             int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
@@ -36,6 +37,9 @@ public class BouncingBall : MonoBehaviour {
             collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore +=10;
             
         }
+=======
+       }
+>>>>>>> parent of fafd8a4... DON'T COmmit yet
      }
 
     public void TakeDamage(float amount)

@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 54965340903825304}
   - component: {fileID: 136536607581646866}
   - component: {fileID: 114618075407600406}
-  - component: {fileID: 114683408659446606}
   m_Layer: 0
   m_Name: PlayerInBounce
   m_TagString: Player
@@ -161,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 355182fb59d4bb74e879bf46a2da8971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   m_enemyDamage: 10
 --- !u!114 &114683408659446606
 MonoBehaviour:
@@ -192,6 +192,9 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+=======
+  enemyDamage: 25
+>>>>>>> parent of fafd8a4... DON'T COmmit yet
 --- !u!136 &136536607581646866
 CapsuleCollider:
   m_ObjectHideFlags: 1

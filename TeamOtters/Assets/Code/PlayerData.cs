@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerData : MonoBehaviour {
 
+<<<<<<< HEAD
     public int m_PlayerIndex = 1;
     public int m_CurrentScore = 0;
     public Text scoreText;
@@ -14,6 +15,13 @@ public class PlayerData : MonoBehaviour {
     {
        // Debug.Log("My player index is" + m_PlayerIndex);		
 
+=======
+    public int myPlayerIndex = 1;
+
+	// Use this for initialization
+	void Start () {
+		
+>>>>>>> parent of fafd8a4... DON'T COmmit yet
 	}
 
     // Update is called once per frame

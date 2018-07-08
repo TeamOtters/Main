@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Score : MonoBehaviour {
 
-    public float m_HittingBall = 10f;
-    public float m_ReachingGoal = 10f;
-    public float m_HittingOpponent = 10f;
-
+    public float BounceHit = 10f;
+    public float FirstReachGoal = 10f;
+    public float HitOpponent = 10f;
 
 	// Use this for initialization
 	void Start () {
 		
 	}
 	
+
 	// Update is called once per frame
 	void Update () {
 		
