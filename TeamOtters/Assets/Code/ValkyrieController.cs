@@ -27,7 +27,7 @@ public class ValkyrieController : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        m_playerIndex = transform.parent.GetComponent<PlayerData>().myPlayerIndex;
+        m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
         m_character   = GetComponent<Rigidbody>();
         m_playerSize  = GetComponent<SpriteRenderer>().bounds.extents;
 

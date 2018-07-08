@@ -17,7 +17,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     {
         //initialize all components
         m_vikingCharacter = GetComponentInChildren<VikingController>().gameObject;
-        m_valkyrieCharacter = GetComponentInChildren<ValkyrieAnimController>().gameObject;
+        m_valkyrieCharacter = GetComponentInChildren<ValkyrieController>().gameObject;
         m_playerData = GetComponent<PlayerData>();
 
         //sets starting state according to startViking variable
