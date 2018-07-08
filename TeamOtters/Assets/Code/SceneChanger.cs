@@ -7,15 +7,7 @@ using UnityEngine.UI;
 
 public class SceneChanger : MonoBehaviour
 {
-    public void Start()
-    {
-        // Create a temporary reference to the current scene.
-        Scene currentScene = SceneManager.GetActiveScene();
 
-        // Retrieve the name of this scene.
-        string sceneName = currentScene.name;
-
-    }
 
     public void onClick()
 
