@@ -12,9 +12,7 @@ public class PlayerData : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    { 
-       // Debug.Log("My player index is" + m_PlayerIndex);		
-
+    { 	
     }
 
     // Update is called once per frame

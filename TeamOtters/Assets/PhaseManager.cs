@@ -11,8 +11,7 @@ public class PhaseManager : MonoBehaviour {
 
 	void Start ()
     {
-
-        m_players = FindObjectsOfType<PlayerData>();
+        
         if (m_isInPhaseOne == true)
         {
             PhaseOneSetup();
@@ -21,7 +20,7 @@ public class PhaseManager : MonoBehaviour {
         {
             PhaseTwoSetup();
         }
-
+        
 	}
 	
 
@@ -33,6 +32,7 @@ public class PhaseManager : MonoBehaviour {
         }
 	}
 
+    // Set all characters to viking
     void PhaseOneSetup()
     {
         foreach(PlayerData player in m_players)
@@ -45,31 +45,51 @@ public class PhaseManager : MonoBehaviour {
         }
     }
 
+    //Set the two characters with highest score to Valkyries
     void PhaseTwoSetup()
     {
-
-        foreach(PlayerData player in m_players)
+        //Adds the current score of the players to the score list
+        for (int i = 0; i < m_players.Length; i++)
         {
-            int currentPlayerScore = player.m_CurrentScore;
-            m_playerScores.Add(currentPlayerScore);
+            m_playerScores[i] = m_players[i].m_CurrentScore;
+
         }
+        //local variables to keep track of the highest scores and corresponding indexes
+        int highest = 0;
+        int highestIndex = -1;
 
-    }
-    void TwoHighest(out float highest, out float second, List<int> scores)
-    {
-        highest = Mathf.NegativeInfinity;
-        second = Mathf.NegativeInfinity;
-        for (int i = 0; i < scores.Count; i++)
+        int second = 0;
+        int secondIndex = -1;
+
+
+        for (int i = 0; i < m_playerScores.Count; i++)
         {
-            if (scores[i] >= highest)
+            //assigns the highest and second highest variables
+            if (m_playerScores[i] >= highest)
             {
                 second = highest;
-                highest = scores[i];
+                secondIndex = highestIndex;
+                highest = m_playerScores[i];
+                highestIndex = i + 1;
             }
-            else if (scores[i] > second)
+            else if (m_playerScores[i] > second)
             {
-                second = scores[i];
+                second = m_playerScores[i];
+                secondIndex = i + 1;
+            }
+        }
+
+        Debug.Log("Highest value is " + highest + "with index " + highestIndex + ". Second highest value is " + second + "with index " + secondIndex);
+
+        //for each player, if they are the "highest" or "second highest" index, they should change to valkyries
+        foreach(PlayerData player in m_players)
+        {
+            if (player.m_PlayerIndex == highestIndex || player.m_PlayerIndex == secondIndex)
+            {
+                player.GetComponent<VikingValkyrieSwitch>().SwitchToValkyrie();
+                Debug.Log(player.m_PlayerIndex);
             }
         }
     }
+   
 }

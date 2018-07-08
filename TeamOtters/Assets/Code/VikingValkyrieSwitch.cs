@@ -62,7 +62,6 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     // Switch to Viking
     public void SwitchToViking()
     {
-        Debug.Log("I am a Viking!");
         m_shouldSwitch = false;
 
         //Activating viking, childing valkyrie to viking and deactivating valkyrie
@@ -75,7 +74,6 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     // Switch to Valkyrie
     public void SwitchToValkyrie()
     {
-        Debug.Log("I am a Valkyrie!");
         m_shouldSwitch = false;
 
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
