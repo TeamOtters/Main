@@ -7,7 +7,14 @@ public class DetectPickup : MonoBehaviour {
     public float m_speed = 10;
     public Transform m_carryLocation; // this is an empty gameobject childed under the Valkyrie, the character will be carried on this position
 
+    private string m_collisionTag;
+
     Transform m_currentCarryable = null;
+
+    private void Start()
+    {
+        m_collisionTag = null;
+    }
 
     private void Update()
     {
@@ -31,17 +38,24 @@ public class DetectPickup : MonoBehaviour {
     void OnCollisionEnter(Collision other)
     {
         Debug.Log(other.gameObject.tag);
-        // pickup if it has tag "Item" and we are not carrying anything
-        if (other.rigidbody.CompareTag("Viking") && m_currentCarryable == null)
+
+        m_collisionTag = other.gameObject.tag;   
+    
+        // pickup if it has tag "Valkyrie" and we are not carrying anything
+        if (m_collisionTag == "Valkyrie" && m_currentCarryable == null)
         {
             // take reference to that collided object
-            m_currentCarryable = other.transform;
+            m_currentCarryable = transform;
 
             // move it to carrying point
-            m_currentCarryable.position = m_currentCarryable.position;
+            m_currentCarryable.position = m_carryLocation.position;
 
             // make it as a child of player, so it moves along with player
-            m_currentCarryable.parent = transform;
+            m_currentCarryable.parent = m_carryLocation.transform;
+        }
+        else
+        {
+            Debug.Log("Collided with: " + m_collisionTag);
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class ValkyrieAnimController : MonoBehaviour {
 
     public float m_speed = 2.0f;
-    public float force = 300;
+    public float m_flightForce = 300;
 
     private int m_playerIndex;
     private Rigidbody m_character;
@@ -15,7 +15,7 @@ public class ValkyrieAnimController : MonoBehaviour {
     {
         m_playerIndex = GetComponent<PlayerData>().myPlayerIndex;
         m_character = GetComponent<Rigidbody>();
-        m_character.velocity = Vector2.up * m_speed;
+        //m_character.velocity = Vector2.up * m_speed;
 	}
 	
 	// Update is called once per frame
@@ -32,7 +32,7 @@ public class ValkyrieAnimController : MonoBehaviour {
 
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
         {
-            GetComponent<Rigidbody>().AddForce(Vector2.up * force);
+            GetComponent<Rigidbody>().AddForce(Vector2.up * m_flightForce);
         }
 		
 	}
