@@ -14,11 +14,21 @@ public class BouncingBall : MonoBehaviour
     public float m_startHealth = 100;
     private float m_health;
 
-    //Image used for decreasing heltbar. Might not be used in final game.
+    public GameController m_gameController;
+
+    private int m_bouncePoints;
+    private int m_goalPoints;
+    private int m_opponentPoints;
+
+    //Image used for decreasing healthbar. Might not be used in final game.
     public Image m_healthBar;
 
     void Start()
     {
+        m_bouncePoints = m_gameController.bounceHit;
+        m_goalPoints = m_gameController.firstReachGoal;
+        m_opponentPoints = m_gameController.hitOpponent;
+
         rb.velocity = new Vector2(m_XBounceSpeed, m_YBounceSpeed);
         m_health = m_startHealth;
     }
@@ -34,7 +44,7 @@ public class BouncingBall : MonoBehaviour
             int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
 
             //Adds 10 points to the player when hitting ball. 
-            collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore +=10;
+            collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore +=m_bouncePoints;
             
         }
        }
