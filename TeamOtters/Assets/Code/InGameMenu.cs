@@ -8,17 +8,28 @@ using UnityEngine.Events;
 public class InGameMenu : MonoBehaviour
 {
     public Canvas m_InGameMenu;
-    public Canvas m_Overlay;
     private void Update()
     {
-        if (Input.GetKeyDown("joystick button 7"))
+        if (Input.GetKeyDown("joystick button 7") && m_InGameMenu.isActiveAndEnabled)
         {
+
             Debug.Log("Hitting pause");
             TogglePause();
-            m_InGameMenu.gameObject.SetActive(true);
-            m_Overlay.gameObject.SetActive(false);
-            Debug.Log(message: "This canvas is " + m_InGameMenu.name);
+            m_InGameMenu.gameObject.SetActive(false);
+
         }
+
+        else if (Input.GetKeyDown("joystick button 7"))
+        {
+
+            Debug.Log("Hitting pause again");
+            TogglePause();
+            m_InGameMenu.gameObject.SetActive(true);
+
+        }
+
+
+
     }
     public void TogglePause()
     {
