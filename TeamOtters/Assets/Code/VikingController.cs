@@ -9,20 +9,18 @@ public class VikingController : MonoBehaviour {
     private VikingProjectiles m_vikingProjectiles;
     public GameObject m_projectile;
 
-    public float speed = 6.0F;
-    public float jumpSpeed = 8.0F;
-    public float gravity = 20.0F;
-    private Vector3 moveDirection = Vector3.zero;
+    public float m_vikingMovementSpeed = 6.0F;
+    public float m_vikingJumpSpeed = 8.0F;
+    public float m_vikingGravityForce = 20.0F;
+    private Vector3 m_vikingMoveDirection = Vector3.zero;
 
-    public float forceX;
-    public float forceY;
-    public float projectileSpeed;
+    public float m_projectileForceX;
+    public float m_projectileForceY;
+    public float m_projectileSpeed;
 
 
     private float m_rapidFireSpeed = 0.2f;
     private bool m_fireCooldownOn;
-
-    private
 
 
     // Use this for initialization
@@ -39,38 +37,49 @@ public class VikingController : MonoBehaviour {
         {
             if (m_fireCooldownOn)
                 return;
-            //if (m_projectile != null)
-            //{
+
                var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3 (transform.position.x + 0.4f, transform.position.y +0.4f, transform.position.z), transform.rotation) as GameObject;
 
-           // Debug.Log(m_vikingProjectiles.m_projectile.name);
-               projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(forceX, forceY, 0) * projectileSpeed);
-           // StartCoroutine("DestroyProjectileTimer",(projectile));
+            float angle = Mathf.Atan2(Input.GetAxis("Horizontal_P1"), Input.GetAxis("Vertical_P1"));
+            //char.transform.eulerAngles = new vector3(char.transform.eulerAngles.x, Mathf.atan2(x, y) * Mathf.rad2deg, char.transform.eulerAngles.z);
+            projectile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed);
+
+
+
+          
+
+            Debug.Log(angle);
+
+
+
+            StartCoroutine("DestroyProjectileTimer",projectile);
 
             m_fireCooldownOn = true;
             StartCoroutine("FireCoolDown");
-            //}
 
-
-           
- 
-        }
+        } 
 
 
       
 
         if (m_vikingcCharacterController.isGrounded)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal_P1"), 0,0);
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
+            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P1"), 0,0);
+            m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
+            m_vikingMoveDirection *= m_vikingMovementSpeed;
 
             if (Input.GetButtonDown("Jump_P1"))
-                moveDirection.y = jumpSpeed;
+                m_vikingMoveDirection.y = m_vikingJumpSpeed;
 
         }
-        moveDirection.y -= gravity * Time.deltaTime;
-        m_vikingcCharacterController.Move(moveDirection * Time.deltaTime);
+        m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
+        m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
+
+
+   
+
+       
 
     }
 
@@ -89,6 +98,6 @@ public class VikingController : MonoBehaviour {
 
     private void DestroyProjectile(GameObject _objectToDestroy)
     {
-        Destroy(this);
+        Destroy(_objectToDestroy);
     }
 }
