@@ -44,12 +44,12 @@ public class VikingController : MonoBehaviour {
 
             float angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndex), Input.GetAxis("Vertical_P" + m_playerIndex));
             //char.transform.eulerAngles = new vector3(char.transform.eulerAngles.x, Mathf.atan2(x, y) * Mathf.rad2deg, char.transform.eulerAngles.z);
-            projectile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            projectile.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
             projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed);
+            
 
 
 
-          
 
             Debug.Log(angle);
 

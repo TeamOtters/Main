@@ -115,12 +115,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_projectile: {fileID: 1924454597101522, guid: 8787e24c271ab2b4cbf7713eebf44579,
     type: 2}
-  speed: 14
-  jumpSpeed: 26
-  gravity: 60
-  forceX: 60
-  forceY: 20
-  projectileSpeed: 70
+  m_vikingMovementSpeed: 15
+  m_vikingJumpSpeed: 20
+  m_vikingGravityForce: 35
+  m_projectileForceX: 30
+  m_projectileForceY: 30
+  m_projectileSpeed: 30
 --- !u!136 &136833951431147754
 CapsuleCollider:
   m_ObjectHideFlags: 1
