@@ -502,24 +502,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1587183965728436, guid: e96b6e6682fb85941bf26c9dbf3a4296,
     type: 2}
   m_PrefabInternal: {fileID: 1892283437}
---- !u!1 &1529999827 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1389495126593390, guid: e96b6e6682fb85941bf26c9dbf3a4296,
-    type: 2}
-  m_PrefabInternal: {fileID: 1102447186}
---- !u!114 &1529999835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1529999827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccb0872c9e819a344b8403ce1e0ff8a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_speed: 10
-  m_carryLocation: {fileID: 1708092526}
 --- !u!4 &1708092526 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4114654027071248, guid: e96b6e6682fb85941bf26c9dbf3a4296,
@@ -569,25 +551,6 @@ Prefab:
     - target: {fileID: 4595764737678862, guid: e96b6e6682fb85941bf26c9dbf3a4296, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114840385211345792, guid: e96b6e6682fb85941bf26c9dbf3a4296,
-        type: 2}
-      propertyPath: m_startViking
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114403893736714786, guid: e96b6e6682fb85941bf26c9dbf3a4296,
-        type: 2}
-      propertyPath: m_boundaryHolder
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114403893736714786, guid: e96b6e6682fb85941bf26c9dbf3a4296,
-        type: 2}
-      propertyPath: m_gameController
-      value: 
-      objectReference: {fileID: 1887722636}
-    - target: {fileID: 1587183965728436, guid: e96b6e6682fb85941bf26c9dbf3a4296, type: 2}
-      propertyPath: m_TagString
-      value: Valkyrie
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e96b6e6682fb85941bf26c9dbf3a4296, type: 2}
