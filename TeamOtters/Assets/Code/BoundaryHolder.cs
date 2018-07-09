@@ -18,6 +18,7 @@ public class BoundaryHolder : MonoBehaviour
     }
 
     public Boundary playerBoundary;
+    public Boundary ballBoundary;
 
     // Use this for initialization
     void Start()
@@ -28,6 +29,11 @@ public class BoundaryHolder : MonoBehaviour
         var dist = (m_character.transform.position - m_camera.transform.position).z;
 
         playerBoundary = new Boundary(m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).y,  //down
+                                      m_camera.ViewportToWorldPoint(new Vector3(0, 1, dist)).y,  //up
+                                      m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x,  //left
+                                      m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x); //right  
+
+        ballBoundary = new Boundary  (m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).y,  //down
                                       m_camera.ViewportToWorldPoint(new Vector3(0, 1, dist)).y,  //up
                                       m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x,  //left
                                       m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x); //right  

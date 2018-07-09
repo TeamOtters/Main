@@ -89,8 +89,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173794344469006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -7.13, y: -1.31, z: 0}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 224246460596369152}
   m_Father: {fileID: 0}
@@ -110,7 +110,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &114015992664390708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,8 +187,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 54988108636432478}
-  m_XBounceSpeed: 200
-  m_YBounceSpeed: 200
+  m_XBounceSpeed: 500
+  m_YBounceSpeed: 500
   m_startHealth: 100
   m_gameController: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
     type: 2}
