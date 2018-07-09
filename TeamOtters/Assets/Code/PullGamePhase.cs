@@ -16,16 +16,14 @@ public class PullGamePhase : MonoBehaviour {
         SceneManager.LoadScene("Phase1", LoadSceneMode.Additive);
 	}
 	
-	// Update is called once per frame
-	void Update () {
 
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Phase1"));
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Phase1"))
-        {
-            m_PullGamePhase.gameObject.SetActive(false);
-            }
-
-        }
-	}
+    public void Phase2UI()
+    {
+        m_PullGamePhase.gameObject.SetActive(false);
+        SceneManager.LoadScene("Phase2", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("Phase1");
+        Debug.Log("Valkyrie Found");
+    }
+}
 
