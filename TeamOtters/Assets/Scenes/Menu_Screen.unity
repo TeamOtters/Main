@@ -307,10 +307,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 18
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -497,6 +497,10 @@ Prefab:
     - target: {fileID: 1761001091052460, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
       propertyPath: m_Name
       value: LBack_Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 1541029840832158, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
@@ -798,10 +802,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 18
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -1212,7 +1216,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -1396,6 +1400,10 @@ Prefab:
       propertyPath: m_Name
       value: ABack_Button
       objectReference: {fileID: 0}
+    - target: {fileID: 1541029840832158, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
   m_IsPrefabParent: 0
@@ -1411,11 +1419,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 224323506881343476, guid: 5f6c4592abe10a142b6745ec01a957e0,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -1513,93 +1516,16 @@ Prefab:
       objectReference: {fileID: 1377279578}
     - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
         type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_BoolArgument
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1679422003}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: Select
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1761001091052460, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
-      propertyPath: m_Name
-      value: SBack_Button
-      objectReference: {fileID: 0}
-    - target: {fileID: 114496900095458242, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300018, guid: 63d5975176d7b21418b333c24e6e4e9b,
-        type: 3}
-    - target: {fileID: 114496900095458242, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Color.r
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114496900095458242, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_NormalColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_NormalColor.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.08962262
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.82411236
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_HighlightedColor.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_PressedColor.r
-      value: 0.7921569
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_PressedColor.g
-      value: 0.23664133
-      objectReference: {fileID: 0}
-    - target: {fileID: 114382481554526030, guid: 5f6c4592abe10a142b6745ec01a957e0,
-        type: 2}
-      propertyPath: m_Colors.m_PressedColor.b
-      value: 0.1843137
+    - target: {fileID: 1541029840832158, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5f6c4592abe10a142b6745ec01a957e0, type: 2}
@@ -1668,7 +1594,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -2191,8 +2117,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 90}
-  m_SizeDelta: {x: 500, y: 60}
+  m_AnchoredPosition: {x: 0, y: 120}
+  m_SizeDelta: {x: 600, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1967412823
 MonoBehaviour:
@@ -2402,7 +2328,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_FontSize: 25
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
