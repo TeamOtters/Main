@@ -20,7 +20,7 @@ public class SnapPositionController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_positionsZ = new List<GameObject>();
-
+        //Populate();
         var snapablesCount = m_snapables.Length;
 
         for (int i = 0; i < snapablesCount; i++)
@@ -29,7 +29,23 @@ public class SnapPositionController : MonoBehaviour {
             m_positionsZ.Add(m_snapables[i].m_viking.gameObject);
         }       
     }
-	
+	/*
+    private void Populate ()
+    {
+        int players = 4;
+
+        for (int i = 0; i < players; i++)
+        {
+           var data = (PlayerData)FindObjectOfType(typeof(PlayerData));
+           var index = data.m_PlayerIndex;
+           if (index == i)
+           {
+                m_snapables[i].m_viking = data.gameObject.GetComponentInChildren<VikingController>().gameObject;
+                m_snapables[i].m_valkyrie = data.gameObject.GetComponentInChildren<ValkyrieController>().gameObject;
+            }
+        }
+    }*/
+
 	// Update is called once per frame
 	void Update ()
     {	

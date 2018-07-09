@@ -8,7 +8,8 @@ public class VikingController : MonoBehaviour {
     private CharacterController m_vikingcCharacterController;
     private VikingProjectiles m_vikingProjectiles;
     private PlayerData m_playerData;
-    public GameObject m_projectile;
+    public GameObject m_loadProjectile;
+    private GameObject m_currentProjectile;
     public GameObject m_hand;
 
     public float m_vikingMovementSpeed = 6.0F;
@@ -19,18 +20,24 @@ public class VikingController : MonoBehaviour {
     public float m_projectileForceX;
     public float m_projectileForceY;
     public float m_projectileSpeed;
+    public float m_projectileRetractTime;
 
     private float m_rapidFireSpeed = 0.2f;
     private bool m_fireCooldownOn;
+   // private int m_allowedAmmo = 1;
+    private int m_currentAmmo = 1;
+
     public bool m_isStunned;
     private bool m_isCarried;
     private bool m_collided;
     private bool m_turnedLeft;
+    private bool m_isRetracting;
 
     public float m_stunnedCoolDown = 1f;
 
     private int m_thisPlayerIndex;
     private string m_playerIndexString;
+
 
     // Use this for initialization
     void Start () {
@@ -42,6 +49,7 @@ public class VikingController : MonoBehaviour {
             m_thisPlayerIndex = m_playerData.m_PlayerIndex;
 
         m_playerIndexString = m_thisPlayerIndex.ToString();
+       
     }
 
     // Update is called once per frame
@@ -49,9 +57,28 @@ public class VikingController : MonoBehaviour {
     {
         if (!m_isStunned)
         {
-            VikingFire();
+            if (Input.GetButtonDown("Fire1_P" + m_playerIndexString))
+            {
+                if (m_currentAmmo != 0)
+                    VikingFire();
+                else if (m_currentAmmo == 0 && !m_isRetracting)
+                    RetractProjectile();
+            }
+
+
             VikingMovement();
+
         }
+        else
+        {
+            m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
+            m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
+        }
+
+        if(m_isRetracting)
+            ProjectileRetractingUpdate();
+
+      
 
         // Only do work if meaningful
         /*  if (vNewInput.sqrMagnitude < 0.1f)
@@ -60,6 +87,8 @@ public class VikingController : MonoBehaviour {
           }*/
   
     }
+
+
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -77,15 +106,17 @@ public class VikingController : MonoBehaviour {
         if (!m_vikingcCharacterController.isGrounded && !m_collided)
         {
             // how much the character should be knocked back
-            var magnitude = 5000;
+            var magnitude = 3;
             // calculate force vector
-            var force = transform.position - hit.transform.position;
+            //var force = transform.position - hit.transform.position;
             // normalize force vector to get direction only and trim magnitude
-            force.Normalize();
-            gameObject.GetComponent<Rigidbody>().AddForce(force * magnitude);
+            //force.Normalize();
+            //gameObject.GetComponent<Rigidbody>().AddForce(force * magnitude);
             m_collided = true;
-        }
 
+            m_vikingMoveDirection.y -= m_vikingGravityForce * magnitude *  Time.deltaTime;
+            m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -93,7 +124,14 @@ public class VikingController : MonoBehaviour {
         if(collision.gameObject.CompareTag("Projectile"))
         {
             if(collision.gameObject.GetComponent<ProjectileBehaviour>().m_playerID != m_thisPlayerIndex)
-             SetStunned();   
+             SetStunned();
+
+            if (collision.gameObject.GetComponent<ProjectileBehaviour>().m_hit == true)
+            {
+                //m_currentAmmo = 1;
+                //Destroy(collision.gameObject);
+                //m_currentProjectile = null;
+            }
         }
 
         if(collision.collider.CompareTag("Viking"))
@@ -142,42 +180,46 @@ public class VikingController : MonoBehaviour {
     {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
-
-        //Fire Projectile
-        if (Input.GetButtonDown("Fire1_P" + m_playerIndexString))
-        {
+        Debug.Log("Fire");
             if (m_fireCooldownOn)
                 return;
 
+ 
             //char.transform.eulerAngles = new vector3(char.transform.eulerAngles.x, Mathf.atan2(x, y) * Mathf.rad2deg, char.transform.eulerAngles.z);
 
             //Idle
-            else if (angle < 0.1)
+            if (angle < 0.1)
             {
 
                 if (m_turnedLeft)
                 {
-                    var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3(transform.position.x - 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
-                    //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                    projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(-m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed );
-                    projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
-                    projectile.GetComponent<SpriteRenderer>().flipX = false;
+                //if(m_projectile == null )
+                    var projectile = Instantiate(Resources.Load(m_loadProjectile.name, typeof(GameObject)), new Vector3(transform.position.x - 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
+                m_currentProjectile = projectile;
+                // m_projectile.SetActive(true);
+                //m_projectile.transform.position = new Vector3(transform.position.x - 1f, transform.position.y + 0.5f, transform.position.z);
+                //m_projectile.transform.rotation = transform.rotation;
+                m_currentProjectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+                m_currentProjectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(-m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed );
+                m_currentProjectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
+                m_currentProjectile.GetComponent<SpriteRenderer>().flipX = false;
 
-                    StartCoroutine("DestroyProjectileTimer", projectile);
                 }
 
                 else
                 {
-                    var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3(transform.position.x + 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
-                    //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                    projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed );
-                    projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
+                //if (m_projectile == null)
+                    var projectile = Instantiate(Resources.Load(m_loadProjectile.name, typeof(GameObject)), new Vector3(transform.position.x + 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
+                m_currentProjectile = projectile;
+                //  m_projectile.SetActive(true);
+                // m_projectile.transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 0.5f, transform.position.z);
+                //m_projectile.transform.rotation = transform.rotation;
+                m_currentProjectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+                m_currentProjectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed );
+                m_currentProjectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
 
-                    projectile.GetComponent<SpriteRenderer>().flipX = true;
+                m_currentProjectile.GetComponent<SpriteRenderer>().flipX = true;
 
-                    StartCoroutine("DestroyProjectileTimer", projectile);
                 }
             }
            /* //Up
@@ -193,7 +235,7 @@ public class VikingController : MonoBehaviour {
                 projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
 
 
-                StartCoroutine("DestroyProjectileTimer", projectile);
+              
 
                 //Debug.Log("Up");
                 //Debug.Log(angle);
@@ -202,30 +244,34 @@ public class VikingController : MonoBehaviour {
             //Right
             else if (Mathf.Clamp(angle, 10, 170) == angle)
             {
-                var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3(transform.position.x + 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
-                //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed);
-                //projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
-                
+            //  if (m_projectile == null)
+            var projectile = Instantiate(Resources.Load(m_loadProjectile.name, typeof(GameObject)), new Vector3(transform.position.x + 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
+            m_currentProjectile = projectile;
+            //m_projectile.SetActive(true);
+            // m_projectile.transform.position = new Vector3(transform.position.x + 1f, transform.position.y + 0.5f, transform.position.z);
+            //m_projectile.transform.rotation = transform.rotation;
+            m_currentProjectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+            m_currentProjectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed);
+            m_currentProjectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
 
-                projectile.GetComponent<SpriteRenderer>().flipX = true;
-                
-                StartCoroutine("DestroyProjectileTimer", projectile);
+            m_currentProjectile.GetComponent<SpriteRenderer>().flipX = true;
+               
             }
 
             //Left
             else if (Mathf.Clamp(angle, -170, -10) == angle)
             {
-                var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3(transform.position.x - 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
-                //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed);
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
-                projectile.GetComponent<SpriteRenderer>().flipX = false;
+            //if (m_projectile == null)
+             var projectile = Instantiate(Resources.Load(m_loadProjectile.name, typeof(GameObject)), new Vector3(transform.position.x - 1f, transform.position.y + 0.5f, transform.position.z), transform.rotation) as GameObject;
+            m_currentProjectile = projectile;
 
-                StartCoroutine("DestroyProjectileTimer", projectile);
+            // m_projectile.SetActive(true);
+            //m_projectile.transform.position = new Vector3(transform.position.x - 1f, transform.position.y + 0.5f, transform.position.z);
+           // m_currentProjectile.transform.rotation = transform.rotation;
+            m_currentProjectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+            m_currentProjectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed);
+            m_currentProjectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
+            m_currentProjectile.GetComponent<SpriteRenderer>().flipX = false;
             }
 
             //Down
@@ -234,18 +280,58 @@ public class VikingController : MonoBehaviour {
                 if (m_vikingcCharacterController.isGrounded)
                     return;
 
-                var projectile = Instantiate(Resources.Load(m_projectile.name, typeof(GameObject)), new Vector3(transform.position.x, transform.position.y - 2f, transform.position.z), transform.rotation) as GameObject;
-                // projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
-                projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
-                projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(0, m_projectileForceY * -1, 0) * m_projectileSpeed );
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
+            //if (m_projectile == null)
+            var projectile = Instantiate(Resources.Load(m_loadProjectile.name, typeof(GameObject)), new Vector3(transform.position.x, transform.position.y - 2f, transform.position.z), transform.rotation) as GameObject;
+            m_currentProjectile = projectile;
+            // m_projectile.SetActive(true);
+            //m_projectile.transform.position = new Vector3(transform.position.x, transform.position.y - 2f, transform.position.z);
+            //m_currentProjectile.transform.rotation = transform.rotation;
+            m_currentProjectile.transform.rotation = Quaternion.Euler(0, 0, 0);
+            m_currentProjectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(0, m_projectileForceY * -1, 0) * m_projectileSpeed );
+            m_currentProjectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
 
-                StartCoroutine("DestroyProjectileTimer", projectile);
             }
 
             m_fireCooldownOn = true;
             StartCoroutine("FireCoolDown");
+            m_currentAmmo = 0;
 
+
+    }
+
+
+    private void RetractProjectile ()
+    {
+        if (m_currentAmmo == 1)
+            return;
+
+        if (m_currentProjectile != null)
+            m_currentProjectile.GetComponent<ProjectileBehaviour>().EnableRagdoll();
+
+        m_currentProjectile.GetComponent<ProjectileBehaviour>().SetRetractingState(true);
+
+        m_isRetracting = true;
+
+    }
+
+    private void ProjectileRetractingUpdate ()
+    {
+        
+        m_currentProjectile.transform.position = Vector3.Lerp(m_currentProjectile.transform.position, transform.position, Time.deltaTime / m_projectileRetractTime);
+        // m_currentProjectile.transform.position = transform.position;
+
+
+
+        //ector3 move = new Vector3(0, target.y * m_panSpeed * Time.deltaTime, 0);
+
+        //transform.Translate(move, Space.World);
+
+        if (Mathf.Clamp(m_currentProjectile.transform.position.x, transform.position.x - 0.5f, transform.position.x + 0.5f) == m_currentProjectile.transform.position.x)
+        {
+            m_currentAmmo = 1;
+            m_currentProjectile.SetActive(false);
+            m_currentProjectile.GetComponent<ProjectileBehaviour>().SetRetractingState(false);
+            m_isRetracting = false;
         }
     }
 
@@ -294,21 +380,12 @@ public class VikingController : MonoBehaviour {
         m_fireCooldownOn = false;
     }
 
-    IEnumerator DestroyProjectileTimer(GameObject _objectToDestroy)
-    {
-        yield return new WaitForSeconds(5f);
-        DestroyProjectile(_objectToDestroy);
-    }
-
-    private void DestroyProjectile(GameObject _objectToDestroy)
-    {
-        if(_objectToDestroy != null)
-         Destroy(_objectToDestroy);
-    }
+    
 
     public void SetStunned ()
     {
         m_isStunned = true;
+        GetComponent<SpriteRenderer>().color = Color.white;
         Invoke("StunnedCooldown", m_stunnedCoolDown);
         Debug.Log("STUNNED");
     }
@@ -317,5 +394,6 @@ public class VikingController : MonoBehaviour {
     {
         Debug.Log("NotStunned!");
         m_isStunned = false;
+        GetComponent<SpriteRenderer>().color = Color.clear;
     }
 }

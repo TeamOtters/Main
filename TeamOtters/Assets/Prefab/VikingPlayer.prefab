@@ -68,9 +68,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1382873379161574}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.8000002, y: -1.82, z: 0}
+  m_LocalScale: {x: 0.15, y: 0.08, z: 0.15}
   m_Children:
   - {fileID: 4040573150492788}
   m_Father: {fileID: 0}
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2963b079c78755044b501a12bd5d51a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_projectile: {fileID: 1924454597101522, guid: 8787e24c271ab2b4cbf7713eebf44579,
+  m_loadProjectile: {fileID: 1924454597101522, guid: 8787e24c271ab2b4cbf7713eebf44579,
     type: 2}
   m_hand: {fileID: 0}
   m_vikingMovementSpeed: 15
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_projectileForceX: 36
   m_projectileForceY: 20
   m_projectileSpeed: 40
+  m_projectileRetractTime: 0.17
   m_isStunned: 0
   m_stunnedCoolDown: 1
 --- !u!114 &114606825063994654
@@ -181,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 10
+  m_immuneAfterDropDuration: 5
 --- !u!143 &143241035801321622
 CharacterController:
   m_ObjectHideFlags: 1

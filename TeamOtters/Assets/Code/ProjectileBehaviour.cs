@@ -8,9 +8,12 @@ public class ProjectileBehaviour : MonoBehaviour {
     private Collider m_collider;
     public int m_playerID;
     public float m_rotationSpeed;
-    private bool m_hit;
+    public bool m_hit;
     public int m_projectileDamage = 10;
+    private bool m_retracting;
     public PlayerData m_playerData;
+    private int m_platformLayer;
+
 
     // Use this for initialization
     void Start ()
@@ -20,6 +23,8 @@ public class ProjectileBehaviour : MonoBehaviour {
         EnableRagdoll();
         m_playerID = m_playerData.m_PlayerIndex;
 
+        m_platformLayer = LayerMask.GetMask("Platform");
+
     }
 
     private void Update()
@@ -28,11 +33,21 @@ public class ProjectileBehaviour : MonoBehaviour {
         if(!m_hit)
             transform.Rotate(0, 0, m_rotationSpeed * Time.deltaTime, Space.Self);
 
+        
     }
     
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(m_retracting)
+        {
+            if (collision.collider.gameObject.layer == m_platformLayer)
+            {
+                Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
+            }
+        }
+            
+
         if (!collision.collider.CompareTag("Viking") && !collision.collider.CompareTag("Valkyrie"))
         {
             DisableRagdoll();
@@ -68,25 +83,40 @@ public class ProjectileBehaviour : MonoBehaviour {
                 Debug.Log("Coouldn't find PlayerData");
         }
     }
-    
-    private void EnableRagdoll()
+
+    public void EnableRagdoll()
     {
         if (m_rigidBody != null)
         {
             m_rigidBody.isKinematic = false;
             m_rigidBody.detectCollisions = true;
+            m_collider.enabled = true;
+            m_hit = false;
+
         }
     }
-     private void DisableRagdoll()
+     public void DisableRagdoll()
     {
-        if (m_rigidBody != null)
+        if (m_rigidBody != null && !m_retracting)
         {
             m_rigidBody.isKinematic = true;
             m_rigidBody.detectCollisions = false;
+            // StartCoroutine("DestroyProjectileTimer");
+            m_collider.enabled = false;
             
-            Destroy(m_collider);
             m_hit = true;
         }
+    }
+
+    IEnumerator DestroyProjectileTimer()
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(this.gameObject);
+    }
+
+    public void SetRetractingState (bool enable)
+    {
+        m_retracting = enable;
     }
 
 }
