@@ -214,7 +214,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 10
-  m_carryLocation: {fileID: 1708092526}
 --- !u!54 &272697377
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -274,6 +273,11 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1515334054}
+    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: cameraHolder
+      value: 
+      objectReference: {fileID: 1360327231}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
@@ -529,11 +533,6 @@ Transform:
 --- !u!1 &1515334054 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1587183965728436, guid: e96b6e6682fb85941bf26c9dbf3a4296,
-    type: 2}
-  m_PrefabInternal: {fileID: 1892283437}
---- !u!4 &1708092526 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4114654027071248, guid: e96b6e6682fb85941bf26c9dbf3a4296,
     type: 2}
   m_PrefabInternal: {fileID: 1892283437}
 --- !u!1 &1863686007
