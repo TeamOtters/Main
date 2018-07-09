@@ -37,7 +37,7 @@ public class PhaseManager : MonoBehaviour {
 	void Update ()
     {
         // this should be the condition for phase 2 switch - e.g. the ball health
-		if(Input.GetKeyDown(KeyCode.Mouse0))
+		if(Input.GetKeyDown(KeyCode.P))
         {
             PhaseTwoSetup();
         }
