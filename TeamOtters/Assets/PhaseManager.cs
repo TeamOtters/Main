@@ -7,11 +7,18 @@ public class PhaseManager : MonoBehaviour {
 
     public bool m_isInPhaseOne = true;
     public PlayerData[] m_players;
-    public List<int> m_playerScores;
+    private List<int> m_playerScores = new List<int>();
+    public float m_phase2Duration = 10f;
 
 	void Start ()
     {
-        
+        //hard coded to 4 atm, if we have a dynamic number of players this might need to change
+        m_playerScores.Add(0);
+        m_playerScores.Add(0);
+        m_playerScores.Add(0);
+        m_playerScores.Add(0);
+
+        //allows the devs to set the starting phase
         if (m_isInPhaseOne == true)
         {
             PhaseOneSetup();
@@ -21,22 +28,25 @@ public class PhaseManager : MonoBehaviour {
             PhaseTwoSetup();
         }
         
+        
 	}
 	
 
 	void Update ()
     {
+        // this should be the condition for phase 2 switch - e.g. the ball health
 		if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             PhaseTwoSetup();
         }
 	}
 
-    // Set all characters to viking
+    // Phase one logic should be contained here
     void PhaseOneSetup()
     {
         foreach(PlayerData player in m_players)
         {
+            //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
             var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
             if (mySwitchScript!=null)
             {
@@ -51,7 +61,14 @@ public class PhaseManager : MonoBehaviour {
         //Adds the current score of the players to the score list
         for (int i = 0; i < m_players.Length; i++)
         {
-            m_playerScores[i] = m_players[i].m_CurrentScore;
+            if (m_playerScores != null && i <= m_playerScores.Count)
+            {
+                m_playerScores[i] = m_players[i].m_CurrentScore;
+            }
+            else
+            {
+                Debug.Log("Cannot find player score list!");
+            }
 
         }
         //local variables to keep track of the highest scores and corresponding indexes
@@ -79,17 +96,30 @@ public class PhaseManager : MonoBehaviour {
             }
         }
 
-        Debug.Log("Highest value is " + highest + "with index " + highestIndex + ". Second highest value is " + second + "with index " + secondIndex);
-
         //for each player, if they are the "highest" or "second highest" index, they should change to valkyries
-        foreach(PlayerData player in m_players)
+        foreach (PlayerData player in m_players)
         {
+            //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
             if (player.m_PlayerIndex == highestIndex || player.m_PlayerIndex == secondIndex)
             {
-                player.GetComponent<VikingValkyrieSwitch>().SwitchToValkyrie();
-                Debug.Log(player.m_PlayerIndex);
+                var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
+                if (mySwitchScript != null)
+                {
+                    mySwitchScript.SwitchToValkyrie();
+                }
             }
         }
+
+        StartCoroutine(PhaseTwoDuration(m_phase2Duration));
+
+
+    }
+
+    //Sets the game state back to phase one after a limited time
+    IEnumerator PhaseTwoDuration(float phaseDuration)
+    {
+        yield return new WaitForSeconds(phaseDuration);
+        PhaseOneSetup();
     }
    
 }
