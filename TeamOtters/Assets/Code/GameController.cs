@@ -16,6 +16,8 @@ public class GameController : MonoBehaviour
     public int firstReachGoal = 10;
     public int hitOpponent = 10;
 
+    public float snapGridZ = 0f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -30,6 +32,8 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+   
 
     // Menu scene swap logic here? Check out https://www.youtube.com/watch?v=CPKAgyp8cno
 }
