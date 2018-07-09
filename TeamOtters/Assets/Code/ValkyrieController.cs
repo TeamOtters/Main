@@ -8,9 +8,10 @@ public class ValkyrieController : MonoBehaviour {
     public float m_flightForce;
 
     internal bool isCarrying;
-    internal Rigidbody heldCharacter;
+    internal Rigidbody heldRigidbody;
+    internal int heldPlayerIndex;
 
-    private int m_playerIndex;
+    internal int m_playerIndex;
     private Rigidbody m_player;
     private Vector3 m_playerSize;
     private Vector3 m_heldCharacterSize;
@@ -31,7 +32,7 @@ public class ValkyrieController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
         Debug.Log(m_boundaryHolder.gameObject.name);
 
@@ -40,26 +41,47 @@ public class ValkyrieController : MonoBehaviour {
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
         m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
 
-        //Debug.Log("Boundary Bottom: " + m_bottomBounds + " should be Down. The boundaryHolder's value for down is: " + m_boundaryHolder.playerBoundary.Down);
-        //Debug.Log("Boundary Top: " + m_topBounds + " should be Up. The boundaryHolder's value for up is: " + m_boundaryHolder.playerBoundary.Up);
-        //Debug.Log("Boundary Left: " + m_leftBounds + " should be Left. The boundaryHolder's value for left is: " + m_boundaryHolder.playerBoundary.Left);
-        //Debug.Log("Boundary Right: " + m_rightBounds + " should be Right. The boundaryHolder's value for right is: " + m_boundaryHolder.playerBoundary.Right);
+        Debug.Log("Boundary Bottom: " + m_bottomBounds + " should be Down. The boundaryHolder's value for down is: " + m_boundaryHolder.playerBoundary.Down);
+        Debug.Log("Boundary Top: " + m_topBounds + " should be Up. The boundaryHolder's value for up is: " + m_boundaryHolder.playerBoundary.Up);
+        Debug.Log("Boundary Left: " + m_leftBounds + " should be Left. The boundaryHolder's value for left is: " + m_boundaryHolder.playerBoundary.Left);
+        Debug.Log("Boundary Right: " + m_rightBounds + " should be Right. The boundaryHolder's value for right is: " + m_boundaryHolder.playerBoundary.Right);
+    }
 
+    private void FixedUpdate()
+    {
         // Basic movement input
         var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
-        float y;
+        var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
 
+        Rigidbody[] myRigidbodies = GetComponents<Rigidbody>();
         // Flight movement input
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
         {
-            y = 0;
-            GetComponent<Rigidbody>().AddForce(Vector2.up * m_flightForce);            
+            Debug.Log("Valkyrie Jump");
+            foreach (Rigidbody rigidbody in myRigidbodies)
+            {
+                rigidbody.AddForce(Vector2.up * m_flightForce);
+            }
+           
         }
-        else
+        if (Input.GetButtonDown("Fire2"))
         {
-            y = Mathf.Clamp(Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime, 0, 1);
+            if (heldRigidbody != null)
+            {
+                DropPickup();
+            }
         }
-        
+
+
+        // Move
+        //transform.Translate(x, y, transform.position.z);	
+        Vector3 movement = new Vector3(x, y, 0f);
+        foreach (Rigidbody rigidbody in myRigidbodies)
+        {
+            rigidbody.AddForce(movement * m_speed);
+
+        }
+
         // Clamp movement
         if (transform.position.x < m_leftBounds)
         {
@@ -81,8 +103,58 @@ public class ValkyrieController : MonoBehaviour {
             Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
         }
-        
-        // Move
-        transform.Translate(x, y, transform.position.z);		
+
     }
+    private void DropPickup()
+    {
+        // Set the valkyrie to not be isCarrying
+        heldRigidbody.GetComponent<DetectPickup>().DropCarryable();
+        isCarrying = false;
+        heldRigidbody = null;
+        heldPlayerIndex = 0;
+
+    }
+    /*
+    // Basic movement input
+    var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
+    float y;
+
+    // Flight movement input
+    if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
+    {
+        y = 0;
+        GetComponent<Rigidbody>().AddForce(Vector2.up * m_flightForce);
+    }
+    else
+    {
+        y = Mathf.Clamp(Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime, 0, 1);
+    }
+
+    // Clamp movement
+    if (transform.position.x < m_leftBounds)
+    {
+        Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
+        transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
+    }
+    if (transform.position.x > m_rightBounds)
+    {
+        Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
+        transform.position = new Vector3(m_boundaryHolder.playerBoundary.Right - m_playerSize.x, transform.position.y, transform.position.z);
+    }
+    if (transform.position.y < m_bottomBounds)
+    {
+        Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
+        transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
+    }
+    if (transform.position.y > m_topBounds)
+    {
+        Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
+        transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
+    }
+
+    // Move
+    transform.Translate(x, y, transform.position.z);
+    */
 }
+   
+
