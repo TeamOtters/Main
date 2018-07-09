@@ -33,22 +33,12 @@ public class BouncingBall : MonoBehaviour
     {
         m_health = m_startHealth;
 
+        //Calculation for making the ball stay within camera view. 
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_ballSize = GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents;
-
         Debug.Log(GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents);
 
-        int directionX = Random.Range(-1, 2);
-        int directionY = Random.Range(-1, 2);
-
-        if (directionX == 0)
-        {
-            directionX = 1;
-        }
-
-        rb.velocity = new Vector2(0f, 0f);
-        rb.velocity = new Vector2(6f * directionX, 6f * directionY);
-
+        rb.AddForce(m_XBounceSpeed, m_YBounceSpeed, 0 * Time.deltaTime);
 
         //StartCoroutine(Pause());
     }
@@ -74,34 +64,34 @@ public class BouncingBall : MonoBehaviour
             //Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
             transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
             Debug.Log("Hitting left");
-            rb.AddForce(m_XBounceSpeed,  m_YBounceSpeed, 0 * Time.deltaTime);
+            rb.AddForce((m_XBounceSpeed * 5), 0, 0 * Time.deltaTime);
         }
         if (transform.position.x > m_rightBounds)
         {
           //  Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
             transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
             Debug.Log("Hitting right");
-            rb.AddForce(-m_XBounceSpeed, 0, 0 * Time.deltaTime);
+            rb.AddForce((-m_XBounceSpeed*5),0, 0 * Time.deltaTime);
         }
         if (transform.position.y < m_bottomBounds)
         {
             //Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
             Debug.Log("Hitting bottom");
-           rb.AddForce(Random.Range(-m_XBounceSpeed, m_XBounceSpeed), m_YBounceSpeed, 0 * Time.deltaTime);
+            rb.AddForce(0,(m_YBounceSpeed * 5), 0 * Time.deltaTime);
         }
         if (transform.position.y > m_topBounds)
         {
             //Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
             Debug.Log("Hitting top");
-            rb.AddForce(m_XBounceSpeed, Random.Range(-m_YBounceSpeed, m_YBounceSpeed), 0 * Time.deltaTime);
+            rb.AddForce(0,(-m_YBounceSpeed * 5), 0 * Time.deltaTime);
         }
     }
 
     void OnCollisionEnter(Collision collisionInfo)
      {
-
+        Debug.Log("This is collider: " + collisionInfo.gameObject.name);
         rb.AddForce(m_XBounceSpeed, m_YBounceSpeed, 0 * Time.deltaTime);
 
         /*if (collisionInfo.gameObject.CompareTag("Projectile"))
