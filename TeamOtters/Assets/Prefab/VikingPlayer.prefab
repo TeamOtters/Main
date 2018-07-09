@@ -160,12 +160,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_projectile: {fileID: 1924454597101522, guid: 8787e24c271ab2b4cbf7713eebf44579,
     type: 2}
-  m_hand: {fileID: 1657883677834934}
+  m_hand: {fileID: 0}
   m_vikingMovementSpeed: 15
   m_vikingJumpSpeed: 19
   m_vikingGravityForce: 50
-  m_projectileForceX: 30
-  m_projectileForceY: 8
+  m_projectileForceX: 36
+  m_projectileForceY: 20
   m_projectileSpeed: 40
   m_isStunned: 0
   m_stunnedCoolDown: 1
