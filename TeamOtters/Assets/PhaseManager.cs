@@ -109,11 +109,13 @@ public class PhaseManager : MonoBehaviour {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
                 {
-                    //CameraShaker.Instance.ShakeOnce(4f, 4.5f, 2.5f, 3f);
+                    CameraShaker.Instance.ShakeOnce(4f, 4.5f, 2.5f, 3f);                    
+
                     mySwitchScript.SwitchToValkyrie();
                 }
             }
         }
+
 
         StartCoroutine(PhaseTwoDuration(m_phase2Duration));
 
@@ -123,6 +125,8 @@ public class PhaseManager : MonoBehaviour {
     //Sets the game state back to phase one after a limited time
     IEnumerator PhaseTwoDuration(float phaseDuration)
     {
+        GameController.Instance.cameraManager.SetRaceState(true);
+
         yield return new WaitForSeconds(phaseDuration);
         PhaseOneSetup();
     }

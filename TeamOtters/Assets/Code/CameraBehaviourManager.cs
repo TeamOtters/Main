@@ -1,18 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class CameraBehaviourManager : MonoBehaviour {
 
-    public bool m_valkyrieRaceState;
+    [SerializeField]
+    private bool m_valkyrieRaceState;
+
     public float m_panSpeed = 0.1f;
-    public GameObject m_endPanTarget;
+    public GameObject m_endPanTarget;  
    
 
 	// Use this for initialization
 	void Start () {
 		
 	}
+
+    public void SetRaceState (bool enable)
+    {
+        m_valkyrieRaceState = enable;
+    }
 	
 	// Update is called once per frame
 	void LateUpdate () {

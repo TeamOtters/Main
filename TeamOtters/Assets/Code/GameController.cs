@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public BoundaryHolder boundaryHolder;
     public GameObject player;
     public PhaseManager phaseManager;
-    public GameObject cameraHolder;
+    public CameraBehaviourManager cameraManager;
 
     public int bounceHit = 10;
     public int firstReachGoal = 10;
