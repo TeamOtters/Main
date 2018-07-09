@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class BouncingBall : MonoBehaviour
 {
@@ -16,9 +17,8 @@ public class BouncingBall : MonoBehaviour
 
     public GameController m_gameController;
 
+    //get right score for hitting ball
     private int m_bouncePoints;
-    private int m_goalPoints;
-    private int m_opponentPoints;
 
     //Image used for decreasing healthbar. Might not be used in final game.
     public Image m_healthBar;
@@ -26,11 +26,10 @@ public class BouncingBall : MonoBehaviour
     void Start()
     {
         m_bouncePoints = m_gameController.bounceHit;
-        m_goalPoints = m_gameController.firstReachGoal;
-        m_opponentPoints = m_gameController.hitOpponent;
 
-        rb.velocity = new Vector2(m_XBounceSpeed, m_YBounceSpeed);
         m_health = m_startHealth;
+
+        StartCoroutine(Pause());
     }
 
     void OnCollisionEnter(Collision collisionInfo)
@@ -64,5 +63,24 @@ public class BouncingBall : MonoBehaviour
         {
            gameObject.SetActive (false);
         }
+    }
+
+    IEnumerator Pause()
+    {
+
+        //Sends the ball off in a random direction
+        int directionX = Random.Range(-1, 2);
+        int directionY = Random.Range(-1, 2);
+
+        if (directionX ==0)
+        {
+            directionX = 1;
+        }
+
+        rb.velocity = new Vector2(0f, 0f);
+
+        //Makes ball oause for 1 sec before starting to move.
+        yield return new WaitForSeconds(1);
+        rb.velocity = new Vector2(6f * directionX, 6f * directionY);
     }
 }
