@@ -47,6 +47,12 @@ public class BouncingBall : MonoBehaviour
 
         }
 
+        //Stun player. Calls temporary Stunned script.
+        if (collisionInfo.gameObject.CompareTag("Player"))
+        {
+            collisionInfo.gameObject.GetComponent<Stunned>().GetStunned();
+        }
+
         else
         {
             Debug.Log("didn't hit but hit "+ collisionInfo.gameObject.tag);
