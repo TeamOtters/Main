@@ -121,6 +121,21 @@ public class VikingController : MonoBehaviour {
     public void SetCarried (bool enable)
     {
         m_isCarried = enable;
+        if(m_isCarried)
+        {
+            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            gameObject.GetComponent<Rigidbody>().useGravity = false;
+            gameObject.GetComponent<Rigidbody>().detectCollisions = false;
+            gameObject.GetComponent<CharacterController>().enabled = false;
+        }
+        else
+        {
+            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            gameObject.GetComponent<Rigidbody>().useGravity = true;
+            gameObject.GetComponent<Rigidbody>().detectCollisions = true;
+            gameObject.GetComponent<CharacterController>().enabled = true;
+        }
+        
     }
 
     private void VikingFire ()

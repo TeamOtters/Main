@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class PhaseManager : MonoBehaviour {
 
     public bool m_isInPhaseOne = true;
+    public bool m_startInPhaseOne = true;
     public PlayerData[] m_players;
     private List<int> m_playerScores = new List<int>();
     public float m_phase2Duration = 10f;
@@ -19,7 +21,7 @@ public class PhaseManager : MonoBehaviour {
         m_playerScores.Add(0);
 
         //allows the devs to set the starting phase
-        if (m_isInPhaseOne == true)
+        if (m_startInPhaseOne == true)
         {
             PhaseOneSetup();
         }
@@ -44,11 +46,12 @@ public class PhaseManager : MonoBehaviour {
     // Phase one logic should be contained here
     void PhaseOneSetup()
     {
+        m_isInPhaseOne = true;
         foreach(PlayerData player in m_players)
         {
             //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
             var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
-            if (mySwitchScript!=null)
+            if (mySwitchScript!=null && mySwitchScript.m_startViking == true)
             {
                 mySwitchScript.SwitchToViking();
             }
@@ -58,6 +61,7 @@ public class PhaseManager : MonoBehaviour {
     //Set the two characters with highest score to Valkyries
     void PhaseTwoSetup()
     {
+        m_isInPhaseOne = false;
         //Adds the current score of the players to the score list
         for (int i = 0; i < m_players.Length; i++)
         {
@@ -105,6 +109,7 @@ public class PhaseManager : MonoBehaviour {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
                 {
+                    CameraShaker.Instance.ShakeOnce(4f, 4.5f, 2.5f, 3f);
                     mySwitchScript.SwitchToValkyrie();
                 }
             }

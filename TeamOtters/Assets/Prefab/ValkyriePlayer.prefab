@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4483917148124028}
+  - component: {fileID: 114260764906701194}
   m_Layer: 0
   m_Name: carryLocation
   m_TagString: Untagged
@@ -39,6 +40,7 @@ GameObject:
   - component: {fileID: 114184967774371322}
   - component: {fileID: 54945505741322880}
   - component: {fileID: 65828799121857528}
+  - component: {fileID: 65322152663575944}
   m_Layer: 0
   m_Name: ValkyriePlayer
   m_TagString: Valkyrie
@@ -88,7 +90,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 2
---- !u!65 &65828799121857528
+--- !u!65 &65322152663575944
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -98,7 +100,19 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.28, y: 0.93538404, z: 0.2}
+  m_Size: {x: 1.28, y: 1.28, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65828799121857528
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1624163314470624}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 1.5, z: 0.3}
   m_Center: {x: 0, y: 0.03745842, z: 0}
 --- !u!95 &95293270518704256
 Animator:
@@ -129,8 +143,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c714c97d1a325bc48a27fae2760e7714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 2
+  m_speed: 20
   m_flightForce: 300
+--- !u!114 &114260764906701194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1054020114837126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92eb9a76ecb1bc946a62b8da49d5c07b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212718005720008498
 SpriteRenderer:
   m_ObjectHideFlags: 1
