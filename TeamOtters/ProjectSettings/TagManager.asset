@@ -9,6 +9,8 @@ TagManager:
   - Viking
   - Floor
   - Valkyrie
+  - BouncingBall
+  - Axe
   layers:
   - Default
   - TransparentFX
