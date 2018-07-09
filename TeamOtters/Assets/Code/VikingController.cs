@@ -23,6 +23,7 @@ public class VikingController : MonoBehaviour {
     private float m_rapidFireSpeed = 0.2f;
     private bool m_fireCooldownOn;
     public bool m_isStunned;
+    private bool m_isCarried;
 
     public float m_stunnedCoolDown = 1f;
 
@@ -79,6 +80,11 @@ public class VikingController : MonoBehaviour {
         {
            Physics.IgnoreCollision(GetComponent<Collider>(),collision.collider, true);
         }
+    }
+
+    public void SetCarried (bool enable)
+    {
+        m_isCarried = enable;
     }
 
     private void VikingFire ()
@@ -184,7 +190,7 @@ public class VikingController : MonoBehaviour {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
 
-        if (m_vikingcCharacterController.isGrounded)
+        if (m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
             m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), 0, 0);
             m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
