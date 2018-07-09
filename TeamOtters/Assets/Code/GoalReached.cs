@@ -1,8 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+
 
 public class GoalReached : MonoBehaviour {
+    public Canvas m_Results;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +20,7 @@ public class GoalReached : MonoBehaviour {
         {
             int ID = player.gameObject.GetComponent<ValkyrieController>().m_playerIndex;
             Debug.Log("PLAYER " + ID + " YOU WIN!!!");
+            m_Results.gameObject.SetActive(true);
 
         }
 
