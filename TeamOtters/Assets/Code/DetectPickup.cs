@@ -8,6 +8,7 @@ public class DetectPickup : MonoBehaviour {
     public Transform m_carryLocation; // this is an empty gameobject childed under the Valkyrie, the character will be carried on this position
 
     private string m_collisionTag;
+    private ValkyrieController m_valkyrie;
 
     Transform m_currentCarryable = null;
 
@@ -31,6 +32,9 @@ public class DetectPickup : MonoBehaviour {
 
                 // release reference
                 m_currentCarryable = null;
+
+                // Set the valkyrie to not be isCarrying
+                m_valkyrie.isCarrying = false;
             }
         }
     }
@@ -44,6 +48,8 @@ public class DetectPickup : MonoBehaviour {
         // pickup if it has tag "Valkyrie" and we are not carrying anything
         if (m_collisionTag == "Valkyrie" && m_currentCarryable == null)
         {
+            m_valkyrie = other.gameObject.GetComponent<ValkyrieController>();
+
             // take reference to that collided object
             m_currentCarryable = transform;
 
@@ -52,10 +58,16 @@ public class DetectPickup : MonoBehaviour {
 
             // make it as a child of player, so it moves along with player
             m_currentCarryable.parent = m_carryLocation.transform;
+
+            // Give the valkyrie the rigidbody of the viking
+            m_valkyrie.heldCharacter = GetComponentInParent<Rigidbody>();
+
+            // Set the valkyrie to the isCarrying state
+            m_valkyrie.isCarrying = true;
         }
         else
         {
-            Debug.Log("Collided with: " + m_collisionTag);
+            Debug.Log("Collided with: " + m_collisionTag + " which isn't a Valkyrie");
         }
     }
 }

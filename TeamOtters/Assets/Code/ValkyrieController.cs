@@ -8,17 +8,20 @@ public class ValkyrieController : MonoBehaviour {
     public float m_flightForce = 300;
     public GameController m_gameController;
 
-    private int m_playerIndex;
-    private Rigidbody m_character;
-    private BoundaryHolder m_boundaryHolder;
-    private Vector3 m_playerSize;
+    internal bool isCarrying;
+    internal Rigidbody heldCharacter;
 
+    private int m_playerIndex;
+    private Rigidbody m_player;
+    private Vector3 m_playerSize;
+    private Vector3 m_heldCharacterSize;
+    private BoundaryHolder m_boundaryHolder;
 
     // Use this for initialization
     void Start ()
     {
         m_playerIndex          = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
-        m_character            = GetComponent<Rigidbody>();
+        m_player               = GetComponent<Rigidbody>();
         m_boundaryHolder       = m_gameController.boundaryHolder;
         m_playerSize           = GetComponent<SpriteRenderer>().bounds.extents;
     }

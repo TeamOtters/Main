@@ -28,12 +28,12 @@ public class BoundaryHolder : MonoBehaviour
         m_camera = Camera.main;
         m_character = m_gameController.player.GetComponentInChildren<Rigidbody>();
 
-        var dist = (m_character.transform.position - Camera.main.transform.position).z;
+        var dist = (m_character.transform.position - m_camera.transform.position).z;
 
-        playerBoundary = new Boundary(Camera.main.ViewportToWorldPoint(new Vector3(0, 0, dist)).y,  //down
-                                      Camera.main.ViewportToWorldPoint(new Vector3(0, 1, dist)).y,  //up
-                                      Camera.main.ViewportToWorldPoint(new Vector3(0, 0, dist)).x,  //left
-                                      Camera.main.ViewportToWorldPoint(new Vector3(1, 0, dist)).x); //right  
+        playerBoundary = new Boundary(m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).y,  //down
+                                      m_camera.ViewportToWorldPoint(new Vector3(0, 1, dist)).y,  //up
+                                      m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x,  //left
+                                      m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x); //right  
 
         //Debug.Log("Boundary Index 0: " + playerBoundary.Down + " should be Down");
         //Debug.Log("Boundary Index 1: " + playerBoundary.Up + " should be Up");
