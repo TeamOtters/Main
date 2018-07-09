@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4865957438720640}
-  - component: {fileID: 54948285107146848}
   - component: {fileID: 114123956633586850}
   - component: {fileID: 212415014928112364}
   - component: {fileID: 143241035801321622}
+  - component: {fileID: 54829936284017244}
   m_Layer: 0
   m_Name: VikingPlayer
   m_TagString: Viking
@@ -117,7 +117,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1657883677834934}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54948285107146848
+--- !u!54 &54829936284017244
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -130,7 +130,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 72
+  m_Constraints: 104
   m_CollisionDetection: 0
 --- !u!64 &64167914833648530
 MeshCollider:

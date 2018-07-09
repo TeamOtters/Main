@@ -29,15 +29,18 @@ public class BouncingBall : MonoBehaviour
 
         m_health = m_startHealth;
 
-        StartCoroutine(Pause());
+        //StartCoroutine(Pause());
     }
 
     void OnCollisionEnter(Collision collisionInfo)
      {
-        if (collisionInfo.gameObject.CompareTag("Axe"))
+
+        rb.AddForce(m_XBounceSpeed, m_YBounceSpeed, 0 * Time.deltaTime);
+
+        /*if (collisionInfo.gameObject.CompareTag("Projectile"))
         {
             Debug.Log(collisionInfo.gameObject.tag);
-            rb.AddForce(0, 200, 0 * Time.deltaTime);
+            //rb.AddForce(0, 200, 0 * Time.deltaTime);
 
             //Collects the players index number. 
            // int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
@@ -45,12 +48,12 @@ public class BouncingBall : MonoBehaviour
             //Adds 10 points to the player when hitting ball. 
           //  collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore += m_bouncePoints;
 
-        }
+        }*/
 
         //Stun player. Calls temporary Stunned script.
-        if (collisionInfo.gameObject.CompareTag("Player"))
+        if (collisionInfo.gameObject.CompareTag("Player") || collisionInfo.gameObject.CompareTag("Viking"))
         {
-            collisionInfo.gameObject.GetComponent<Stunned>().GetStunned();
+            collisionInfo.gameObject.GetComponent<VikingController>().SetStunned();
         }
 
         else

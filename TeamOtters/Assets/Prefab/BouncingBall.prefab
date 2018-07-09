@@ -56,8 +56,8 @@ GameObject:
   - component: {fileID: 4552988314497618}
   - component: {fileID: 212228971326242184}
   - component: {fileID: 114922378335886312}
-  - component: {fileID: 135957345531870444}
-  - component: {fileID: 54364957211304194}
+  - component: {fileID: 54988108636432478}
+  - component: {fileID: 135014215002751272}
   m_Layer: 0
   m_Name: BouncingBall
   m_TagString: BouncingBall
@@ -89,14 +89,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173794344469006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.007, y: 0.714, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224246460596369152}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &54364957211304194
+--- !u!54 &54988108636432478
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -105,11 +105,11 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!114 &114015992664390708
 MonoBehaviour:
@@ -186,10 +186,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8b343169717d54285d5861697569e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 54364957211304194}
-  m_XBounceSpeed: 4
-  m_YBounceSpeed: 4
+  rb: {fileID: 54988108636432478}
+  m_XBounceSpeed: 200
+  m_YBounceSpeed: 200
   m_startHealth: 100
+  m_gameController: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
+    type: 2}
   m_healthBar: {fileID: 114171429578610716}
 --- !u!114 &114998900373305518
 MonoBehaviour:
@@ -218,7 +220,7 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!135 &135957345531870444
+--- !u!135 &135014215002751272
 SphereCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

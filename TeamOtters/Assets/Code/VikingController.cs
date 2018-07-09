@@ -107,9 +107,10 @@ public class VikingController : MonoBehaviour {
                 //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
                 projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
                 projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed * m_projectileForceY);
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+               // projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
 
-               
+
                 StartCoroutine("DestroyProjectileTimer", projectile);
 
                 //Debug.Log("Up");
@@ -123,7 +124,9 @@ public class VikingController : MonoBehaviour {
                 //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
                 projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
                 projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed);
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+                //projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
+                
 
                 projectile.GetComponent<SpriteRenderer>().flipX = true;
                 
@@ -140,7 +143,8 @@ public class VikingController : MonoBehaviour {
                 //projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
                 projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
                 projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(angle, m_projectileForceY, 0) * m_projectileSpeed);
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+                //projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
                 projectile.GetComponent<SpriteRenderer>().flipX = false;
 
                
@@ -160,8 +164,9 @@ public class VikingController : MonoBehaviour {
                 // projectile.transform.rotation = Quaternion.Euler(angle, 0, 0);
                 projectile.transform.rotation = Quaternion.Euler(0, 0, 0);
                 projectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(0, m_projectileForceY * -1, 0) * m_projectileSpeed * m_projectileForceY);
-                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
-                
+                //projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerID = m_thisPlayerIndex;
+                projectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
+
                 //  Debug.Log("Down");
                 // Debug.Log(angle);
 

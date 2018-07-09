@@ -9,6 +9,8 @@ public class ProjectileBehaviour : MonoBehaviour {
     public int m_playerID;
     public float m_rotationSpeed;
     private bool m_hit;
+    public int m_projectileDamage = 10;
+    public PlayerData m_playerData;
 
     // Use this for initialization
     void Start ()
@@ -16,6 +18,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         m_rigidBody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
         EnableRagdoll();
+        m_playerID = m_playerData.m_PlayerIndex;
 
     }
 
@@ -46,6 +49,23 @@ public class ProjectileBehaviour : MonoBehaviour {
         if(collision.collider.CompareTag("Scoreable"))
         {
             Debug.Log("CollectScore!");
+        }
+
+        if (collision.collider.CompareTag("BouncingBall"))
+        {
+            Debug.Log("damage dealt");
+
+            //Calling script on BouncingBall to drain HP
+            collision.gameObject.GetComponent<BouncingBall>().TakeDamage(m_projectileDamage);
+
+            if (m_playerData != null)
+            {
+                m_playerData.SendMessage("AddToScore", 5);
+                
+            }
+
+            if (m_playerData == null)
+                Debug.Log("Coouldn't find PlayerData");
         }
     }
     

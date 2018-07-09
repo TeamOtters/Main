@@ -10,6 +10,8 @@ public class PlayerData : MonoBehaviour
     public int m_CurrentScore = 0;
     public Text scoreText;
 
+    private int m_otherPlayerIndex;
+
     // Use this for initialization
     void Start()
     { 	
@@ -20,6 +22,8 @@ public class PlayerData : MonoBehaviour
     {
         scoreText.text = m_CurrentScore.ToString();
 	}
+
+  
 
     void AddToScore(int points)
     {
