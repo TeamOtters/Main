@@ -35,13 +35,16 @@ public class DetectPickup : MonoBehaviour {
 
                 // Set the valkyrie to not be isCarrying
                 m_valkyrie.isCarrying = false;
+
+                // Turn back on the movement of the viking
+                gameObject.GetComponent<VikingController>().enabled = true;
             }
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
+        Debug.Log("Viking is colliding with" + other.gameObject.tag);
 
         m_collisionTag = other.gameObject.tag;   
     
@@ -50,6 +53,9 @@ public class DetectPickup : MonoBehaviour {
         {
             m_valkyrie = other.gameObject.GetComponent<ValkyrieController>();
 
+            //find the object within the colliding valkyrie with the "CarryLocation" tag and assign it as the carry location.
+            m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren<CarryLocation>().gameObject.transform;
+
             // take reference to that collided object
             m_currentCarryable = transform;
 
@@ -57,13 +63,16 @@ public class DetectPickup : MonoBehaviour {
             m_currentCarryable.position = m_carryLocation.position;
 
             // make it as a child of player, so it moves along with player
-            m_currentCarryable.parent = m_carryLocation.transform;
+            m_currentCarryable.transform.parent = m_carryLocation.transform;
 
             // Give the valkyrie the rigidbody of the viking
             m_valkyrie.heldCharacter = GetComponentInParent<Rigidbody>();
 
             // Set the valkyrie to the isCarrying state
             m_valkyrie.isCarrying = true;
+
+            // Turn off the movement of the viking for now
+            gameObject.GetComponent<VikingController>().enabled = false;
         }
         else
         {

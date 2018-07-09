@@ -49,7 +49,7 @@ public class PhaseManager : MonoBehaviour {
         {
             //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
             var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
-            if (mySwitchScript!=null)
+            if (mySwitchScript!=null && mySwitchScript.m_startViking == true)
             {
                 mySwitchScript.SwitchToViking();
             }
