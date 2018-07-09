@@ -15,15 +15,20 @@ public class PullGamePhase : MonoBehaviour {
 	void Start () {
         SceneManager.LoadScene("Phase1", LoadSceneMode.Additive);
 	}
-	
 
-
-    public void Phase2UI()
+    void Update()
     {
-        m_PullGamePhase.gameObject.SetActive(false);
-        SceneManager.LoadScene("Phase2", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("Phase1");
-        Debug.Log("Valkyrie Found");
+        GameObject valkyrie = GameObject.FindGameObjectWithTag("Valkyrie");
+
+        if (valkyrie)
+        {
+            Debug.Log("Valkyrie Found");
+            m_PullGamePhase.gameObject.SetActive(false);
+            SceneManager.LoadScene("Phase2", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("Phase1");
+            
+        }
     }
+
 }
 
