@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -105,6 +106,7 @@ public class PhaseManager : MonoBehaviour {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
                 {
+                    CameraShaker.Instance.ShakeOnce(4f, 4.5f, 2.5f, 3f);
                     mySwitchScript.SwitchToValkyrie();
                 }
             }
