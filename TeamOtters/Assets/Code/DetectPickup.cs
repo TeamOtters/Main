@@ -79,14 +79,10 @@ public class DetectPickup : MonoBehaviour {
     {
         // remove as child
         transform.parent = null;
-
-        //set position near player
-        transform.position = transform.GetComponent<SpriteRenderer>().bounds.max;
-
-
+        
         // Set the viking to be un-carried
         gameObject.GetComponent<VikingController>().SetCarried(false);
-
+        transform.position = new Vector3(transform.position.x, transform.position.y - gameObject.GetComponent<SpriteRenderer>().bounds.extents.y, transform.position.z);
         StartCoroutine(ImmuneAfterDrop(m_immuneAfterDropDuration));
     }
 

@@ -39,10 +39,14 @@ public class BoundaryHolder : MonoBehaviour
 
     }
 
-    /*void Update()
+    void Update()
     {
+        var dist = (m_character.transform.position - m_camera.transform.position).z;
 
-        // Update playerbounds with any camera movements
+        playerBoundary.Down = m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).y;  //down
+        playerBoundary.Up = m_camera.ViewportToWorldPoint(new Vector3(0, 1, dist)).y;  //up
+        playerBoundary.Left = m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x;  //left
+        playerBoundary.Right = m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x; //right  
 
-    }*/
+    }
 }
