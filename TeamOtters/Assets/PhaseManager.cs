@@ -41,7 +41,16 @@ public class PhaseManager : MonoBehaviour {
         {
             PhaseTwoSetup();
         }
-	}
+
+        //wait for camera shake to end before phase 2 begins
+        foreach(CameraShakeInstance camShakeInstance in CameraShaker.Instance.ShakeInstances)
+        {
+            if (camShakeInstance.CurrentState == CameraShakeState.Inactive && camShakeInstance.DeleteOnInactive)
+            {
+                StartCoroutine(PhaseTwoDuration(m_phase2Duration));
+            }
+        }
+    }
 
     // Phase one logic should be contained here
     void PhaseOneSetup()
@@ -109,17 +118,16 @@ public class PhaseManager : MonoBehaviour {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
                 {
-                    CameraShaker.Instance.ShakeOnce(4f, 4.5f, 2.5f, 3f);                    
+                    // valkyrie transform camera shake
+                    CameraShaker.Instance.ShakeOnce(GameController.Instance.cameraManager.transform_magnitude,
+                                                    GameController.Instance.cameraManager.transform_roughness,
+                                                    GameController.Instance.cameraManager.transform_fadeInTime,
+                                                    GameController.Instance.cameraManager.transform_fadeOutTime);
 
                     mySwitchScript.SwitchToValkyrie();
                 }
             }
         }
-
-
-        StartCoroutine(PhaseTwoDuration(m_phase2Duration));
-
-
     }
 
     //Sets the game state back to phase one after a limited time
