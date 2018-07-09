@@ -28,7 +28,7 @@ public class ValkyrieController : MonoBehaviour {
         m_playerIndex          = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
         m_player               = GameController.Instance.player.GetComponent<Rigidbody>();
         m_boundaryHolder       = GameController.Instance.boundaryHolder;
-        m_playerSize           = GameController.Instance.player.GetComponentInChildren<ValkyrieController>().GetComponent<SpriteRenderer>().bounds.extents;        
+        m_playerSize           = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController),true).GetComponent<SpriteRenderer>().bounds.extents;        
     }
 
     // Update is called once per frame
