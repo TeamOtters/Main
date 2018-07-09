@@ -9,18 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Scenes/MainGame.unity
-    guid: 22be544c62a162e44bdc81c9a3086a43
-  - enabled: 1
     path: Assets/Scenes/Menu_Screen.unity
     guid: c6ae655424999914987df0f333f60c61
-  - enabled: 0
-    path: Assets/Scenes/CharCust_Screen.unity
-    guid: 0a6f24e22661e5640b3920f2f0c730ec
+  - enabled: 1
+    path: Assets/Scenes/MainGame.unity
+    guid: 22be544c62a162e44bdc81c9a3086a43
   - enabled: 1
     path: Assets/Scenes/Phase1.unity
     guid: 0975981b71f46a84590fd9773b307ce6
   - enabled: 1
     path: Assets/Scenes/Phase2.unity
     guid: 5b1edb92ee4732142b0bda02a62007c5
+  - enabled: 0
+    path: Assets/Scenes/CharCust_Screen.unity
+    guid: 0a6f24e22661e5640b3920f2f0c730ec
+  - enabled: 1
+    path: Assets/Scenes/BouncingBall_Scene.unity
+    guid: 751d8f65b908b6a4a9c6dfd2b724b40e
   m_configObjects: {}

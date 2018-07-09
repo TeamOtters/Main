@@ -10,7 +10,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     private GameObject m_valkyrieCharacter;
     private PlayerData m_playerData;
     private bool m_isValkyrie;
-    private bool m_shouldSwitch = true;
+    private Transform m_parentTransform;
 
 	// Use this for initialization
 	void Start ()
@@ -19,6 +19,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         m_vikingCharacter = GetComponentInChildren<VikingController>().gameObject;
         m_valkyrieCharacter = GetComponentInChildren<ValkyrieController>().gameObject;
         m_playerData = GetComponent<PlayerData>();
+        m_parentTransform = this.gameObject.transform;
 
         //sets starting state according to startViking variable
         if (m_startViking)
@@ -31,42 +32,16 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             SwitchToValkyrie();
         }
 
-        //initializing shouldSwitch variable
-        m_shouldSwitch = true;
-    }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        //running a function that listens for the switch condition every frame
-        SwitchConditionListener(); 
-	}
-
-    void SwitchConditionListener()
-    {
-        //condition for switch
-        if (m_playerData.m_CurrentScore > 5 && m_shouldSwitch)
-        {
-            // check which switch function to use
-           if (m_isValkyrie)
-            {
-                SwitchToViking();
-            }
-            else
-            {
-                SwitchToValkyrie();
-            }
-        }
     }
 
     // Switch to Viking
     public void SwitchToViking()
     {
-        m_shouldSwitch = false;
 
         //Activating viking, childing valkyrie to viking and deactivating valkyrie
         m_isValkyrie = false;
         m_vikingCharacter.SetActive(true);
+        m_vikingCharacter.transform.parent = m_parentTransform;
         m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
         m_valkyrieCharacter.SetActive(false);
     }
@@ -74,18 +49,13 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     // Switch to Valkyrie
     public void SwitchToValkyrie()
     {
-        m_shouldSwitch = false;
 
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
         m_valkyrieCharacter.SetActive(true);
-        m_valkyrieCharacter.transform.parent = this.gameObject.transform;
+        m_valkyrieCharacter.transform.parent = m_parentTransform;
         m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
         m_vikingCharacter.SetActive(false);
     }
 
-    void ResetSwitch()
-    {
-        m_shouldSwitch = true;
-    }
 }

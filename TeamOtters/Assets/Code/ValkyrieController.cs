@@ -6,7 +6,6 @@ public class ValkyrieController : MonoBehaviour {
 
     public float m_speed = 2.0f;
     public float m_flightForce = 300;
-    public GameController m_gameController;
 
     internal bool isCarrying;
     internal Rigidbody heldCharacter;
@@ -21,9 +20,9 @@ public class ValkyrieController : MonoBehaviour {
     void Start ()
     {
         m_playerIndex          = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
-        m_player               = GetComponent<Rigidbody>();
-        m_boundaryHolder       = m_gameController.boundaryHolder;
-        m_playerSize           = GetComponent<SpriteRenderer>().bounds.extents;
+        m_player               = GameController.Instance.player.GetComponent<Rigidbody>();
+        m_boundaryHolder       = GameController.Instance.boundaryHolder;
+        m_playerSize           = GameController.Instance.player.GetComponentInChildren<ValkyrieController>().GetComponent<SpriteRenderer>().bounds.extents;
     }
 	
 	// Update is called once per frame

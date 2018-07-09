@@ -6,8 +6,7 @@ public class BoundaryHolder : MonoBehaviour
 {
 
     public Boundary playerBoundary;
-
-    private GameController m_gameController;
+    
     private Camera m_camera;
     private Rigidbody m_character;
 
@@ -24,9 +23,8 @@ public class BoundaryHolder : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_gameController = GetComponentInParent<GameController>();
         m_camera = Camera.main;
-        m_character = m_gameController.player.GetComponentInChildren<Rigidbody>();
+        m_character = GameController.Instance.player.GetComponentInChildren<Rigidbody>();
 
         var dist = (m_character.transform.position - m_camera.transform.position).z;
 
