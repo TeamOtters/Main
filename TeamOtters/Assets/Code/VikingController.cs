@@ -59,6 +59,14 @@ public class VikingController : MonoBehaviour {
   
     }
 
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("Viking"))
+        {
+            Physics.IgnoreCollision(GetComponent<Collider>(), hit.collider, true);
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Projectile"))
@@ -67,9 +75,9 @@ public class VikingController : MonoBehaviour {
              SetStunned();   
         }
 
-        if(collision.gameObject.CompareTag("Viking") && collision.gameObject.CompareTag("Valkyrie"))
+        if(collision.collider.CompareTag("Viking"))
         {
-                Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
+           Physics.IgnoreCollision(GetComponent<Collider>(),collision.collider, true);
         }
     }
 
