@@ -539,7 +539,7 @@ Prefab:
     - target: {fileID: 224315614421574538, guid: 26fc2be084620de42afb1f808be166a7,
         type: 2}
       propertyPath: m_LocalPosition.z
-      value: -1.1900005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224315614421574538, guid: 26fc2be084620de42afb1f808be166a7,
         type: 2}
@@ -569,12 +569,12 @@ Prefab:
     - target: {fileID: 224315614421574538, guid: 26fc2be084620de42afb1f808be166a7,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 476.77594
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224315614421574538, guid: 26fc2be084620de42afb1f808be166a7,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 271.3344
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224315614421574538, guid: 26fc2be084620de42afb1f808be166a7,
         type: 2}
@@ -615,10 +615,6 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1258010303171892, guid: 26fc2be084620de42afb1f808be166a7, type: 2}
-      propertyPath: m_Name
-      value: XboxMenu
       objectReference: {fileID: 0}
     - target: {fileID: 114661963285816056, guid: 26fc2be084620de42afb1f808be166a7,
         type: 2}
