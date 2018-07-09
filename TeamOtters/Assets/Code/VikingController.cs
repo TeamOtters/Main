@@ -24,6 +24,7 @@ public class VikingController : MonoBehaviour {
     private bool m_fireCooldownOn;
     public bool m_isStunned;
     private bool m_isCarried;
+    private bool m_collided;
 
     public float m_stunnedCoolDown = 1f;
 
@@ -66,6 +67,25 @@ public class VikingController : MonoBehaviour {
         {
             Physics.IgnoreCollision(GetComponent<Collider>(), hit.collider, true);
         }
+
+        if (!m_vikingcCharacterController.isGrounded)
+        {
+            //m_collided = true;
+            GetComponent<Rigidbody>().AddForce(transform.position * 10f);
+        }
+
+        if (!m_vikingcCharacterController.isGrounded && !m_collided)
+        {
+            // how much the character should be knocked back
+            var magnitude = 5000;
+            // calculate force vector
+            var force = transform.position - hit.transform.position;
+            // normalize force vector to get direction only and trim magnitude
+            force.Normalize();
+            gameObject.GetComponent<Rigidbody>().AddForce(force * magnitude);
+            m_collided = true;
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -80,6 +100,22 @@ public class VikingController : MonoBehaviour {
         {
            Physics.IgnoreCollision(GetComponent<Collider>(),collision.collider, true);
         }
+
+        /*  // force is how forcefully we will push the player away from the enemy.
+          float force = 50;
+
+          // If the object we hit is the enemy
+          if (!m_vikingcCharacterController.isGrounded)
+          {
+              // Calculate Angle Between the collision point and the player
+              Vector3 dir = collision.contacts[0].point - transform.position;
+              // We then get the opposite (-Vector3) and normalize it
+              dir = -dir.normalized;
+              // And finally we add force in the direction of dir and multiply it by force. 
+              // This will push back the player
+              GetComponent<Rigidbody>().AddForce(dir * force);
+              m_collided = true;
+          }*/
     }
 
     public void SetCarried (bool enable)
@@ -192,6 +228,7 @@ public class VikingController : MonoBehaviour {
 
         if (m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
+            m_collided = false;
             m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), 0, 0);
             m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
             m_vikingMoveDirection *= m_vikingMovementSpeed;
@@ -199,7 +236,12 @@ public class VikingController : MonoBehaviour {
             if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
                 m_vikingMoveDirection.y = m_vikingJumpSpeed;
 
+
         }
+
+
+
+       
 
         //Right
         if (Mathf.Clamp(angle, 10, 170) == angle)

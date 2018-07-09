@@ -83,6 +83,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         {
             m_rigidBody.isKinematic = true;
             m_rigidBody.detectCollisions = false;
+            
             Destroy(m_collider);
             m_hit = true;
         }
