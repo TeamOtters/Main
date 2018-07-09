@@ -66,6 +66,11 @@ public class VikingController : MonoBehaviour {
             if(collision.gameObject.GetComponent<ProjectileBehaviour>().m_playerID != m_thisPlayerIndex)
              SetStunned();   
         }
+
+        if(collision.gameObject.CompareTag("Viking") && collision.gameObject.CompareTag("Valkyrie"))
+        {
+                Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
+        }
     }
 
     private void VikingFire ()

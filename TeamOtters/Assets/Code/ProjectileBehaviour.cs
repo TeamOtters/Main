@@ -38,7 +38,9 @@ public class ProjectileBehaviour : MonoBehaviour {
         if(collision.collider.CompareTag("Viking"))
         {
             if (collision.collider.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex == m_playerID)
+            {
                 Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
+            }
         }
 
         if(collision.collider.CompareTag("Scoreable"))
