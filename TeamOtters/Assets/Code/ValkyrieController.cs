@@ -31,29 +31,27 @@ public class ValkyrieController : MonoBehaviour {
         m_playerSize           = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController),true).GetComponent<SpriteRenderer>().bounds.extents;        
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        Debug.Log(m_boundaryHolder.gameObject.name);
-
+        //set the bounds value every frame to go with updated camera movement
         m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;// + m_heldCharacterSize.y;
         m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
         m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
 
+        /*
         Debug.Log("Boundary Bottom: " + m_bottomBounds + " should be Down. The boundaryHolder's value for down is: " + m_boundaryHolder.playerBoundary.Down);
         Debug.Log("Boundary Top: " + m_topBounds + " should be Up. The boundaryHolder's value for up is: " + m_boundaryHolder.playerBoundary.Up);
         Debug.Log("Boundary Left: " + m_leftBounds + " should be Left. The boundaryHolder's value for left is: " + m_boundaryHolder.playerBoundary.Left);
         Debug.Log("Boundary Right: " + m_rightBounds + " should be Right. The boundaryHolder's value for right is: " + m_boundaryHolder.playerBoundary.Right);
-    }
+        */
 
-    private void FixedUpdate()
-    {
         // Basic movement input
         var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
         var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
 
         Rigidbody[] myRigidbodies = GetComponents<Rigidbody>();
+
         // Flight movement input
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
         {
@@ -71,7 +69,6 @@ public class ValkyrieController : MonoBehaviour {
                 DropPickup();
             }
         }
-
 
         // Move
         //transform.Translate(x, y, transform.position.z);	
@@ -114,47 +111,7 @@ public class ValkyrieController : MonoBehaviour {
         heldPlayerIndex = 0;
 
     }
-    /*
-    // Basic movement input
-    var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
-    float y;
-
-    // Flight movement input
-    if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
-    {
-        y = 0;
-        GetComponent<Rigidbody>().AddForce(Vector2.up * m_flightForce);
-    }
-    else
-    {
-        y = Mathf.Clamp(Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime, 0, 1);
-    }
-
-    // Clamp movement
-    if (transform.position.x < m_leftBounds)
-    {
-        Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
-        transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
-    }
-    if (transform.position.x > m_rightBounds)
-    {
-        Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
-        transform.position = new Vector3(m_boundaryHolder.playerBoundary.Right - m_playerSize.x, transform.position.y, transform.position.z);
-    }
-    if (transform.position.y < m_bottomBounds)
-    {
-        Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
-        transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
-    }
-    if (transform.position.y > m_topBounds)
-    {
-        Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
-        transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-    }
-
-    // Move
-    transform.Translate(x, y, transform.position.z);
-    */
+   
 }
    
 

@@ -48,7 +48,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Player is missing a character child! Make sure it has both the viking and the valkyrie");
+            Debug.Log("Player is missing a character child! Make sure it has both the viking and the valkyrie! Object: " + this.gameObject.name);
         }
     }
 
