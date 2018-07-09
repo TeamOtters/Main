@@ -102,13 +102,16 @@ public class ValkyrieController : MonoBehaviour {
         }
 
     }
-    private void DropPickup()
+    public void DropPickup()
     {
-        // Set the valkyrie to not be isCarrying
-        heldRigidbody.GetComponent<DetectPickup>().DropCarryable();
-        isCarrying = false;
-        heldRigidbody = null;
-        heldPlayerIndex = 0;
+        if (isCarrying == true)
+        {
+            // Set the valkyrie to not be isCarrying
+            heldRigidbody.GetComponent<DetectPickup>().Dropped();
+            isCarrying = false;
+            heldRigidbody = null;
+            heldPlayerIndex = 0;
+        }
 
     }
    

@@ -44,7 +44,9 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             m_vikingCharacter.SetActive(true);
             m_vikingCharacter.transform.parent = m_parentTransform;
             m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
+            m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
             m_valkyrieCharacter.SetActive(false);
+            
         }
         else
         {
