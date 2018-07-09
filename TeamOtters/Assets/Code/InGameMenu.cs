@@ -11,6 +11,13 @@ public class InGameMenu : MonoBehaviour
 
     public object buttons { get; private set; }
 
+    public void Start()
+    {
+        Debug.Log("Restarted");
+        Time.timeScale = 1.0f;
+        m_InGameMenu.gameObject.SetActive(false);
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown("joystick button 7") && m_InGameMenu.isActiveAndEnabled)
