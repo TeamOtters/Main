@@ -352,6 +352,7 @@ MonoBehaviour:
     type: 2}
   logicLayer: {fileID: 0}
   numberOfPlayers: 4
+  playerStartViking: 1
   bounceHit: 10
   firstReachGoal: 10
   hitOpponent: 10

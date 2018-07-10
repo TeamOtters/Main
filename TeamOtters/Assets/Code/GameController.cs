@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     public GameObject logicLayer;
 
     public int numberOfPlayers = 4; //could this number read from number of plugged in controllers or menu in case we want to support more than 4 players?
+    public bool playerStartViking = true;
     public int bounceHit = 10;
     public int firstReachGoal = 10;
     public int hitOpponent = 10;
@@ -96,7 +97,7 @@ public class GameController : MonoBehaviour
             myNewPlayer.AddComponent<VikingValkyrieSwitch>();
 
             //initializing the necessary variables for each component
-            myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_startViking = true;
+            myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_startViking = playerStartViking;
             m_currentPlayerData = myNewPlayer.GetComponent<PlayerData>();
             m_currentPlayerData.m_PlayerIndex = i + 1;
             m_currentPlayerData.m_CurrentScore = 0;
