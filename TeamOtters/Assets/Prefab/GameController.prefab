@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4299416604753702}
   - component: {fileID: 114836898664233470}
+  - component: {fileID: 114358465408991534}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -334,6 +335,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_phase2Duration: 10
   m_bouncingBall: {fileID: 0}
+--- !u!114 &114358465408991534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1079985458198934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9404ad104c9313b4eb2a523db0d96ade, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scoreBall: {fileID: 0}
+  m_positionsZ: []
 --- !u!114 &114411074648067334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -396,6 +410,7 @@ MonoBehaviour:
   player: {fileID: 1587183965728436, guid: e96b6e6682fb85941bf26c9dbf3a4296, type: 2}
   phaseManager: {fileID: 114319279279604970}
   cameraManager: {fileID: 0}
+  snapPositionController: {fileID: 114358465408991534}
   playerData: {fileID: 114411074648067334}
   vikingPrefab: {fileID: 1382873379161574, guid: d875cbbb7adccae478c3bd6b0b69825e,
     type: 2}
