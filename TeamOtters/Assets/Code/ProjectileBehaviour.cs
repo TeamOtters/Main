@@ -12,6 +12,8 @@ public class ProjectileBehaviour : MonoBehaviour {
     public int m_projectileDamage = 10;
     private bool m_retracting;
     public PlayerData m_playerData;
+    private GameController m_gameController = GameController.Instance;
+    private ScoreManager m_scoreManager;
     private int m_platformLayer;
 
 
@@ -24,6 +26,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         m_playerID = m_playerData.m_PlayerIndex;
 
         m_platformLayer = LayerMask.GetMask("Platform");
+        m_scoreManager = m_gameController.m_scoreManager;
 
     }
 
@@ -73,14 +76,13 @@ public class ProjectileBehaviour : MonoBehaviour {
             //Calling script on BouncingBall to drain HP
             collision.gameObject.GetComponent<BouncingBall>().TakeDamage(m_projectileDamage);
 
-            if (m_playerData != null)
+            if (m_scoreManager != null)
             {
-                m_playerData.SendMessage("AddToScore", 5);
-                
+                m_scoreManager.AddToScore( 5, m_playerID); 
             }
 
-            if (m_playerData == null)
-                Debug.Log("Coouldn't find PlayerData");
+            if (m_scoreManager == null)
+                Debug.Log("Couldn't find scoreManager");
         }
     }
 

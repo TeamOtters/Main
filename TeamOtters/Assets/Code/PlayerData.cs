@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PlayerData : MonoBehaviour
 {
@@ -11,16 +12,21 @@ public class PlayerData : MonoBehaviour
     internal Text scoreText;
 
 
+    private GameController m_gameController = GameController.Instance;
+    private PhaseManager m_phaseManager;
 
     private int m_otherPlayerIndex;
+
+    int[] m_highestScore = { 0, 0, 0, 0 };
+    int maxValue;
+    public GameObject m_glowEffect;
+
 
     // Use this for initialization
     void Start()
     { 	
         scoreText = GetComponentInChildren<Text>();
-
-
-
+        m_phaseManager = m_gameController.phaseManager;
     }
 
     // Update is called once per frame
@@ -35,11 +41,6 @@ public class PlayerData : MonoBehaviour
             }
 	}
 
-  
 
-    void AddToScore(int points)
-    {
-        m_CurrentScore += points;
-        Debug.Log("Player " + m_PlayerIndex + " - Current Score : " + m_CurrentScore);
-    }
+    
 }

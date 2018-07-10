@@ -18,8 +18,12 @@ public class GameController : MonoBehaviour
     public GameObject valkyriePrefab;
     public GameObject scorePrefab;
     public GameObject logicLayer;
+
     public RumbleManager rumbleManager;
     private SnapablePlayers snapablePlayers;
+
+    public ScoreManager m_scoreManager;
+
 
     public int numberOfPlayers = 4; //could this number read from number of plugged in controllers or menu in case we want to support more than 4 players?
     public bool playerStartViking = true;
@@ -111,11 +115,14 @@ public class GameController : MonoBehaviour
             GameObject myNewValkyrieCharacter = Instantiate(valkyriePrefab, myNewPlayer.transform);
             GameObject myNewPlayerScoreUI = Instantiate(scorePrefab, myNewPlayer.transform);
             phaseManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();
+			m_scoreManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();      
 
             snapPositionController.m_positionsZ.Add(myNewVikingCharacter.gameObject);
             snapPositionController.m_positionsZ.Add(myNewValkyrieCharacter.gameObject);
         }
-        
+
+    }
+
 
 
     }
