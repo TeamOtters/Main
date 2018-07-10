@@ -1,0 +1,154 @@
+fileFormatVersion: 2
+guid: b30ce4e7115ebbd439be6c90fd7d46ad
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Deco_flower01
+    100002: Deco_flower02
+    100004: Deco_mushroom01
+    100006: Deco_runestone01
+    100008: Ground_Back01
+    100010: Ground_Front01
+    100012: Ground_Front02
+    100014: Ground_PlayArea01
+    100016: //RootNode
+    100018: Tree_BG01
+    100020: Tree_BG02
+    100022: Tree_BG03
+    100024: Tree_playarea01
+    100026: Tree_playarea02
+    400000: Deco_flower01
+    400002: Deco_flower02
+    400004: Deco_mushroom01
+    400006: Deco_runestone01
+    400008: Ground_Back01
+    400010: Ground_Front01
+    400012: Ground_Front02
+    400014: Ground_PlayArea01
+    400016: //RootNode
+    400018: Tree_BG01
+    400020: Tree_BG02
+    400022: Tree_BG03
+    400024: Tree_playarea01
+    400026: Tree_playarea02
+    2100000: 01 - Default
+    2300000: Deco_flower01
+    2300002: Deco_flower02
+    2300004: Deco_mushroom01
+    2300006: Deco_runestone01
+    2300008: Ground_Back01
+    2300010: Ground_Front01
+    2300012: Ground_Front02
+    2300014: Ground_PlayArea01
+    2300016: Tree_BG01
+    2300018: Tree_BG02
+    2300020: Tree_BG03
+    2300022: Tree_playarea01
+    2300024: Tree_playarea02
+    3300000: Deco_flower01
+    3300002: Deco_flower02
+    3300004: Deco_mushroom01
+    3300006: Deco_runestone01
+    3300008: Ground_Back01
+    3300010: Ground_Front01
+    3300012: Ground_Front02
+    3300014: Ground_PlayArea01
+    3300016: Tree_BG01
+    3300018: Tree_BG02
+    3300020: Tree_BG03
+    3300022: Tree_playarea01
+    3300024: Tree_playarea02
+    4300000: Ground_PlayArea01
+    4300002: Ground_Back01
+    4300004: Ground_Front02
+    4300006: Ground_Front01
+    4300008: Tree_playarea01
+    4300010: Tree_BG01
+    4300012: Tree_playarea02
+    4300014: Deco_runestone01
+    4300016: Tree_BG02
+    4300018: Tree_BG03
+    4300020: Deco_flower01
+    4300022: Deco_flower02
+    4300024: Deco_mushroom01
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
