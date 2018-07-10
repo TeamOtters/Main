@@ -27,28 +27,12 @@ public class ScoreManager : MonoBehaviour {
         m_players[playerIndex-1].m_CurrentScore += points;
         Debug.Log("Player " + playerIndex + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
 
-        SetHighestPlayerScore();
-
-    
-
-        //int maxValue = m_highestScore.Max();
-
-        /*for (int i = 0; i < m_phaseManager.m_players.Length; i++)
-        {
-
-        }
-
-
-        if (m_CurrentScore == maxValue)
-        {
-            //GameObject effect = GetComponentsInChildren<VikingPlayer(Clone)>(Instantiate(m_glowEffect, transform.position, Quaternion.identity));
-            //GameObject fisk = Player_1.transform.GetChild(0).gameObject;
-            Debug.Log(m_PlayerIndex + " HAS THE HIGHEST SCOOOOOOOOOOOOORE!!!!");
-        }*/
+        //Sending playerIndex of player that just scored
+        SetHighestPlayerScore(playerIndex-1);
 
     }
 
-    private void SetHighestPlayerScore()
+    private void SetHighestPlayerScore(int scoringPlayer)
     {
         for (int i = 0; i < m_players.Length; i++)
         {
@@ -67,33 +51,43 @@ public class ScoreManager : MonoBehaviour {
         int highestIndex = -1;
 
         for (int i = 0; i < m_playerScores.Length; i++)
+
         {
-            //check who has the highest score
-            if (m_playerScores[i] >= highest)
+            GlowEffect gloweffect = m_players[i].GetComponentInChildren<GlowEffect>();
+
+            //check who has the highest score and give them gloweffect
+            if (m_playerScores[i] == m_playerScores[scoringPlayer] && m_playerScores[i] >= highest && gloweffect == null)
             {
                 highest = m_playerScores[i];
                 highestIndex = i + 1;
+
                 GameObject effect = (GameObject)Instantiate(m_glowEffect,m_players[i].GetComponentInChildren<VikingController>().gameObject.transform);
+                Debug.Log(m_players[i] + " says I EARNED IT!");
             }
-            else 
+            else if (m_playerScores[i] == m_playerScores[scoringPlayer] && m_playerScores[i] >= highest && gloweffect != null)
+            {
+                highest = m_playerScores[i];
+                highestIndex = i + 1;
+                Debug.Log(m_players[i] + " says I ALREADY HAVE THE GLOW");
+            }
+            else
             {
 
-                GlowEffect gloweffect = m_players[i].GetComponentInChildren<GlowEffect>();
-
-                if (gloweffect != null)
+                if (m_playerScores[i] < highest && gloweffect != null)
                 {
                     Destroy(gloweffect.gameObject);
-                    Debug.Log("I'm not in the LEAD :( ");
+                    Debug.Log(m_players[i] + "NOT IN THE LEAD ANYMORE :( ");
                 }
 
                 else
                 {
-                    Debug.Log("Gloweffect is DEAD!");
+                    Debug.Log(m_players[i] + " I NEED MORE SCORE!");
                 }
                
             }
         }
     }
+
 
 
 
