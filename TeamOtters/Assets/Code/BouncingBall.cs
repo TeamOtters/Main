@@ -5,17 +5,16 @@ using System.Collections;
 public class BouncingBall : MonoBehaviour
 {
 
-    public Rigidbody rb;
-
-    //Making the ball bounce diagonally
-    public float m_XBounceSpeed = 20f;
-    public float m_YBounceSpeed = 20f;
-
     //Health on BouncingBall enemy
     public float m_startHealth = 100;
     private float m_health;
 
-    public GameController m_gameController;
+    public GameObject m_ballDeathEffect;
+
+    //Setting ball speed
+    public Rigidbody rb;
+    public float m_XBounceSpeed = 200f;
+    public float m_YBounceSpeed = 200f;
 
     //Makes sure ball don't go outside of screen
     private BoundaryHolder m_boundaryHolder;
@@ -38,14 +37,17 @@ public class BouncingBall : MonoBehaviour
         m_ballSize = GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents;
         Debug.Log(GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents);
 
-        rb.AddForce(m_XBounceSpeed, m_YBounceSpeed, 0 * Time.deltaTime);
+        Vector3 m_currentVelocity = rb.velocity;
+
+        //rb.AddForce(m_XBounceSpeed, m_YBounceSpeed, 0 * Time.deltaTime);
 
         //StartCoroutine(Pause());
     }
-
-    void Update()
+    private void FixedUpdate()
     {
-        //Debug.Log(m_boundaryHolder.gameObject.name);
+
+        //rb.AddForce(Transform.rb.localRotation * m_XBounceSpeed);
+        //rb.velocity = 5 * (rb.velocity.normalized);
 
         m_bottomBounds = m_boundaryHolder.ballBoundary.Down + m_ballSize.y;
         m_topBounds = m_boundaryHolder.ballBoundary.Up - m_ballSize.y;
@@ -64,50 +66,47 @@ public class BouncingBall : MonoBehaviour
             //Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
             transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
             Debug.Log("Hitting left");
-            rb.AddForce((m_XBounceSpeed * 5), 0, 0 * Time.deltaTime);
+            //rb.AddForce((m_XBounceSpeed*2), 0, 0 * Time.deltaTime);
+
         }
         if (transform.position.x > m_rightBounds)
         {
-          //  Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
+            //  Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
             transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
             Debug.Log("Hitting right");
-            rb.AddForce((-m_XBounceSpeed*5),0, 0 * Time.deltaTime);
+            //rb.AddForce((-m_XBounceSpeed*2),0, 0 * Time.deltaTime);
+
         }
         if (transform.position.y < m_bottomBounds)
         {
             //Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
             Debug.Log("Hitting bottom");
-            rb.AddForce(0,(m_YBounceSpeed * 5), 0 * Time.deltaTime);
+            //rb.AddForce(0,(m_YBounceSpeed*2), 0 * Time.deltaTime);
+
         }
         if (transform.position.y > m_topBounds)
         {
             //Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
             Debug.Log("Hitting top");
-            rb.AddForce(0,(-m_YBounceSpeed * 5), 0 * Time.deltaTime);
+            //rb.AddForce(0,m_YBounceSpeed, 0 * Time.deltaTime);
+
+        }
+
+        if (rb.velocity.x > 15 || rb.velocity.y > 15)
+        {
+            Debug.Log("CHANGED VELOCITY");
+            rb.velocity = new Vector3(5, 5, 0);
+
         }
     }
 
     void OnCollisionEnter(Collision collisionInfo)
      {
         Debug.Log("This is collider: " + collisionInfo.gameObject.name);
-        rb.AddForce(m_XBounceSpeed, m_YBounceSpeed, 0 * Time.deltaTime);
 
-        /*if (collisionInfo.gameObject.CompareTag("Projectile"))
-        {
-            Debug.Log(collisionInfo.gameObject.tag);
-            rb.AddForce(0, 200, 0 * Time.deltaTime);
-
-            Collects the players index number. 
-            int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
-
-            Adds 10 points to the player when hitting ball. 
-            collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore += m_bouncePoints;
-
-        }*/
-
-        //Stun player. Calls temporary Stunned script.
+        //Stun players touching bouncingBall.
         if (collisionInfo.gameObject.CompareTag("Player") || collisionInfo.gameObject.CompareTag("Viking"))
         {
             collisionInfo.gameObject.GetComponent<VikingController>().SetStunned();
@@ -115,9 +114,23 @@ public class BouncingBall : MonoBehaviour
 
         else
         {
-            Debug.Log("didn't hit but hit "+ collisionInfo.gameObject.tag);
+            Debug.Log("Hit " + collisionInfo.gameObject.tag + " Collision");
         }
        }
+
+
+    /*if (collisionInfo.gameObject.CompareTag("Projectile"))
+    {
+        Debug.Log(collisionInfo.gameObject.tag);
+        rb.AddForce(0, 200, 0 * Time.deltaTime);
+
+        Collects the players index number. 
+        int hittingPlayer = collisionInfo.gameObject.GetComponent<PlayerData>().m_PlayerIndex;
+
+        Adds 10 points to the player when hitting ball. 
+        collisionInfo.gameObject.GetComponent<PlayerData>().m_CurrentScore += m_bouncePoints;
+
+    }*/
 
     public void TakeDamage(float amount)
     {
@@ -127,26 +140,15 @@ public class BouncingBall : MonoBehaviour
 
         if (m_health <= 0)
         {
-           gameObject.SetActive (false);
+            GameObject effect = (GameObject)Instantiate(m_ballDeathEffect, transform.position, Quaternion.identity);
+            gameObject.SetActive (false);
+            Destroy(effect, 5f);
         }
     }
 
     IEnumerator Pause()
     {
-
-        //Sends the ball off in a random direction
-        int directionX = Random.Range(-1, 2);
-        int directionY = Random.Range(-1, 2);
-
-        if (directionX ==0)
-        {
-            directionX = 1;
-        }
-
-        rb.velocity = new Vector2(0f, 0f);
-
-        //Makes ball oause for 1 sec before starting to move.
+        //Makes ball pause for 1 sec before starting to move.
         yield return new WaitForSeconds(1);
-        rb.velocity = new Vector2(6f * directionX, 6f * directionY);
     }
 }

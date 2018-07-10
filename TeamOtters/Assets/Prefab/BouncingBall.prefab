@@ -88,8 +88,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173794344469006}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.13, y: -1.31, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 8.944406, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 224246460596369152}
@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8b343169717d54285d5861697569e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_startHealth: 100
+  m_ballDeathEffect: {fileID: 1432418845525510, guid: 6a98bade033940d4fbb9b35724998270,
+    type: 2}
   rb: {fileID: 54988108636432478}
   m_XBounceSpeed: 500
   m_YBounceSpeed: 500
-  m_startHealth: 100
-  m_gameController: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
-    type: 2}
   m_healthBar: {fileID: 114171429578610716}
 --- !u!114 &114998900373305518
 MonoBehaviour:
