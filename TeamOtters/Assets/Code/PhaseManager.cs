@@ -69,6 +69,7 @@ public class PhaseManager : MonoBehaviour {
                 mySwitchScript.SwitchToViking();
             }
         }
+        //respawns the bouncing ball in phase 1 if we want
         if(!m_bouncingBall.m_isAlive)
         {
             m_bouncingBall.Respawn();
@@ -99,32 +100,32 @@ public class PhaseManager : MonoBehaviour {
         int highest = 0;
         int highestIndex = -1;
 
+        /*
+        OLD CODE FOR 2 VIKINGS
         int second = 0;
         int secondIndex = -1;
-
+        */
 
         for (int i = 0; i < m_playerScores.Count; i++)
         {
             //assigns the highest and second highest variables
             if (m_playerScores[i] >= highest)
             {
+                /*
+                OLD CODE FOR 2 VIKINGS
                 second = highest;
                 secondIndex = highestIndex;
+                */
                 highest = m_playerScores[i];
                 highestIndex = i + 1;
             }
-            else if (m_playerScores[i] > second)
-            {
-                second = m_playerScores[i];
-                secondIndex = i + 1;
-            }
         }
 
-        //for each player, if they are the "highest" or "second highest" index, they should change to valkyries
+        //Viking to valkyrie change 
         foreach (PlayerData player in m_players)
         {
             //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
-            if (player.m_PlayerIndex == highestIndex || player.m_PlayerIndex == secondIndex)
+            if (player.m_PlayerIndex != highestIndex) // if the players are not the highest, they should change into valkyries
             {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
