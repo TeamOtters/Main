@@ -12,7 +12,7 @@ public class PlayerData : MonoBehaviour
     internal Text scoreText;
 
 
-    private GameController m_gameController = GameController.Instance;
+    private GameController m_gameController; 
     private PhaseManager m_phaseManager;
 
     private int m_otherPlayerIndex;
@@ -25,6 +25,7 @@ public class PlayerData : MonoBehaviour
     // Use this for initialization
     void Start()
     { 	
+        m_gameController = GameController.Instance;
         scoreText = GetComponentInChildren<Text>();
         m_phaseManager = m_gameController.phaseManager;
     }

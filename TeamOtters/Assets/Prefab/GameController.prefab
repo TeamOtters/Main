@@ -77,6 +77,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1700147857175166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4614498629836318}
+  - component: {fileID: 114396316235210372}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1754558287336512
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +217,7 @@ Transform:
   - {fileID: 4468252205985162}
   - {fileID: 4542255557892598}
   - {fileID: 4286720414939204}
+  - {fileID: 4614498629836318}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -224,7 +241,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1813575951730160}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.84, y: -4.17, z: 0}
+  m_LocalPosition: {x: -7.84, y: 5.29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
@@ -237,7 +254,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1252888969779734}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.58, y: -4.05, z: 0}
+  m_LocalPosition: {x: -12.58, y: 5.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
@@ -250,11 +267,24 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1916770491476742}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.14, y: -4.29, z: 0}
+  m_LocalPosition: {x: 3.14, y: 4.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
   m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4614498629836318
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1700147857175166}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4299416604753702}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4644318207929426
 Transform:
@@ -263,7 +293,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1769378554227238}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.33, y: -4.21, z: 0}
+  m_LocalPosition: {x: -2.33, y: 4.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
@@ -333,7 +363,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_phase2Duration: 10
+  m_phase2Duration: 5000
   m_bouncingBall: {fileID: 0}
 --- !u!114 &114358465408991534
 MonoBehaviour:
@@ -348,6 +378,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreBall: {fileID: 0}
   m_positionsZ: []
+--- !u!114 &114396316235210372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1700147857175166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f1ef3f0961586442966090156a2647c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_glowEffect: {fileID: 1033994417920002, guid: bbca96ff12d85ca49affd83670eb9e45,
+    type: 2}
 --- !u!114 &114411074648067334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,6 +404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerIndex: 1
   m_CurrentScore: 0
+  m_glowEffect: {fileID: 0}
 --- !u!114 &114473235066853268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -420,10 +464,12 @@ MonoBehaviour:
     type: 2}
   logicLayer: {fileID: 0}
   rumbleManager: {fileID: 114069718216160198}
+  m_scoreManager: {fileID: 114396316235210372}
   numberOfPlayers: 4
   playerStartViking: 1
   bounceHit: 10
   firstReachGoal: 10
+  carryingBonus: 20
   hitOpponent: 10
   snapGridZ: 0
 --- !u!114 &114937836959872220

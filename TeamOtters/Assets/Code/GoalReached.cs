@@ -8,13 +8,16 @@ using UnityEngine.Events;
 
 public class GoalReached : MonoBehaviour {
     public Canvas m_Results;
-    private GameController m_gameController = GameController.Instance;
+    private GameController m_gameController;
+    private ScoreManager m_scoreManager;
     private int m_carryingScoreBonus;
     private int m_normalScoreBonus;
 
 	// Use this for initialization
 	void Start ()
     {
+        m_gameController = GameController.Instance;
+        m_scoreManager = m_gameController.m_scoreManager;
         m_normalScoreBonus = m_gameController.firstReachGoal;
         m_carryingScoreBonus = m_gameController.carryingBonus;
 	}
@@ -26,7 +29,7 @@ public class GoalReached : MonoBehaviour {
         if (player.gameObject.CompareTag("Valkyrie") && player.gameObject.GetComponent<ValkyrieController>().isCarrying == (true))
         {
             int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-            player.GetComponentInParent<PlayerData>().SendMessage("AddToScore", m_carryingScoreBonus);
+            m_scoreManager.AddToScore(m_carryingScoreBonus, ID);
             
             m_Results.gameObject.SetActive(true);
             StartCoroutine("Wait");
@@ -35,7 +38,7 @@ public class GoalReached : MonoBehaviour {
         else if(player.gameObject.CompareTag("Viking") || player.gameObject.CompareTag("Valkyrie"))
         {
             int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-            player.GetComponentInParent<PlayerData>().SendMessage("AddToScore", m_normalScoreBonus);
+            m_scoreManager.AddToScore(m_normalScoreBonus, ID);
             myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
         }
 

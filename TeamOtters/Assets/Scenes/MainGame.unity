@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1433,27 +1433,6 @@ Prefab:
       propertyPath: m_bouncingBall
       value: 
       objectReference: {fileID: 382614073}
-    - target: {fileID: 4463452976695208, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 5.29
-      objectReference: {fileID: 0}
-    - target: {fileID: 4644318207929426, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 4.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4468252205985162, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 5.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4542255557892598, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 4.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_phase2Duration
-      value: 5000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
