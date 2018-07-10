@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VikingValkyrieSwitch : MonoBehaviour {
 
@@ -11,15 +12,24 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     private PlayerData m_playerData;
     private bool m_isValkyrie;
     private Transform m_parentTransform;
+    private GameObject m_scoreText;
 
 	// Use this for initialization
 	void Start ()
     {
         //initialize all components
-        m_vikingCharacter = GetComponentInChildren(typeof(VikingController), true).gameObject;
-        m_valkyrieCharacter = GetComponentInChildren(typeof(ValkyrieController), true).gameObject;
-        m_playerData = GetComponent<PlayerData>();
-        m_parentTransform = this.gameObject.transform;
+        if (transform.childCount != 0)
+        {
+            m_vikingCharacter = GetComponentInChildren(typeof(VikingController), true).gameObject;
+            m_valkyrieCharacter = GetComponentInChildren(typeof(ValkyrieController), true).gameObject;
+            m_playerData = GetComponent<PlayerData>();
+            m_scoreText = GetComponentInChildren<Text>().gameObject.transform.parent.gameObject;
+            m_parentTransform = this.gameObject.transform;
+        }
+        else
+        {
+            Debug.Log("Player gameobject does not have its children! Something is very wrong");
+        }
 
         //sets starting state according to startViking variable
         if (m_startViking)
@@ -44,6 +54,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             m_vikingCharacter.SetActive(true);
             m_vikingCharacter.transform.parent = m_parentTransform;
             m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
+            m_scoreText.transform.parent = m_vikingCharacter.transform;
             m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
             m_valkyrieCharacter.SetActive(false);
             
@@ -62,6 +73,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         m_valkyrieCharacter.SetActive(true);
         m_valkyrieCharacter.transform.parent = m_parentTransform;
         m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
+        m_scoreText.transform.parent = m_valkyrieCharacter.transform;
         m_vikingCharacter.SetActive(false);
     }
 
