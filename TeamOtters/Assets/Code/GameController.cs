@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
     public bool playerStartViking = true;
     public int bounceHit = 10;
     public int firstReachGoal = 10;
+    public int carryingBonus = 20;
     public int hitOpponent = 10;
 
     public float snapGridZ = 0f;
