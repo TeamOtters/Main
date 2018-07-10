@@ -21,13 +21,19 @@ public class GoalReached : MonoBehaviour {
             int ID = player.gameObject.GetComponent<ValkyrieController>().m_playerIndex;
             Debug.Log("PLAYER " + ID + " YOU WIN!!!");
             m_Results.gameObject.SetActive(true);
-
+            StartCoroutine("Wait");
         }
 
         else
         {
             Debug.Log("I'm NOT a Valkyrie carrying a viking.");
         }
+
+    }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1.5f);
+
     }
     // Update is called once per frame
     void Update () {
