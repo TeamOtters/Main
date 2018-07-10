@@ -140,6 +140,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1965676301416952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4286720414939204}
+  - component: {fileID: 114069718216160198}
+  m_Layer: 0
+  m_Name: RumbleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4227347536493268
 Transform:
   m_ObjectHideFlags: 1
@@ -152,6 +168,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4299416604753702}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4286720414939204
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965676301416952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4299416604753702}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4299416604753702
 Transform:
@@ -170,6 +199,7 @@ Transform:
   - {fileID: 4644318207929426}
   - {fileID: 4468252205985162}
   - {fileID: 4542255557892598}
+  - {fileID: 4286720414939204}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -251,6 +281,28 @@ Transform:
   m_Father: {fileID: 4299416604753702}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114069718216160198
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965676301416952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac69c8cd3a8cbe64e8fd995e0a8ce917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_players: []
+  transform_magnitude: 4
+  transform_roughness: 4.5
+  transform_fadeInTime: 2.5
+  transform_fadeOutTime: 3
+  hitReact_magnitude: 0
+  hitReact_roughness: 0
+  hitReact_fadeInTime: 0
+  hitReact_fadeOutTime: 0
+  transformShakeComplete: 0
+  hitReactShakeComplete: 0
 --- !u!114 &114179536568703722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -280,7 +332,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_phase2Duration: 20
+  m_phase2Duration: 10
   m_bouncingBall: {fileID: 0}
 --- !u!114 &114411074648067334
 MonoBehaviour:
@@ -341,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundaryHolder: {fileID: 114793835429560908}
-  player: {fileID: 0}
+  player: {fileID: 1587183965728436, guid: e96b6e6682fb85941bf26c9dbf3a4296, type: 2}
   phaseManager: {fileID: 114319279279604970}
   cameraManager: {fileID: 0}
   playerData: {fileID: 114411074648067334}
@@ -352,6 +404,7 @@ MonoBehaviour:
   scorePrefab: {fileID: 1463135725327858, guid: 4f81a21ecc2bca44fb346bcf0fdb3b76,
     type: 2}
   logicLayer: {fileID: 0}
+  rumbleManager: {fileID: 114069718216160198}
   numberOfPlayers: 4
   playerStartViking: 1
   bounceHit: 10

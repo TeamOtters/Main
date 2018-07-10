@@ -16,8 +16,6 @@ public class PhaseManager : MonoBehaviour {
     private List<int> m_playerScores = new List<int>();
     private bool m_phaseSet = false;
 
-    //internal XInputDotNetPure.PlayerIndex[] m_controllerIndex = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four};
-
     void Start ()
     {
         //hard coded to 4 atm, if we have a dynamic number of players this might need to change
@@ -50,20 +48,12 @@ public class PhaseManager : MonoBehaviour {
         }
 
         //wait for camera shake to end before phase 2 begins
-        foreach(CameraShakeInstance camShakeInstance in CameraShaker.Instance.ShakeInstances)
-        {
-            if (camShakeInstance.CurrentState == CameraShakeState.Inactive && camShakeInstance.DeleteOnInactive)
-            {
-                // When camera shake ends, stop the rumble
-                GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
-                GamePad.SetVibration(PlayerIndex.Two, 0f, 0f);
-                GamePad.SetVibration(PlayerIndex.Three, 0f, 0f);
-                GamePad.SetVibration(PlayerIndex.Four, 0f, 0f);                
-
-                // Begin Phase 2
-                StartCoroutine(PhaseTwoDuration(m_phase2Duration));
-            }
-        }
+       if (GameController.Instance.rumbleManager.transformShakeComplete == true)
+       { 
+            // Begin Phase 2
+            StartCoroutine(PhaseTwoDuration(m_phase2Duration));
+       }
+        
     }   
 
     // Phase one logic should be contained here
@@ -139,19 +129,8 @@ public class PhaseManager : MonoBehaviour {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
                 {
-                    // valkyrie transform camera shake
-                    CameraShaker.Instance.ShakeOnce(GameController.Instance.cameraManager.transform_magnitude,
-                                                    GameController.Instance.cameraManager.transform_roughness,
-                                                    GameController.Instance.cameraManager.transform_fadeInTime,
-                                                    GameController.Instance.cameraManager.transform_fadeOutTime);
-                            
-                    
-
-                    // vibrate controllers     
-                    GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
-                    GamePad.SetVibration(PlayerIndex.Two, 1f, 1f);
-                    GamePad.SetVibration(PlayerIndex.Three, 1f, 1f);
-                    GamePad.SetVibration(PlayerIndex.Four, 1f, 1f);
+                    // valkyrie transform camera shake + rumble
+                    GameController.Instance.rumbleManager.TransformShakeStart();
 
                     mySwitchScript.SwitchToValkyrie();
                 }

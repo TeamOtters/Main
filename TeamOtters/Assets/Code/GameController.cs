@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour
     public GameObject valkyriePrefab;
     public GameObject scorePrefab;
     public GameObject logicLayer;
+    public RumbleManager rumbleManager;
 
     public int numberOfPlayers = 4; //could this number read from number of plugged in controllers or menu in case we want to support more than 4 players?
     public bool playerStartViking = true;
