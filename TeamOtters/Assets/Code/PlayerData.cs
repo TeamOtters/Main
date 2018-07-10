@@ -10,21 +10,29 @@ public class PlayerData : MonoBehaviour
     public int m_CurrentScore = 0;
     internal Text scoreText;
 
+
+
     private int m_otherPlayerIndex;
 
     // Use this for initialization
     void Start()
     { 	
         scoreText = GetComponentInChildren<Text>();
+
+
+
     }
 
     // Update is called once per frame
     void Update ()
     {
+
         if (scoreText != null)
-        {
-            scoreText.text = "Player " + m_PlayerIndex + ": " + m_CurrentScore.ToString() + " score";
-        }
+
+            {
+                scoreText.text = "P" + m_PlayerIndex;
+                //scoreText.text = "Player " + m_PlayerIndex + ": " + m_CurrentScore.ToString() + " score";
+            }
 	}
 
   
