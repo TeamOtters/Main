@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
+using XInputDotNetPure;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -12,7 +13,7 @@ public class PhaseManager : MonoBehaviour {
     private List<int> m_playerScores = new List<int>();
     public float m_phase2Duration = 10f;
 
-	void Start ()
+    void Start ()
     {
         //hard coded to 4 atm, if we have a dynamic number of players this might need to change
         m_playerScores.Add(0);
@@ -31,8 +32,7 @@ public class PhaseManager : MonoBehaviour {
         }
         
         
-	}
-	
+	}	
 
 	void Update ()
     {
@@ -47,10 +47,17 @@ public class PhaseManager : MonoBehaviour {
         {
             if (camShakeInstance.CurrentState == CameraShakeState.Inactive && camShakeInstance.DeleteOnInactive)
             {
+                // When camera shake ends, stop the rumble
+                GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+                GamePad.SetVibration(PlayerIndex.Two, 0f, 0f);
+                GamePad.SetVibration(PlayerIndex.Three, 0f, 0f);
+                GamePad.SetVibration(PlayerIndex.Four, 0f, 0f);                
+
+                // Begin Phase 2
                 StartCoroutine(PhaseTwoDuration(m_phase2Duration));
             }
         }
-    }
+    }   
 
     // Phase one logic should be contained here
     void PhaseOneSetup()
@@ -123,6 +130,12 @@ public class PhaseManager : MonoBehaviour {
                                                     GameController.Instance.cameraManager.transform_roughness,
                                                     GameController.Instance.cameraManager.transform_fadeInTime,
                                                     GameController.Instance.cameraManager.transform_fadeOutTime);
+                                       
+                    // vibrate controllers     
+                    GamePad.SetVibration(PlayerIndex.One, 1f, 1f);
+                    GamePad.SetVibration(PlayerIndex.Two, 1f, 1f);
+                    GamePad.SetVibration(PlayerIndex.Three, 1f, 1f);
+                    GamePad.SetVibration(PlayerIndex.Four, 1f, 1f);
 
                     mySwitchScript.SwitchToValkyrie();
                 }
