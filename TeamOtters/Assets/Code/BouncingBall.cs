@@ -7,7 +7,8 @@ public class BouncingBall : MonoBehaviour
 
     //Health on BouncingBall enemy
     public float m_startHealth = 100;
-    private float m_health;
+    internal float m_currentHealth;
+    internal bool m_isAlive = true;
 
     public GameObject m_ballDeathEffect;
 
@@ -16,6 +17,7 @@ public class BouncingBall : MonoBehaviour
     public float m_XBounceSpeed = 200f;
     public float m_YBounceSpeed = 200f;
 
+    
     //Makes sure ball don't go outside of screen
     private BoundaryHolder m_boundaryHolder;
     private float m_leftBounds;
@@ -30,7 +32,7 @@ public class BouncingBall : MonoBehaviour
 
     void Start()
     {
-        m_health = m_startHealth;
+        m_currentHealth = m_startHealth;
 
         //Calculation for making the ball stay within camera view. 
         m_boundaryHolder = GameController.Instance.boundaryHolder;
@@ -134,15 +136,13 @@ public class BouncingBall : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        m_health -= amount;
+        m_currentHealth -= amount;
 
-        m_healthBar.fillAmount = m_health / m_startHealth;
+        m_healthBar.fillAmount = m_currentHealth / m_startHealth;
 
-        if (m_health <= 0)
+        if (m_currentHealth <= 0)
         {
-            GameObject effect = (GameObject)Instantiate(m_ballDeathEffect, transform.position, Quaternion.identity);
-            gameObject.SetActive (false);
-            Destroy(effect, 5f);
+            IsDead();
         }
     }
 
@@ -150,5 +150,29 @@ public class BouncingBall : MonoBehaviour
     {
         //Makes ball pause for 1 sec before starting to move.
         yield return new WaitForSeconds(1);
+    }
+
+    public void IsDead()
+    {
+        m_isAlive = false;
+        GameObject effect = (GameObject)Instantiate(m_ballDeathEffect, transform.position, Quaternion.identity);
+        gameObject.SetActive(false);
+        Destroy(effect, 5f);
+    }
+
+    public void Respawn()
+    {
+        //sets the Alive bool back to read as alive by managers
+        m_isAlive = true;
+
+        //respawns at the center of screen - this may be an issue later where it gets stuck. If we go in this direction we should set up each level "stage" individually with a unique new spawn point for the ball.
+        gameObject.transform.position = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+        gameObject.transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
+        Debug.Log("Ball respawning at position" + (gameObject.transform.position));
+
+        //resets health and active values 
+        m_currentHealth = m_startHealth;
+        m_healthBar.fillAmount = m_startHealth;
+        gameObject.SetActive(true);
     }
 }

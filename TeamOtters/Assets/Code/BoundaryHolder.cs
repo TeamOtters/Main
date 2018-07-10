@@ -54,5 +54,10 @@ public class BoundaryHolder : MonoBehaviour
         playerBoundary.Left = m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x;  //left
         playerBoundary.Right = m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x; //right  
 
+        ballBoundary = new Boundary(m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).y,  //down
+                                      m_camera.ViewportToWorldPoint(new Vector3(0, 1, dist)).y,  //up
+                                      m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x,  //left
+                                      m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x); //right 
+
     }
 }

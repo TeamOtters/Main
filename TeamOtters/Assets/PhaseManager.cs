@@ -10,8 +10,11 @@ public class PhaseManager : MonoBehaviour {
     public bool m_isInPhaseOne = true;
     public bool m_startInPhaseOne = true;
     public PlayerData[] m_players;
-    private List<int> m_playerScores = new List<int>();
     public float m_phase2Duration = 10f;
+    public BouncingBall m_bouncingBall;
+
+    private List<int> m_playerScores = new List<int>();
+    private bool m_phaseSet = false;
 
     //internal XInputDotNetPure.PlayerIndex[] m_controllerIndex = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four};
 
@@ -23,6 +26,7 @@ public class PhaseManager : MonoBehaviour {
         m_playerScores.Add(0);
         m_playerScores.Add(0);
         
+
         //allows the devs to set the starting phase
         if (m_startInPhaseOne == true)
         {
@@ -32,15 +36,16 @@ public class PhaseManager : MonoBehaviour {
         {
             PhaseTwoSetup();
         }
-        
+       
         
 	}	
 
 	void Update ()
     {
         // this should be the condition for phase 2 switch - e.g. the ball health
-		if(Input.GetKeyDown(KeyCode.P))
+		if(!m_bouncingBall.m_isAlive && !m_phaseSet)
         {
+            Debug.Log("ShouldSetUpPhase2");
             PhaseTwoSetup();
         }
 
@@ -74,11 +79,18 @@ public class PhaseManager : MonoBehaviour {
                 mySwitchScript.SwitchToViking();
             }
         }
+        if(!m_bouncingBall.m_isAlive)
+        {
+            m_bouncingBall.Respawn();
+            Debug.Log("Bouncing ball respawn triggered");
+        }
     }
 
     //Set the two characters with highest score to Valkyries
     void PhaseTwoSetup()
     {
+        m_phaseSet = true;
+        Debug.Log("I am in phase 2!)");
         m_isInPhaseOne = false;
         //Adds the current score of the players to the score list
         for (int i = 0; i < m_players.Length; i++)
@@ -154,6 +166,7 @@ public class PhaseManager : MonoBehaviour {
 
         yield return new WaitForSeconds(phaseDuration);
         PhaseOneSetup();
+        m_phaseSet = false;
     }
    
 }
