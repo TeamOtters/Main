@@ -5,18 +5,6 @@ using EZCameraShake;
 
 public class CameraBehaviourManager : MonoBehaviour {
 
-    [Header("Transformation Camera Shake Settings")]
-    public float transform_magnitude;
-    public float transform_roughness;
-    public float transform_fadeInTime;
-    public float transform_fadeOutTime;
-
-    [Header("Hit React Camera Shake Settings")]
-    public float hitReact_magnitude;
-    public float hitReact_roughness;
-    public float hitReact_fadeInTime;
-    public float hitReact_fadeOutTime;
-
     [SerializeField]
     private bool m_valkyrieRaceState;
 
