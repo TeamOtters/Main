@@ -83,7 +83,7 @@ InputManager:
     snap: 0
     invert: 0
     type: 2
-    axis: 0
+    axis: 5
     joyNum: 0
   - serializedVersion: 3
     m_Name: Vertical_P1
@@ -163,7 +163,7 @@ InputManager:
     snap: 0
     invert: 1
     type: 2
-    axis: 1
+    axis: 6
     joyNum: 0
   - serializedVersion: 3
     m_Name: Fire1_P1
@@ -374,7 +374,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Pause
+    m_Name: Pause_P1
     descriptiveName: InGame Menu
     descriptiveNegativeName: 
     negativeButton: 
@@ -388,4 +388,52 @@ InputManager:
     invert: 0
     type: 0
     axis: 0
-    joyNum: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: Pause_P2
+    descriptiveName: InGame Menu
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: escape
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 1
+  - serializedVersion: 3
+    m_Name: Pause_P3
+    descriptiveName: InGame Menu
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: escape
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 3
+  - serializedVersion: 3
+    m_Name: Pause_P4
+    descriptiveName: InGame Menu
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: joystick button 7
+    altNegativeButton: 
+    altPositiveButton: escape
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 4
