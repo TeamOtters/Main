@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45105398, g: 0.5008837, b: 0.5741778, a: 1}
+  m_IndirectSpecularColor: {r: 0.4510532, g: 0.500883, b: 0.57417643, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -506,6 +506,12 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 321470259}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &382614073 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114922378335886312, guid: 0ba4ae88e15989349bc1bec44468937d,
+    type: 2}
+  m_PrefabInternal: {fileID: 973788442}
+  m_Script: {fileID: 11500000, guid: cf8b343169717d54285d5861697569e6, type: 3}
 --- !u!1 &479220874
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,6 +1525,11 @@ Prefab:
       propertyPath: logicLayer
       value: 
       objectReference: {fileID: 1072945318}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_bouncingBall
+      value: 
+      objectReference: {fileID: 382614073}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
