@@ -38,10 +38,10 @@ public class BoundaryHolder : MonoBehaviour
                                       m_camera.ViewportToWorldPoint(new Vector3(0, 0, dist)).x,  //left
                                       m_camera.ViewportToWorldPoint(new Vector3(1, 0, dist)).x); //right  
 
-        Debug.Log("Boundary Index 0: " + playerBoundary.Down + " should be Down");
-        Debug.Log("Boundary Index 1: " + playerBoundary.Up + " should be Up");
-        Debug.Log("Boundary Index 2: " + playerBoundary.Left + " should be Left");
-        Debug.Log("Boundary Index 3: " + playerBoundary.Right + " should be Right");
+        //Debug.Log("Boundary Index 0: " + playerBoundary.Down + " should be Down");
+        //Debug.Log("Boundary Index 1: " + playerBoundary.Up + " should be Up");
+        //Debug.Log("Boundary Index 2: " + playerBoundary.Left + " should be Left");
+        //Debug.Log("Boundary Index 3: " + playerBoundary.Right + " should be Right");
 
     }
 

@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ValkyrieController : MonoBehaviour {
+public class ValkyrieController : MonoBehaviour
+{
 
     public float m_speed;
     public float m_flightForce;
+    public float m_attackDuration = 2f;
+    public float m_attackSpeed = .01f;
+    public BoxCollider m_attackCollision;
 
     internal bool isCarrying;
+    internal bool isAttacking;
+    internal bool isShielding;
     internal Rigidbody heldRigidbody;
     internal int heldPlayerIndex;
 
     internal int m_playerIndex;
     private Rigidbody m_player;
+    private Rigidbody m_otherPlayer;
     private Vector3 m_playerSize;
     private Vector3 m_heldCharacterSize;
     private BoundaryHolder m_boundaryHolder;
@@ -23,12 +30,12 @@ public class ValkyrieController : MonoBehaviour {
     private float m_bottomBounds;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
-        m_playerIndex          = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
-        m_player               = GameController.Instance.player.GetComponent<Rigidbody>();
-        m_boundaryHolder       = GameController.Instance.boundaryHolder;
-        m_playerSize           = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController),true).GetComponent<SpriteRenderer>().bounds.extents;        
+        m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
+        m_player = GameController.Instance.player.GetComponent<Rigidbody>();
+        m_boundaryHolder = GameController.Instance.boundaryHolder;
+        m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController), true).GetComponent<SpriteRenderer>().bounds.extents;
     }
 
     private void FixedUpdate()
@@ -60,13 +67,35 @@ public class ValkyrieController : MonoBehaviour {
             {
                 rigidbody.AddForce(Vector2.up * m_flightForce);
             }
-           
+
         }
+
+        // Melee attack/drop Viking mechanic
+        if (Input.GetButtonDown("Fire1_P" + m_playerIndex))
+        {
+            if (isAttacking == false)
+            {
+                Invoke("AttackStart", m_attackSpeed);
+
+                if (heldRigidbody != null)
+                {
+                    DropPickup();
+                }
+
+                Invoke("AttackStop", m_attackDuration);
+            }
+        }
+
+        // Shield/drop Viking mechanic TODO
         if (Input.GetButtonDown("Fire2"))
         {
             if (heldRigidbody != null)
             {
-                DropPickup();
+                //DropPickup();
+            }
+            else
+            {
+                Shield();
             }
         }
 
@@ -82,22 +111,22 @@ public class ValkyrieController : MonoBehaviour {
         // Clamp movement
         if (transform.position.x < m_leftBounds)
         {
-            Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
+            //Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
             transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
         }
         if (transform.position.x > m_rightBounds)
         {
-            Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
+            //Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
             transform.position = new Vector3(m_boundaryHolder.playerBoundary.Right - m_playerSize.x, transform.position.y, transform.position.z);
         }
         if (transform.position.y < m_bottomBounds)
         {
-            Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
+            //Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
         }
         if (transform.position.y > m_topBounds)
         {
-            Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
+            //Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
         }
 
@@ -114,7 +143,36 @@ public class ValkyrieController : MonoBehaviour {
         }
 
     }
-   
+
+    public void Shield()
+    {
+        Debug.Log("Valkyrie Shield");
+    }
+
+    public void AttackStart()
+    {
+        Debug.Log("Valkyrie Attack Started");
+
+        isAttacking = true;
+        m_attackCollision.enabled = true;
+    }
+
+    public void AttackStop()
+    {
+        Debug.Log("Valkyrie Attack Stopped");
+
+        m_attackCollision.enabled = false;
+
+        Debug.Log("Valkyrie Attack Box Collision Enable = " + m_attackCollision.enabled);
+
+        isAttacking = false;
+    }
+
+    public void GetStunned()
+    {
+        Debug.Log("Valkyrie Stunned!");
+    }
 }
-   
+
+
 
