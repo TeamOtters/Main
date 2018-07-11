@@ -103,7 +103,10 @@ public class VikingController : MonoBehaviour
 
     private void Update()
     {
-        
+        //Set the boundaries to camera
+        if (!m_isCarried)
+            SetBoundaries();
+
         if (m_askForGoundedOffset)
                 m_isGroundedTimer -= Time.deltaTime;
 
@@ -136,9 +139,6 @@ public class VikingController : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Set the boundaries to camera
-        if(!m_isCarried)
-           SetBoundaries();
 
         if (!m_isStunned)
         {
@@ -304,12 +304,12 @@ public class VikingController : MonoBehaviour
         {
             transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
         }
-        /*
+        
         if (transform.position.y < m_bottomBounds)
         {
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z); // this is where fall penalty should go
         }
-        */
+
         if (transform.position.y > m_topBounds)
         {
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
