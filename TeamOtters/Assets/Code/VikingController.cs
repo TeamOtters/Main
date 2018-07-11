@@ -72,11 +72,7 @@ public class VikingController : MonoBehaviour
 
     // Use this for initialization
     void Start()
-    {
-        m_animator = GetComponent<Animator>();
-
-        m_animator.SetInteger("State", 0); // Idle
-
+    {   
         m_vikingcCharacterController = GetComponent<CharacterController>();
         m_playerData = GetComponentInParent<PlayerData>();
 
@@ -95,7 +91,11 @@ public class VikingController : MonoBehaviour
         m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(VikingController), true).GetComponent<SpriteRenderer>().bounds.extents;
         m_boundaryHolder = GameController.Instance.boundaryHolder;
 
+        //assign an animator controller based on player index
+        m_animator = transform.gameObject.GetComponent<Animator>();
+        m_animator.runtimeAnimatorController = Resources.Load("Viking_P" + m_playerIndexString) as RuntimeAnimatorController;
 
+        m_animator.SetInteger("State", 0); // Idle
     }
 
     private void Update()
