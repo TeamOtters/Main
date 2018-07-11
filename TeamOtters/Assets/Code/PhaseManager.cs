@@ -47,8 +47,15 @@ public class PhaseManager : MonoBehaviour {
             PhaseTwoSetup();
         }
 
+        // DEBUG, Click to phase 2
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("ShouldSetUpPhase2");
+            PhaseTwoSetup();
+        }
+
         //wait for camera shake to end before phase 2 begins
-       if (GameController.Instance.rumbleManager.transformShakeComplete == true)
+        if (GameController.Instance.rumbleManager.transformShakeComplete == true)
        { 
             // Begin Phase 2
             StartCoroutine(PhaseTwoDuration(m_phase2Duration));

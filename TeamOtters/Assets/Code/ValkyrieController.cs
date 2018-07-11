@@ -7,7 +7,8 @@ public class ValkyrieController : MonoBehaviour
 
     public float m_speed;
     public float m_flightForce;
-    public float m_attackDuration = 2f;
+    public float m_wrapScreenDelay = 0.5f;
+    public float m_attackDuration = 1f;
     public float m_attackSpeed = .01f;
     public BoxCollider m_attackCollision;
 
@@ -45,13 +46,6 @@ public class ValkyrieController : MonoBehaviour
         m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
         m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
-
-        /*
-        Debug.Log("Boundary Bottom: " + m_bottomBounds + " should be Down. The boundaryHolder's value for down is: " + m_boundaryHolder.playerBoundary.Down);
-        Debug.Log("Boundary Top: " + m_topBounds + " should be Up. The boundaryHolder's value for up is: " + m_boundaryHolder.playerBoundary.Up);
-        Debug.Log("Boundary Left: " + m_leftBounds + " should be Left. The boundaryHolder's value for left is: " + m_boundaryHolder.playerBoundary.Left);
-        Debug.Log("Boundary Right: " + m_rightBounds + " should be Right. The boundaryHolder's value for right is: " + m_boundaryHolder.playerBoundary.Right);
-        */
 
         // Basic movement input
         var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
@@ -102,35 +96,80 @@ public class ValkyrieController : MonoBehaviour
         // Move
         //transform.Translate(x, y, transform.position.z);	
         Vector3 movement = new Vector3(x, y, 0f);
+
+
         foreach (Rigidbody rigidbody in myRigidbodies)
         {
-            rigidbody.AddForce(movement * m_speed);
 
+            rigidbody.AddForce(movement * m_speed);
+            /*if (rigidbody.velocity.y > m_maxVelocity)
+                rigidbody.Sleep();
+            else
+                rigidbody.AddForce(movement * m_speed);*/
         }
 
-        // Clamp movement
+        //ClampVelocity();
+
+        // Wrap screen enables once the camera gets above the "ground level"/Phase 1 screen
+        /*if (m_bottomBounds > GameController.Instance.boundaryHolder.initialCameraBounds.Up)
+        {
+            m_canWrapScreen = true;
+        }*/
+
+        // Clamp movement and wrap screen logic
         if (transform.position.x < m_leftBounds)
         {
-            //Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
-            transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
+            //GetComponent<SpriteRenderer>().enabled = false; //hide character in foreground
+            //Invoke("WrapScreenLeftToRight", m_wrapScreenDelay);            
+            //GetComponent<SpriteRenderer>().enabled = true; //show character appearing after delay
+
+            WrapScreenLeftToRight();
         }
         if (transform.position.x > m_rightBounds)
         {
-            //Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
-            transform.position = new Vector3(m_boundaryHolder.playerBoundary.Right - m_playerSize.x, transform.position.y, transform.position.z);
+            //GetComponent<SpriteRenderer>().enabled = false; //hide character in foreground
+            //Invoke("WrapScreenRightToLeft", m_wrapScreenDelay);
+            //GetComponent<SpriteRenderer>().enabled = true; //show character appearing after delay
+
+            WrapScreenRightToLeft();
         }
         if (transform.position.y < m_bottomBounds)
         {
-            //Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
-            transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
+                transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
         }
         if (transform.position.y > m_topBounds)
         {
-            //Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
-            transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-        }
+                transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
+        }       
 
     }
+
+    public void WrapScreenLeftToRight()
+    {
+        transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);        
+    }
+
+    public void WrapScreenRightToLeft()
+    {
+        transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);        
+    }
+
+
+    /*public void ClampVelocity()
+    {
+        float speed = Vector3.Magnitude(m_player.velocity);  // test current object speed
+
+        if (speed > m_maxVelocity)
+        {
+            float brakeSpeed = speed - m_maxVelocity;  // calculate the speed decrease
+
+            Vector3 normalisedVelocity = m_player.velocity.normalized;
+            Vector3 brakeVelocity = normalisedVelocity * brakeSpeed;  // make the brake Vector3 value
+
+            m_player.AddForce(-brakeVelocity);  // apply opposing brake force
+        }
+    }*/
+
     public void DropPickup()
     {
         if (isCarrying == true)
