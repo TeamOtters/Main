@@ -14,6 +14,7 @@ public class DetectPickup : MonoBehaviour {
     private bool m_immuneToPickUp = false;
     private GameObject m_ourParent; // Should be PLAYER DATA 
     private GameObject m_ourGrandparentLogic; // SHOULD BE LOGIC LAYER
+    internal bool m_isPickedUp = false;
     
 
     private void Start()
@@ -50,6 +51,7 @@ public class DetectPickup : MonoBehaviour {
     {
         Debug.Log("Carrying viking!");
 
+        m_isPickedUp = true;
         // Set the valkyrie to the isCarrying state and assign the carryable rigidbody to the carrying valkyrie
         m_valkyrie.isCarrying = true;
         m_valkyrie.heldRigidbody = GetComponent<Rigidbody>();
@@ -57,8 +59,6 @@ public class DetectPickup : MonoBehaviour {
         //find the object within the colliding valkyrie with the "CarryLocation" tag and assign it as the carry location.
        // m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren<CarryLocation>().gameObject.transform;
         m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren(typeof(CarryLocation), true).gameObject.transform;
-        
-        Debug.Log(m_carryLocation.gameObject.name);
 
         // move the carryable to the carrying point
          transform.position = m_carryLocation.position;
@@ -95,6 +95,7 @@ public class DetectPickup : MonoBehaviour {
         m_ourParent.transform.SetParent(m_ourGrandparentLogic.transform,true);
         
         // Set the viking to be un-carried
+        m_isPickedUp= false;
         gameObject.GetComponent<VikingController>().SetCarried(false);
         transform.position = new Vector3(transform.position.x, transform.position.y - gameObject.GetComponent<SpriteRenderer>().bounds.extents.y, transform.position.z);
         StartCoroutine(ImmuneAfterDrop(m_immuneAfterDropDuration));

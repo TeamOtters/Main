@@ -21,7 +21,7 @@ public class VikingController : MonoBehaviour
     private Vector3 m_vikingMoveDirection = Vector3.zero;
     public float m_isGroundedOffset;
     private float m_isGroundedTimer;
-    
+
 
     public float m_projectileForceX;
     public float m_projectileForceY;
@@ -62,11 +62,14 @@ public class VikingController : MonoBehaviour
 
     private BoundaryHolder m_boundaryHolder;
 
-    private float m_leftBounds;
-    private float m_rightBounds;
-    private float m_topBounds;
-    private float m_bottomBounds;
+    internal float m_leftBounds;
+    internal float m_rightBounds;
+    internal float m_topBounds;
+    internal float m_bottomBounds;
     private Vector3 m_playerSize;
+    private VikingRespawn m_vikingRespawn;
+    private DetectPickup m_detectPickup;
+
 
 
 
@@ -92,6 +95,8 @@ public class VikingController : MonoBehaviour
 
         m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(VikingController), true).GetComponent<SpriteRenderer>().bounds.extents;
         m_boundaryHolder = GameController.Instance.boundaryHolder;
+        m_vikingRespawn = GetComponent<VikingRespawn>();
+        m_detectPickup = GetComponent<DetectPickup>();
 
         //assign an animator controller based on player index
         m_animator = transform.gameObject.GetComponent<Animator>();
@@ -233,7 +238,7 @@ public class VikingController : MonoBehaviour
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
         }
 
-        if(collision.contacts[0].normal.y > 0.1 )
+        if (collision.contacts[0].normal.y > 0.1)
         {
             print("First normal of the point that collide: " + collision.contacts[0].normal);
 
@@ -289,7 +294,7 @@ public class VikingController : MonoBehaviour
     //From Fixed Update
     private void SetBoundaries()
     {
-        //set the bounds value every frame to go with updated camera movement
+		//set the bounds value every frame to go with updated camera movement
         m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;
         m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
@@ -304,12 +309,12 @@ public class VikingController : MonoBehaviour
         {
             transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
         }
-        
-        if (transform.position.y < m_bottomBounds)
-        {
-            transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z); // this is where fall penalty should go
-        }
 
+        if (transform.position.y < m_bottomBounds && !m_vikingRespawn.m_hasRespawned && !m_detectPickup.m_isPickedUp)
+        {
+            m_vikingRespawn.Respawn();// this is where fall penalty should go
+        }
+        
         if (transform.position.y > m_topBounds)
         {
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
@@ -516,15 +521,16 @@ public class VikingController : MonoBehaviour
             m_isGrounded = true;
             m_askForGoundedOffset = false;
 
-            if (m_isWallJumping)
+			if (m_isWallJumping)
                 m_isWallJumping = false;
 
             if (m_isJumping)
                 m_isJumping = false;
 
+
         }
 
-        if(!m_vikingcCharacterController.isGrounded)
+        if (!m_vikingcCharacterController.isGrounded)
         {
             m_askForGoundedOffset = true;
 
