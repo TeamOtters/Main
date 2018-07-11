@@ -16,7 +16,7 @@ public class DetectPickup : MonoBehaviour {
 
     private void Start()
     {
-        m_collisionTag = null;
+        m_collisionTag = string.Empty;
 
     }
 
