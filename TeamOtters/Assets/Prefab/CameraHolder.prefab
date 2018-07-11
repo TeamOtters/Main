@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1217976398222344}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
-  m_LocalPosition: {x: 0, y: 7, z: -17}
+  m_LocalPosition: {x: 0, y: 12.03, z: -17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4419086037702042}
@@ -91,7 +91,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 59.3
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -127,17 +127,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4710672547675264ab723eab4d72cbf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transform_magnitude: 4
-  transform_roughness: 4.5
-  transform_fadeInTime: 2.5
-  transform_fadeOutTime: 3
-  hitReact_magnitude: 0
-  hitReact_roughness: 0
-  hitReact_fadeInTime: 0
-  hitReact_fadeOutTime: 0
   m_valkyrieRaceState: 0
-  m_panSpeed: 0.1
+  m_panSpeedY: 0.07
+  m_panSpeedXMin: 0.003
+  m_panSpeedXMax: 0.006
   m_endPanTarget: {fileID: 0}
+  m_panXAmount: 2
 --- !u!114 &114460563340998320
 MonoBehaviour:
   m_ObjectHideFlags: 1

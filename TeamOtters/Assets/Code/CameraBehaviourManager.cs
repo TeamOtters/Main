@@ -50,12 +50,10 @@ public class CameraBehaviourManager : MonoBehaviour {
             float percentageOfMax = Mathf.Abs(pos.x-targetX) / maxDistance;
             // clamp the value to 0-1 so we don't have to do a comparison
             percentageOfMax = Mathf.Clamp01(percentageOfMax);
-            // if you were using lerp to change the speed...
 
             float dynamicSpeed;
             dynamicSpeed = Mathf.Lerp(m_panSpeedXMax, m_panSpeedXMin, percentageOfMax);
-
-            dynamicSpeed = Mathf.SmoothStep(m_panSpeedXMin, m_panSpeedXMax, percentageOfMax);
+            
 
             Vector3 move = new Vector3(targetX * dynamicSpeed, target.y * m_panSpeedY * Time.deltaTime, 0);
             Debug.Log(percentageOfMax);
