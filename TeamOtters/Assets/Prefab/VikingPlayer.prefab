@@ -39,10 +39,10 @@ GameObject:
   - component: {fileID: 4865957438720640}
   - component: {fileID: 114123956633586850}
   - component: {fileID: 212415014928112364}
-  - component: {fileID: 143241035801321622}
   - component: {fileID: 54829936284017244}
   - component: {fileID: 114606825063994654}
   - component: {fileID: 95929624090876370}
+  - component: {fileID: 143665012898978188}
   m_Layer: 10
   m_Name: VikingPlayer
   m_TagString: Viking
@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 1382873379161574}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4998595159367928}
   - {fileID: 4040573150492788}
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 10
   m_immuneAfterDropDuration: 5
---- !u!143 &143241035801321622
+--- !u!143 &143665012898978188
 CharacterController:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -257,8 +257,8 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 2.6
-  m_Radius: 1.1
+  m_Height: 2.56
+  m_Radius: 0.75
   m_SlopeLimit: 70
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
