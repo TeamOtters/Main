@@ -212,8 +212,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d4497239c6a552c48aba62d5ebfd4441, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 5aa595faa1e592343aa9e0b043e49b85, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -451,8 +451,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d4497239c6a552c48aba62d5ebfd4441, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 5aa595faa1e592343aa9e0b043e49b85, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -691,8 +691,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d4497239c6a552c48aba62d5ebfd4441, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 5aa595faa1e592343aa9e0b043e49b85, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -764,8 +764,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d4497239c6a552c48aba62d5ebfd4441, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 5aa595faa1e592343aa9e0b043e49b85, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -992,8 +992,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: d4497239c6a552c48aba62d5ebfd4441, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 5aa595faa1e592343aa9e0b043e49b85, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2918,7 +2918,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.28627452}
-  m_EffectDistance: {x: 3, y: -3}
+  m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!1 &1518354464
 GameObject:

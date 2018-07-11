@@ -11,9 +11,11 @@ public class PullGamePhase : MonoBehaviour {
 
     public Scene m_Active;
     public GameObject m_PullGamePhase;
+    public Canvas m_Phase2;
+    public Canvas m_InGameMenu;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         SceneManager.LoadScene("Phase1", LoadSceneMode.Additive);
 	}
 
@@ -25,9 +27,14 @@ public class PullGamePhase : MonoBehaviour {
         {
             Debug.Log("Valkyrie Found");
             m_PullGamePhase.gameObject.SetActive(false);
-            SceneManager.LoadScene("Phase2", LoadSceneMode.Additive);
+            m_Phase2.gameObject.SetActive(true);
             SceneManager.UnloadSceneAsync("Phase1");
             
+        }
+
+        if (m_InGameMenu.enabled)
+        {
+            m_Phase2.gameObject.SetActive(false);
         }
     }
 
