@@ -2935,6 +2935,11 @@ Prefab:
       propertyPath: field of view
       value: 59.3
       objectReference: {fileID: 0}
+    - target: {fileID: 114056696822692360, guid: 5c32eea8e6f638b4aa11f4f951cdd5a7,
+        type: 2}
+      propertyPath: m_panSpeedY
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5c32eea8e6f638b4aa11f4f951cdd5a7, type: 2}
   m_IsPrefabParent: 0
