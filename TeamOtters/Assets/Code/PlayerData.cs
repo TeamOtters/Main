@@ -17,6 +17,8 @@ public class PlayerData : MonoBehaviour
     private GameObject m_valkyrie;
     public bool m_isGlowing = false;
 
+  
+
     // Use this for initialization
     void Start()
     {
@@ -24,6 +26,8 @@ public class PlayerData : MonoBehaviour
         pInd = GetComponentInChildren<Text>();
         m_phaseManager = m_gameController.phaseManager;
         m_scoreManager = m_gameController.m_scoreManager;
+        scoreText = GetComponentInChildren<Text>();
+
 
 
         GetPlayers();
@@ -99,8 +103,9 @@ public class PlayerData : MonoBehaviour
             }
         }
 
-        if (pInd != null)
+       if (pInd != null)
         {
+           
             pInd.text = "P" + m_PlayerIndex;
 
             if (m_PlayerIndex == 1)
@@ -119,12 +124,8 @@ public class PlayerData : MonoBehaviour
             {
                 pInd.color = new Color32(253, 146, 214, 255);
             }
-
-        if (scoreText != null)
-            {
-                scoreText.text = m_CurrentScore.ToString();
-            }
         }
+
 
 
 

@@ -129,9 +129,9 @@ GameObject:
   - component: {fileID: 45367986}
   - component: {fileID: 45367985}
   - component: {fileID: 45367984}
-  m_Layer: 5
-  m_Name: Score
-  m_TagString: P1UI
+  m_Layer: 31
+  m_Name: ScoreText
+  m_TagString: Score
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -246,6 +246,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1725771721746776, guid: 185530bb855fb2d428c4b78ed17deb5a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 185530bb855fb2d428c4b78ed17deb5a, type: 2}
   m_IsPrefabParent: 0
@@ -271,9 +275,9 @@ GameObject:
   - component: {fileID: 90667632}
   - component: {fileID: 90667631}
   - component: {fileID: 90667630}
-  m_Layer: 5
-  m_Name: Score
-  m_TagString: P1UI
+  m_Layer: 31
+  m_Name: ScoreText
+  m_TagString: Score
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,7 +364,7 @@ GameObject:
   - component: {fileID: 113629098}
   - component: {fileID: 113629097}
   - component: {fileID: 113629096}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Results
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 124466823}
   - component: {fileID: 124466822}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: SceneChanger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +501,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 157102193}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -511,7 +515,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 157102192}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.27594, y: -6.334406, z: 1.1900005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 421764098}
@@ -626,7 +630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 419020912}
   - component: {fileID: 419020913}
-  m_Layer: 30
+  m_Layer: 31
   m_Name: buttonbg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -798,6 +802,10 @@ Prefab:
       propertyPath: m_InGameMenu
       value: 
       objectReference: {fileID: 754684703}
+    - target: {fileID: 1258010303171892, guid: 26fc2be084620de42afb1f808be166a7, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 26fc2be084620de42afb1f808be166a7, type: 2}
   m_IsPrefabParent: 0
@@ -815,7 +823,7 @@ GameObject:
   m_Component:
   - component: {fileID: 431097149}
   - component: {fileID: 431097150}
-  m_Layer: 30
+  m_Layer: 31
   m_Name: buttonbg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -896,13 +904,13 @@ GameObject:
   - component: {fileID: 516812109}
   - component: {fileID: 516812108}
   - component: {fileID: 516812107}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Phase2_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &516812107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,9 +1031,9 @@ GameObject:
   - component: {fileID: 649892976}
   - component: {fileID: 649892975}
   - component: {fileID: 649892974}
-  m_Layer: 5
-  m_Name: Score
-  m_TagString: P1UI
+  m_Layer: 31
+  m_Name: ScoreText
+  m_TagString: Score
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1110,7 +1118,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744441403}
   - component: {fileID: 744441404}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: TimeOut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1168,7 +1176,7 @@ GameObject:
   - component: {fileID: 757300248}
   - component: {fileID: 757300247}
   - component: {fileID: 757300249}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,7 +1264,7 @@ GameObject:
   - component: {fileID: 776637193}
   - component: {fileID: 776637192}
   - component: {fileID: 776637194}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: PullGamePhase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1544,7 +1552,7 @@ GameObject:
   - component: {fileID: 847323128}
   - component: {fileID: 847323130}
   - component: {fileID: 847323129}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1619,9 +1627,9 @@ GameObject:
   - component: {fileID: 878670485}
   - component: {fileID: 878670484}
   - component: {fileID: 878670483}
-  m_Layer: 5
-  m_Name: Score
-  m_TagString: P1UI
+  m_Layer: 31
+  m_Name: ScoreText
+  m_TagString: Score
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1737,7 +1745,7 @@ GameObject:
   - component: {fileID: 942188408}
   - component: {fileID: 942188410}
   - component: {fileID: 942188409}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1962,6 +1970,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 1072945319}
     m_Modifications:
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: scoreText.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4299416604753702, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
       propertyPath: m_LocalPosition.x
       value: 5.27594
@@ -2019,6 +2032,26 @@ Prefab:
       propertyPath: m_scoreBall
       value: 
       objectReference: {fileID: 344618011}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: scoreText.Array.data[0]
+      value: 
+      objectReference: {fileID: 649892975}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: scoreText.Array.data[1]
+      value: 
+      objectReference: {fileID: 45367985}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: scoreText.Array.data[2]
+      value: 
+      objectReference: {fileID: 878670484}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: scoreText.Array.data[3]
+      value: 
+      objectReference: {fileID: 90667631}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
@@ -2033,8 +2066,7 @@ GameObject:
   - component: {fileID: 1125328526}
   - component: {fileID: 1125328525}
   - component: {fileID: 1125328524}
-  - component: {fileID: 1125328527}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Player2_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2134,21 +2166,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1125328522}
---- !u!114 &1125328527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1125328522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d23cd5101e83c94e90db2e577cc2486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerIndex: 2
-  m_CurrentScore: 0
-  scoreText: {fileID: 45367985}
-  m_isGlowing: 0
 --- !u!1 &1151435584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,8 +2177,7 @@ GameObject:
   - component: {fileID: 1151435588}
   - component: {fileID: 1151435587}
   - component: {fileID: 1151435586}
-  - component: {fileID: 1151435589}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Player3_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2261,21 +2277,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1151435584}
---- !u!114 &1151435589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1151435584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d23cd5101e83c94e90db2e577cc2486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerIndex: 3
-  m_CurrentScore: 0
-  scoreText: {fileID: 878670484}
-  m_isGlowing: 0
 --- !u!1 &1165516697
 GameObject:
   m_ObjectHideFlags: 0
@@ -2287,7 +2288,7 @@ GameObject:
   - component: {fileID: 1165516701}
   - component: {fileID: 1165516700}
   - component: {fileID: 1165516699}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: 3rd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2397,7 +2398,7 @@ GameObject:
   - component: {fileID: 1178658499}
   - component: {fileID: 1178658501}
   - component: {fileID: 1178658500}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2699,6 +2700,38 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1598315955116692, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1877575843556440, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1717682117853476, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968790790383606, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697678096575738, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1300135382240912, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1722225552871520, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1144114150107254, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
+      propertyPath: m_Layer
+      value: 31
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77ae195b1a7ab7848852724eabb7711a, type: 2}
   m_IsPrefabParent: 0
@@ -2732,8 +2765,7 @@ GameObject:
   - component: {fileID: 1281878931}
   - component: {fileID: 1281878930}
   - component: {fileID: 1281878929}
-  - component: {fileID: 1281878932}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Player4_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2833,21 +2865,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1281878927}
---- !u!114 &1281878932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1281878927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d23cd5101e83c94e90db2e577cc2486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerIndex: 4
-  m_CurrentScore: 0
-  scoreText: {fileID: 90667631}
-  m_isGlowing: 0
 --- !u!1001 &1338648860
 Prefab:
   m_ObjectHideFlags: 0
@@ -2919,7 +2936,7 @@ GameObject:
   - component: {fileID: 1385553011}
   - component: {fileID: 1385553013}
   - component: {fileID: 1385553012}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3041,7 +3058,7 @@ GameObject:
   - component: {fileID: 1427479528}
   - component: {fileID: 1427479527}
   - component: {fileID: 1427479526}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: 2nd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3156,7 +3173,7 @@ GameObject:
   - component: {fileID: 1454901123}
   - component: {fileID: 1454901122}
   - component: {fileID: 1454901121}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3221,7 +3238,7 @@ GameObject:
   - component: {fileID: 1459275911}
   - component: {fileID: 1459275910}
   - component: {fileID: 1459275914}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: MainMenu_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3460,13 +3477,13 @@ GameObject:
   - component: {fileID: 1618360004}
   - component: {fileID: 1618360009}
   - component: {fileID: 1618360008}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Results_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1618360004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3692,7 +3709,7 @@ GameObject:
   - component: {fileID: 1753984042}
   - component: {fileID: 1753984044}
   - component: {fileID: 1753984043}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3729,7 +3746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0.6862745}
+  m_Color: {r: 0.6132076, g: 0.6132076, b: 0.6132076, a: 0.8235294}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -3761,7 +3778,7 @@ GameObject:
   - component: {fileID: 1784358455}
   - component: {fileID: 1784358454}
   - component: {fileID: 1784358453}
-  m_Layer: 0
+  m_Layer: 31
   m_Name: ReadyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3856,7 +3873,7 @@ GameObject:
   - component: {fileID: 1804798105}
   - component: {fileID: 1804798104}
   - component: {fileID: 1804798103}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: 4th
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4107,7 +4124,7 @@ GameObject:
   - component: {fileID: 1926152114}
   - component: {fileID: 1926152116}
   - component: {fileID: 1926152115}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4182,8 +4199,7 @@ GameObject:
   - component: {fileID: 1939618883}
   - component: {fileID: 1939618882}
   - component: {fileID: 1939618881}
-  - component: {fileID: 1939618884}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Player1_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4283,21 +4299,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1939618879}
---- !u!114 &1939618884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1939618879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d23cd5101e83c94e90db2e577cc2486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerIndex: 1
-  m_CurrentScore: 0
-  scoreText: {fileID: 649892975}
-  m_isGlowing: 0
 --- !u!1 &1969353076
 GameObject:
   m_ObjectHideFlags: 0
@@ -4375,7 +4376,7 @@ GameObject:
   - component: {fileID: 1981540176}
   - component: {fileID: 1981540175}
   - component: {fileID: 1981540177}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: Restart_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4514,7 +4515,7 @@ GameObject:
   - component: {fileID: 2060444357}
   - component: {fileID: 2060444356}
   - component: {fileID: 2060444355}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: First
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4626,7 +4627,7 @@ GameObject:
   - component: {fileID: 2146598043}
   - component: {fileID: 2146598042}
   - component: {fileID: 2146598044}
-  m_Layer: 5
+  m_Layer: 31
   m_Name: MainMenu_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,8 +12,7 @@ public class ScoreManager : MonoBehaviour {
     private int highestScore = 0;
     private GlowEffect m_glowEffectScript;
     public GameObject m_glowEffect;
-    internal Text scoreText;
-
+    public Text[] scoreText;
  
 
     //Am the players score I'm getting Higher then the current highestScore? If so, set that score the new highest score! 
@@ -41,6 +40,18 @@ public class ScoreManager : MonoBehaviour {
         //SetHighestPlayerScore(playerIndex-1);
 
     }
+
+    //Additions by Vivienne
+
+    public void Update()
+    {
+        for (int i = 0; i < m_players.Length; i++)
+        {
+            scoreText[i].text=m_players[i].m_CurrentScore.ToString();
+        }
+            
+    }
+
     /*
     private void SetHighestPlayerScore(int scoringPlayer)
     {
