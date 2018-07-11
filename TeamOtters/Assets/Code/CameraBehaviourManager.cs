@@ -44,21 +44,27 @@ public class CameraBehaviourManager : MonoBehaviour {
             Vector3 target = m_endPanTarget.transform.position;
             
 
+
             float maxDistance = m_panXAmount * 2;
-            float percentageOfMax = targetX / maxDistance;
+
+            float percentageOfMax = Mathf.Abs(pos.x-targetX) / maxDistance;
             // clamp the value to 0-1 so we don't have to do a comparison
             percentageOfMax = Mathf.Clamp01(percentageOfMax);
             // if you were using lerp to change the speed...
 
             float dynamicSpeed;
+            dynamicSpeed = Mathf.Lerp(m_panSpeedXMax, m_panSpeedXMin, percentageOfMax);
 
-            dynamicSpeed = Mathf.Lerp(m_panSpeedXMin, m_panSpeedXMax, percentageOfMax);
-            
+            dynamicSpeed = Mathf.SmoothStep(m_panSpeedXMin, m_panSpeedXMax, percentageOfMax);
+
             Vector3 move = new Vector3(targetX * dynamicSpeed, target.y * m_panSpeedY * Time.deltaTime, 0);
+            Debug.Log(percentageOfMax);
+
+            transform.Translate(move, Space.World);
 
             //Vector3 move = new Vector3(0f * m_panSpeedX, target.y * m_panSpeedY * Time.deltaTime, 0);
 
-            transform.Translate(move, Space.World);
+
 
 
             /* Rotation stuff, let's deal with this later
@@ -71,7 +77,7 @@ public class CameraBehaviourManager : MonoBehaviour {
             if (rot.y == targetYRotation)
                 targetYRotation = -targetYRotation;
             */
-   
+
 
             //Set the new target x value for moving from left to right
             if (Mathf.Clamp(pos.x, targetX - 0.5f, targetX + 0.5f) == pos.x)
