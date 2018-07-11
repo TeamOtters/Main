@@ -11,6 +11,7 @@ public class PhaseManager : MonoBehaviour {
     public bool m_startInPhaseOne = true;
     public PlayerData[] m_players;
     public float m_phase2Duration = 10f;
+    public float m_phase2Delay = 3f;
     public BouncingBall m_bouncingBall;
 
     private List<int> m_playerScores = new List<int>();
@@ -56,9 +57,9 @@ public class PhaseManager : MonoBehaviour {
 
         //wait for camera shake to end before phase 2 begins
         if (GameController.Instance.rumbleManager.transformShakeComplete == true)
-       { 
+       {
             // Begin Phase 2
-            StartCoroutine(PhaseTwoDuration(m_phase2Duration));
+            Invoke("BeginPhaseTwo", m_phase2Delay);      
        }
         
     }   
@@ -82,6 +83,11 @@ public class PhaseManager : MonoBehaviour {
             m_bouncingBall.Respawn();
             Debug.Log("Bouncing ball respawn triggered");
         }
+    }
+
+    void BeginPhaseTwo()
+    {
+        StartCoroutine(PhaseTwoDuration(m_phase2Duration));
     }
 
     //Set the two characters with highest score to Valkyries
