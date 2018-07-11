@@ -40,7 +40,9 @@ public class VikingController : MonoBehaviour
     private bool m_isGrounded;
     private bool m_askForGoundedOffset;
     private bool m_isJumping;
+    private bool m_isWallJumping;
     private bool m_layerIsSet;
+    
 
     public float m_stunnedCoolDown = 1f;
 
@@ -92,10 +94,7 @@ public class VikingController : MonoBehaviour
     {
         
         if (m_askForGoundedOffset)
-        {
                 m_isGroundedTimer -= Time.deltaTime;
-
-         }
 
         if(m_isGroundedTimer <= 0.0f)
         {
@@ -105,9 +104,12 @@ public class VikingController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+
     void FixedUpdate()
     {
+        //Set the boundaries to camera
+        SetBoundaries();
+
         if (!m_isStunned)
         {
             if (Input.GetButtonDown("Fire1_P" + m_playerIndexString))
@@ -129,48 +131,6 @@ public class VikingController : MonoBehaviour
 
         if (m_isRetracting)
             ProjectileRetractingUpdate();
-
-        //set the bounds value every frame to go with updated camera movement
-        m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;
-        m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
-        m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
-        m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;
-
-        //Set position to bounds
-        if (transform.position.x < m_leftBounds)
-        {
-            transform.position = new Vector3(m_leftBounds, transform.position.y , transform.position.z);
-        }
-        if (transform.position.x > m_rightBounds)
-        {
-            transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
-        }
-        /*
-        if (transform.position.y < m_bottomBounds)
-        {
-            transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z); // this is where fall penalty should go
-        }
-        */
-        if (transform.position.y > m_topBounds)
-        {
-            transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-        }
-        
-
-
-        /*if(transform.position.normalized.y <= 0)
-        {
-            Debug.Log("OJ");
-            if (m_isJumping)
-            {
-                if (m_layerIsSet)
-                {
-                    m_layerIsSet = false;
-                    gameObject.layer = m_playersLayer;
-                    m_isJumping = false;
-                }
-            }
-        }*/
 
         m_currentHeight = transform.position.y;
         float travel = m_currentHeight - m_previousHeight;
@@ -220,12 +180,7 @@ public class VikingController : MonoBehaviour
         if (!m_vikingcCharacterController.isGrounded && !m_collided)
         {
             // how much the character should be knocked back
-            var magnitude = 5;
-            // calculate force vector
-            //var force = transform.position - hit.transform.position;
-            // normalize force vector to get direction only and trim magnitude
-            //force.Normalize();
-            //gameObject.GetComponent<Rigidbody>().AddForce(force * magnitude);
+            var magnitude = 5; 
             m_collided = true;
 
             m_vikingMoveDirection.y -= m_vikingGravityForce * magnitude * Time.deltaTime;
@@ -240,20 +195,12 @@ public class VikingController : MonoBehaviour
             if (collision.gameObject.GetComponent<ProjectileBehaviour>().m_playerID != m_thisPlayerIndex)
                 SetStunned();
 
-            if (collision.gameObject.GetComponent<ProjectileBehaviour>().m_hit == true)
-            {
-                //m_currentAmmo = 1;
-                //Destroy(collision.gameObject);
-                //m_currentProjectile = null;
-            }
         }
 
         if (collision.collider.CompareTag("Viking"))
         {
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
         }
-
-
 
         if(collision.contacts[0].normal.y > 0.1 )
         {
@@ -307,6 +254,39 @@ public class VikingController : MonoBehaviour
 
     }
 
+
+    //From Fixed Update
+    private void SetBoundaries()
+    {
+        //set the bounds value every frame to go with updated camera movement
+        m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;
+        m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
+        m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
+        m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;
+
+        //Set position to bounds
+        if (transform.position.x < m_leftBounds)
+        {
+            transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x > m_rightBounds)
+        {
+            transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
+        }
+        /*
+        if (transform.position.y < m_bottomBounds)
+        {
+            transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z); // this is where fall penalty should go
+        }
+        */
+        if (transform.position.y > m_topBounds)
+        {
+            transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
+        }
+    }
+
+
+    //Called From Fixed Update
     private void VikingFire()
     {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
@@ -431,6 +411,7 @@ public class VikingController : MonoBehaviour
     }
 
 
+    //Called From Fixed Update
     private void RetractProjectile()
     {
         if (m_currentAmmo == 1)
@@ -445,17 +426,11 @@ public class VikingController : MonoBehaviour
 
     }
 
+    //Called From Fixed Update
     private void ProjectileRetractingUpdate()
     {
 
         m_currentProjectile.transform.position = Vector3.Lerp(m_currentProjectile.transform.position, transform.position, Time.deltaTime / m_projectileRetractTime);
-        // m_currentProjectile.transform.position = transform.position;
-
-
-
-        //ector3 move = new Vector3(0, target.y * m_panSpeed * Time.deltaTime, 0);
-
-        //transform.Translate(move, Space.World);
 
         if (Mathf.Clamp(m_currentProjectile.transform.position.x, transform.position.x - 0.5f, transform.position.x + 0.5f) == m_currentProjectile.transform.position.x)
         {
@@ -466,12 +441,11 @@ public class VikingController : MonoBehaviour
         }
     }
 
+    //Called From Fixed Update
     private void VikingMovement()
     {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
-
-
 
         //MovementGround
         if (m_vikingcCharacterController.isGrounded && !m_isCarried)
@@ -481,8 +455,7 @@ public class VikingController : MonoBehaviour
             m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
             m_vikingMoveDirection *= m_vikingMovementSpeed;
 
-             //m_vikingcCharacterController.SimpleMove(m_vikingMoveDirection * m_vikingMovementSpeed);
-            
+             //m_vikingcCharacterController.SimpleMove(m_vikingMoveDirection * m_vikingMovementSpeed); 
         }
 
 
@@ -491,10 +464,12 @@ public class VikingController : MonoBehaviour
             m_isGrounded = true;
             m_askForGoundedOffset = false;
 
-            if(m_isJumping)
-            {
+            if (m_isWallJumping)
+                m_isWallJumping = false;
+
+            if (m_isJumping)
                 m_isJumping = false;
-            }
+
         }
 
         if(!m_vikingcCharacterController.isGrounded)
@@ -508,14 +483,16 @@ public class VikingController : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
             {
-   
+                
                 m_vikingMoveDirection.y =  m_vikingJumpSpeed;
                 if (!m_layerIsSet)
                 {
                     gameObject.layer = m_goThroughPlatformLayer;
                     m_layerIsSet = true;
                 }
+
                 m_isJumping = true;
+
                // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
 
                 //  m_rb.AddForce (transform.TransformDirection(transform.position.x, transform.position.y + 1, transform.position.z) * m_vikingJumpSpeed);
@@ -528,17 +505,34 @@ public class VikingController : MonoBehaviour
         //Movement Air
         if (!m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
-            //var _airDir = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), 0, 0);
             m_vikingMoveDirection.x = transform.TransformDirection(vNewInput).x * m_vikingMovementSpeed;
-            
-            // m_vikingcCharacterController.SimpleMove(_airDir * m_vikingMovementSpeed);
-
         }
 
-        
+        //Wall Jump
+        if (!m_vikingcCharacterController.isGrounded && !m_isCarried && !m_isWallJumping)
+        {
+            if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
+            {
+                if(transform.position.x == m_leftBounds || transform.position.x == m_rightBounds)
+                {
+                    m_vikingMoveDirection.y = m_vikingJumpSpeed -2f;
+                    
+                    if (!m_layerIsSet)
+                    {
+                        gameObject.layer = m_goThroughPlatformLayer;
+                        m_layerIsSet = true;
+                    }
 
-        //Right - Sprite Flip
-        if (Mathf.Clamp(angle, 10, 170) == angle)
+                    m_isJumping = true;
+                    m_isWallJumping = true;
+                }
+            }
+        }
+
+
+
+            //Right - Sprite Flip
+            if (Mathf.Clamp(angle, 10, 170) == angle)
         {
             GetComponent<SpriteRenderer>().flipX = false;
             m_turnedLeft = false;
@@ -558,14 +552,12 @@ public class VikingController : MonoBehaviour
         m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
     }
 
-
+   
     IEnumerator FireCoolDown()
     {
         yield return new WaitForSeconds(m_rapidFireSpeed);
         m_fireCooldownOn = false;
     }
-
-
 
     public void SetStunned()
     {
