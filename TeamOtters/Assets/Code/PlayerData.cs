@@ -6,94 +6,81 @@ using System.Linq;
 
 public class PlayerData : MonoBehaviour
 {
-
     public int m_PlayerIndex = 1;
     public int m_CurrentScore = 0;
     internal Text scoreText;
-
-
-
     private GameController m_gameController;
     private PhaseManager m_phaseManager;
-
-    private int m_otherPlayerIndex;
-
-    int[] m_highestScore = { 0, 0, 0, 0 };
-    int maxValue;
-    public GameObject m_glowEffect;
-
     private ScoreManager m_scoreManager;
     private GameObject m_viking;
     private GameObject m_valkyrie;
-    private GameObject m_glowViking;
-    private GameObject m_glowValkyrie;
-
+    public bool m_isGlowing = false;
 
     // Use this for initialization
     void Start()
+    { 
         m_gameController = GameController.Instance;
         scoreText = GetComponentInChildren<Text>();
         m_phaseManager = m_gameController.phaseManager;
         m_scoreManager = m_gameController.m_scoreManager;
 
-        StartCoroutine("LateStart");
-       
-      
+        GetPlayers();
+        
     }
 
-    IEnumerator LateStart ()
+    private void GetPlayers ()
     {
-        yield return new WaitForSecondsRealtime(3f);
-        m_viking = GetComponentInChildren<VikingController>().gameObject;
-        m_valkyrie = GetComponentInChildren<ValkyrieController>().gameObject;
-        m_glowViking = m_viking.GetComponent<VikingController>().m_highestScoreEffect;
-        Debug.Log("LAteStart");
-        //m_glowValkyrie = GetComponentInChildren<ValkyrieController>().m_highestScoreEffect;
+        m_viking = GetComponentInChildren(typeof(VikingController), true).gameObject;
+        m_valkyrie = GetComponentInChildren(typeof(ValkyrieController), true).gameObject;
     }
 
-    // Update is called once per frame
     void Update ()
     {
-
-        print("Highest:" + m_gameController.m_scoreManager.GetHighestScore());
-
-
+        //I'm sending my (this players) score to the scoreManager, there it checks if my score is the highest score and if so, it sets my score as the highest score.
         m_gameController.m_scoreManager.SetHighestScore(m_CurrentScore);
 
-        if (m_CurrentScore >= m_gameController.m_scoreManager.GetHighestScore())
-        {
-            print("Player:" + m_PlayerIndex.ToString() + "has Highest Score of:" + m_gameController.m_scoreManager.GetHighestScore() + " WOOOOOOOW!!");
 
-            if (m_viking.activeSelf && m_CurrentScore != 0)
+        //am I the highest score? Then, make me glow and be glorious! ( as long as my score isn't the starting score of 0 )
+        if (m_CurrentScore >= m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
+        {
+            //Am I glowing? Only need to set it to  glowing once. We don't want to enable the effect over and over ( we are in Update after all) .
+            if (!m_isGlowing)
             {
-                if(!m_glowViking.activeSelf)
-                    m_glowViking.SetActive(true);
+                //Check if I am a valkyrie or viking, as we need to know which prefab we should reference.
+                if (m_viking.activeSelf )
+                    m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(true);
+                if (m_valkyrie.activeSelf )
+                    m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
+
+                //we are in fact glowing! 
+                m_isGlowing = true;
             }
-           // if (m_valkyrie.activeSelf)
-             //   m_glowValkyrie.SetActive(true);
 
         }
 
-        if (m_CurrentScore < m_gameController.m_scoreManager.GetHighestScore())
+        //am I not anymore the one who has the highest score? Make me normal and dull! ( as long as my score isn't the starting score of 0 )
+        if (m_CurrentScore < m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
         {
-            print("Player:" + m_PlayerIndex.ToString() + "does not have highest score. BUUUUUUUU!");
-
-
-            if (m_viking.gameObject.activeSelf)
+            //Am I glowing? Only need to set it to not glowing once. We don't want to disable the effect over and over. ( we are in Update after all) .
+            if (m_isGlowing)
             {
-                if(m_glowViking.activeSelf)
-                    m_glowViking.SetActive(false);
-            }
-            //if (m_valkyrie.activeSelf)
-              //  m_glowValkyrie.SetActive(false);
+                //Check if I am a valkyrie or viking, as we need to know which prefab we should reference and our score isn't 0. 
+                if (m_viking.gameObject.activeSelf)
+                    m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(false);
+                if (m_valkyrie.activeSelf)
+                    m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
 
+
+                //Not glowing anymore
+                m_isGlowing = false;
+            }
         }
+
         if (scoreText != null)
-
-            {
+        {
                 scoreText.text = "P" + m_PlayerIndex;
                 //scoreText.text = "Player " + m_PlayerIndex + ": " + m_CurrentScore.ToString() + " score";
-            }
+        }
 	}
 
 

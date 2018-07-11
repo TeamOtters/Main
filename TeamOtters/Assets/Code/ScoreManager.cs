@@ -12,6 +12,7 @@ public class ScoreManager : MonoBehaviour {
     public GameObject m_glowEffect;
 
     
+    //Am the players score I'm getting Higher then the current highestScore? If so, set that score the new highest score! 
     public void SetHighestScore(int score)
     {
         if (score > highestScore)
@@ -19,6 +20,8 @@ public class ScoreManager : MonoBehaviour {
             highestScore = score;
         }
     }
+
+    //Easy way for the player to see if they are the highest score!
     public int GetHighestScore()
     {
         return highestScore;

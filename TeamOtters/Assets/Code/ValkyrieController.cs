@@ -30,6 +30,8 @@ public class ValkyrieController : MonoBehaviour
     private float m_topBounds;
     private float m_bottomBounds;
 
+    public GameObject m_highestScoreEffect;
+
     // Use this for initialization
     void Start()
     {

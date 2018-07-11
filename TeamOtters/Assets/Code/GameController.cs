@@ -7,9 +7,11 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     //public static GameController Instance = null;
-    
+
     //ORiginal
-    public static GameController Instance { get; private set; }
+    // public static GameController Instance { get; private set; }
+
+    private static GameController instance;
 
     public BoundaryHolder boundaryHolder;
     public GameObject player;
@@ -43,12 +45,18 @@ public class GameController : MonoBehaviour
     private PlayerSpawnPoint[] m_playerSpawnPoints;
     private GameObject m_tempGameObject;
 
+    public static GameController Instance
+    {
+        // get { return instance ?? (instance = Instantiate(Resources.Load("GameController", typeof(GameObject)) as GameObject; }
+        get { return instance; }
+    }
+
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
             // First time creation, sets first Instance
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }       
         else
