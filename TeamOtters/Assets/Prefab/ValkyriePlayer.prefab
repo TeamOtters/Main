@@ -91,7 +91,7 @@ Transform:
   m_GameObject: {fileID: 1624163314470624}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4475827811146840}
   - {fileID: 4483917148124028}
@@ -163,8 +163,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.28, y: 1.28, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.0721889, y: 1.4560416, z: 0.20000002}
+  m_Center: {x: 0.13203132, y: -0.6748272, z: 0}
 --- !u!65 &65572327428260170
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -175,8 +175,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 3.8168633, y: 1.3030804, z: 1}
-  m_Center: {x: -0.12479842, y: -0.6863875, z: 0}
+  m_Size: {x: 4.4036694, y: 1.7431858, z: 1}
+  m_Center: {x: 0.10992378, y: -0.5250157, z: 0}
 --- !u!65 &65828799121857528
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -187,8 +187,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 0.3}
-  m_Center: {x: 0, y: 0.03745842, z: 0}
+  m_Size: {x: 2.5562513, y: 2.468231, z: 0.3}
+  m_Center: {x: 0.11736117, y: 0.02278909, z: 0}
 --- !u!95 &95293270518704256
 Animator:
   serializedVersion: 3
@@ -4880,12 +4880,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 38490c5467858804c89f270a57e3a475, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a34bc5bc831d4264e8ab26a44cd45ebe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
