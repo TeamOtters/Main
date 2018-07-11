@@ -634,7 +634,7 @@ public class VikingController : MonoBehaviour
 
     private void StunnedCooldown()
     {
-        Debug.Log("NotStunned!");
+        //Debug.Log("NotStunned!");
         m_animator.SetInteger("State", 1); // Idle, not stunned
 
         m_isStunned = false;

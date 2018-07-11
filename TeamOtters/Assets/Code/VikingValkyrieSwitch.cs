@@ -49,20 +49,14 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     {
         //Activating viking, childing valkyrie to viking and deactivating valkyrie
         m_isValkyrie = false;
-        if (m_vikingCharacter != null && m_valkyrieCharacter != null)
-        { 
-            m_vikingCharacter.SetActive(true);
-            m_vikingCharacter.transform.parent = m_parentTransform;
-            m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
-            m_scoreText.transform.parent = m_vikingCharacter.transform;
-            m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
-            m_valkyrieCharacter.SetActive(false);
-            
-        }
-        else
-        {
-            Debug.Log("Player is missing a character child! Make sure it has both the viking and the valkyrie! Object: " + this.gameObject.name);
-        }
+        m_vikingCharacter.SetActive(true);
+        m_vikingCharacter.transform.parent = m_parentTransform;
+        m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
+        m_scoreText.transform.parent = m_vikingCharacter.transform;
+        m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
+        m_valkyrieCharacter.SetActive(false);
+
+
     }
 
     // Switch to Valkyrie
