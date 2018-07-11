@@ -12,7 +12,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     public int m_projectileDamage = 10;
     private bool m_retracting;
     public PlayerData m_playerData;
-    private GameController m_gameController = GameController.Instance;
+    private GameController m_gameController;
     private ScoreManager m_scoreManager;
     private int m_platformLayer;
 
@@ -24,6 +24,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         m_collider = GetComponent<Collider>();
         EnableRagdoll();
         m_playerID = m_playerData.m_PlayerIndex;
+        m_gameController = GameController.Instance;
 
         m_platformLayer = LayerMask.GetMask("Platform");
         m_scoreManager = m_gameController.m_scoreManager;
@@ -78,11 +79,19 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             if (m_scoreManager != null)
             {
-                m_scoreManager.AddToScore( 5, m_playerID); 
+                m_scoreManager.AddToScore( m_gameController.bounceHit, m_playerID); 
             }
 
             if (m_scoreManager == null)
                 Debug.Log("Couldn't find scoreManager");
+        }
+        if (collision.collider.CompareTag("Valkyrie"))
+        {
+            if (collision.collider.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex != m_playerID)
+            {
+                m_scoreManager.AddToScore(m_gameController.hitOpponent, m_playerID);
+                Debug.Log("Viking hit valkyrie");
+            }
         }
     }
 
