@@ -25,6 +25,7 @@ public class PlayerData : MonoBehaviour
         m_phaseManager = m_gameController.phaseManager;
         m_scoreManager = m_gameController.m_scoreManager;
 
+
         GetPlayers();
 
     }
@@ -39,22 +40,36 @@ public class PlayerData : MonoBehaviour
     {
         //I'm sending my (this players) score to the scoreManager, there it checks if my score is the highest score and if so, it sets my score as the highest score.
         m_gameController.m_scoreManager.SetHighestScore(m_CurrentScore);
-
+        var mySwitchScript = gameObject.GetComponent<VikingValkyrieSwitch>();
 
         //am I the highest score? Then, make me glow and be glorious! ( as long as my score isn't the starting score of 0 )
         if (m_CurrentScore >= m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
         {
-            //Am I glowing? Only need to set it to  glowing once. We don't want to enable the effect over and over ( we are in Update after all) .
-            if (!m_isGlowing)
+            if (m_phaseManager.m_isInPhaseOne == true)
             {
-                //Check if I am a valkyrie or viking, as we need to know which prefab we should reference.
-                if (m_viking.activeSelf)
-                    m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(true);
-                if (m_valkyrie.activeSelf)
-                    m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
+                //Am I glowing? Only need to set it to  glowing once. We don't want to enable the effect over and over ( we are in Update after all) .
+                if (!m_isGlowing)
+                {
+                    //Check if I am a valkyrie or viking, as we need to know which prefab we should reference.
+                    if (m_viking.activeSelf)
+                        m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(true);
+                    if (m_valkyrie.activeSelf)
+                        m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
 
-                //we are in fact glowing! 
-                m_isGlowing = true;
+                    //we are in fact glowing! 
+                    m_isGlowing = true;
+                }
+            }
+            if (m_phaseManager.m_isInPhaseOne == false)
+            {
+                
+                /*if (m_playerScoreArray[m_PlayerIndex] == m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
+                {
+                        compare your id to the other player with the same scores id and pick one at random. 
+                        
+                        this player becomes viking, the other becomes valkyrie
+                }*/
+                mySwitchScript.SwitchToViking();
             }
 
         }
@@ -62,18 +77,25 @@ public class PlayerData : MonoBehaviour
         //am I not anymore the one who has the highest score? Make me normal and dull! ( as long as my score isn't the starting score of 0 )
         if (m_CurrentScore < m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
         {
-            //Am I glowing? Only need to set it to not glowing once. We don't want to disable the effect over and over. ( we are in Update after all) .
-            if (m_isGlowing)
+            if (m_phaseManager.m_isInPhaseOne == true)
             {
-                //Check if I am a valkyrie or viking, as we need to know which prefab we should reference and our score isn't 0. 
-                if (m_viking.gameObject.activeSelf)
-                    m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(false);
-                if (m_valkyrie.activeSelf)
-                    m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
+                //Am I glowing? Only need to set it to not glowing once. We don't want to disable the effect over and over. ( we are in Update after all) .
+                if (m_isGlowing)
+                {
+                    //Check if I am a valkyrie or viking, as we need to know which prefab we should reference and our score isn't 0. 
+                    if (m_viking.gameObject.activeSelf)
+                        m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(false);
+                    if (m_valkyrie.activeSelf)
+                        m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
 
 
-                //Not glowing anymore
-                m_isGlowing = false;
+                    //Not glowing anymore
+                    m_isGlowing = false;
+                }
+            }
+            if (m_phaseManager.m_isInPhaseOne == false)
+            {
+                mySwitchScript.SwitchToValkyrie();
             }
         }
 
