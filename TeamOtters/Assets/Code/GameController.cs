@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    //public static GameController Instance = null;
+    
+    //ORiginal
     public static GameController Instance { get; private set; }
 
     public BoundaryHolder boundaryHolder;

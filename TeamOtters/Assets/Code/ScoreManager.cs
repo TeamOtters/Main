@@ -6,39 +6,43 @@ public class ScoreManager : MonoBehaviour {
 
     internal PlayerData[] m_players= { null, null, null, null };
     internal int [] m_playerScores = { 0, 0, 0, 0 };
-
+    private int highest = 0;
+    private int highestScore = 0;
+    private GlowEffect m_glowEffectScript;
     public GameObject m_glowEffect;
 
-    // Use this for initialization
-    void Start ()
+    
+    public void SetHighestScore(int score)
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        if (score > highestScore)
+        {
+            highestScore = score;
+        }
+    }
+    public int GetHighestScore()
     {
-		
-	}
+        return highestScore;
+    }
 
     public void AddToScore(int points, int playerIndex)
     {
 
         m_players[playerIndex-1].m_CurrentScore += points;
-        Debug.Log("Player " + playerIndex + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
+       //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
 
         //Sending playerIndex of player that just scored
-        SetHighestPlayerScore(playerIndex-1);
+        //SetHighestPlayerScore(playerIndex-1);
 
     }
-
+    /*
     private void SetHighestPlayerScore(int scoringPlayer)
     {
         for (int i = 0; i < m_players.Length; i++)
         {
-            if (m_playerScores != null && i <= m_playerScores.Length)
+            if (m_playerScores[i] != 0 && i <= m_playerScores.Length)
             {
                 m_playerScores[i] = m_players[i].m_CurrentScore;
+                Debug.Log(i + " is indexnumber for Player" + scoringPlayer + m_players[i]);
             }
             else
             {
@@ -47,35 +51,37 @@ public class ScoreManager : MonoBehaviour {
 
         }
         //local variables to keep track of the highest scores and corresponding indexes
-        int highest = 0;
-        int highestIndex = -1;
 
         for (int i = 0; i < m_playerScores.Length; i++)
 
         {
-            GlowEffect gloweffect = m_players[i].GetComponentInChildren<GlowEffect>();
+         
 
             //check who has the highest score and give them gloweffect
-            if (m_playerScores[i] == m_playerScores[scoringPlayer] && m_playerScores[i] >= highest && gloweffect == null)
+            if (i == scoringPlayer && m_playerScores[i] >= highest && m_glowEffectScript == null)
             {
                 highest = m_playerScores[i];
-                highestIndex = i + 1;
 
-                GameObject effect = (GameObject)Instantiate(m_glowEffect,m_players[i].GetComponentInChildren<VikingController>().gameObject.transform);
+                Instantiate(m_glowEffect, m_players[i].GetComponentInChildren<VikingController>().gameObject.transform);
                 Debug.Log(m_players[i] + " says I EARNED IT!");
+               m_glowEffectScript = m_players[i].GetComponentInChildren<GlowEffect>();
             }
-            else if (m_playerScores[i] == m_playerScores[scoringPlayer] && m_playerScores[i] >= highest && gloweffect != null)
+            if (i == scoringPlayer && m_playerScores[i] >= highest && m_glowEffectScript != null || i != scoringPlayer && m_playerScores[i] >= highest && m_glowEffectScript != null)
             {
                 highest = m_playerScores[i];
-                highestIndex = i + 1;
                 Debug.Log(m_players[i] + " says I ALREADY HAVE THE GLOW");
             }
+
+            if (m_playerScores[i] == highest)
+                {
+                     Debug.Log(m_players[i] + "Am I a Zero??");
+                }
             else
             {
 
-                if (m_playerScores[i] < highest && gloweffect != null)
+                if (m_playerScores[i] < highest && m_glowEffectScript != null)
                 {
-                    Destroy(gloweffect.gameObject);
+                    Destroy(m_glowEffectScript.gameObject);
                     Debug.Log(m_players[i] + "NOT IN THE LEAD ANYMORE :( ");
                 }
 
@@ -86,7 +92,7 @@ public class ScoreManager : MonoBehaviour {
                
             }
         }
-    }
+    }*/
 
 
 

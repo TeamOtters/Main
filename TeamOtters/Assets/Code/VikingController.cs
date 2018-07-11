@@ -45,6 +45,8 @@ public class VikingController : MonoBehaviour
     private int m_thisPlayerIndex;
     private string m_playerIndexString;
 
+    public GameObject m_highestScoreEffect;
+
 
 
 

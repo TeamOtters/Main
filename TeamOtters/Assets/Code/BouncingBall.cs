@@ -67,7 +67,7 @@ public class BouncingBall : MonoBehaviour
         {
             //Debug.Log("My position is: " + transform.position.x + "which is less than my Left boundary value: " + m_leftBounds);
             transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
-            Debug.Log("Hitting left");
+           // Debug.Log("Hitting left");
             //rb.AddForce((m_XBounceSpeed*2), 0, 0 * Time.deltaTime);
 
         }
@@ -75,7 +75,7 @@ public class BouncingBall : MonoBehaviour
         {
             //  Debug.Log("My position is: " + transform.position.x + "which is greater than my Right boundary value: " + m_rightBounds);
             transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
-            Debug.Log("Hitting right");
+            //Debug.Log("Hitting right");
             //rb.AddForce((-m_XBounceSpeed*2),0, 0 * Time.deltaTime);
 
         }
@@ -83,7 +83,7 @@ public class BouncingBall : MonoBehaviour
         {
             //Debug.Log("My position is: " + transform.position.y + "which is less than my Down boundary value: " + m_bottomBounds);
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
-            Debug.Log("Hitting bottom");
+            //Debug.Log("Hitting bottom");
             //rb.AddForce(0,(m_YBounceSpeed*2), 0 * Time.deltaTime);
 
         }
@@ -91,7 +91,7 @@ public class BouncingBall : MonoBehaviour
         {
             //Debug.Log("My position is: " + transform.position.y + "which is greater than my Up boundary value: " + m_topBounds);
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-            Debug.Log("Hitting top");
+            //Debug.Log("Hitting top");
             //rb.AddForce(0,m_YBounceSpeed, 0 * Time.deltaTime);
 
         }
