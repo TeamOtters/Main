@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class VikingController : MonoBehaviour
 {
-
+    private Animator m_animator;
     private float m_vikingSpeedForce;
     private CharacterController m_vikingcCharacterController;
     private VikingProjectiles m_vikingProjectiles;
@@ -34,6 +34,7 @@ public class VikingController : MonoBehaviour
 
     public bool m_isStunned;
     private bool m_isCarried;
+    private bool m_isIdle;
     private bool m_collided;
     private bool m_turnedLeft;
     private bool m_isRetracting;
@@ -55,6 +56,8 @@ public class VikingController : MonoBehaviour
 
     private float m_currentHeight;
     private float m_previousHeight;
+    private float m_currentHorizontalPos;
+    private float m_previousHorizontalPos;
 
     private BoundaryHolder m_boundaryHolder;
 
@@ -65,9 +68,14 @@ public class VikingController : MonoBehaviour
     private Vector3 m_playerSize;
 
 
+
+
     // Use this for initialization
     void Start()
     {
+        m_animator = GetComponent<Animator>();
+
+        m_animator.SetInteger("State", 0); // Idle
 
         m_vikingcCharacterController = GetComponent<CharacterController>();
         m_playerData = GetComponentInParent<PlayerData>();
@@ -160,6 +168,7 @@ public class VikingController : MonoBehaviour
     private void LateUpdate()
     {
         m_previousHeight = m_currentHeight;
+        m_previousHorizontalPos = m_currentHorizontalPos;
     }
 
 
@@ -292,6 +301,9 @@ public class VikingController : MonoBehaviour
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
         Debug.Log("Fire");
+
+        //m_animator.SetInteger("State", 3); //Throwing
+
         if (m_fireCooldownOn)
             return;
 
@@ -424,6 +436,8 @@ public class VikingController : MonoBehaviour
 
         m_isRetracting = true;
 
+        //m_animator.SetInteger("State", 4); // Catching
+
     }
 
     //Called From Fixed Update
@@ -455,9 +469,24 @@ public class VikingController : MonoBehaviour
             m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
             m_vikingMoveDirection *= m_vikingMovementSpeed;
 
-             //m_vikingcCharacterController.SimpleMove(m_vikingMoveDirection * m_vikingMovementSpeed); 
-        }
+            m_currentHorizontalPos = transform.position.x;
+            float travelxLeft = m_currentHorizontalPos - m_previousHorizontalPos;
+            float travelxRight = m_currentHorizontalPos + m_previousHorizontalPos;
 
+            // Actually moving
+            if (travelxLeft != m_previousHorizontalPos && travelxRight != m_previousHorizontalPos)
+            {
+                m_animator.SetInteger("State", 1); //Walking
+            }
+            
+            if (m_currentHorizontalPos == m_previousHorizontalPos)
+            {                
+                m_isIdle = true;
+                m_animator.SetInteger("State", 0); // Idle
+            }
+            //m_vikingcCharacterController.SimpleMove(m_vikingMoveDirection * m_vikingMovementSpeed);
+        }
+        
 
         if (m_vikingcCharacterController.isGrounded)
         {
@@ -493,7 +522,8 @@ public class VikingController : MonoBehaviour
 
                 m_isJumping = true;
 
-               // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
+                m_animator.SetInteger("State",2); //Jumping
+                // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
 
                 //  m_rb.AddForce (transform.TransformDirection(transform.position.x, transform.position.y + 1, transform.position.z) * m_vikingJumpSpeed);
                 //m_jumping = true;
@@ -506,6 +536,7 @@ public class VikingController : MonoBehaviour
         if (!m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
             m_vikingMoveDirection.x = transform.TransformDirection(vNewInput).x * m_vikingMovementSpeed;
+            m_animator.SetInteger("State", 3); //Falling
         }
 
         //Wall Jump
@@ -534,15 +565,17 @@ public class VikingController : MonoBehaviour
             //Right - Sprite Flip
             if (Mathf.Clamp(angle, 10, 170) == angle)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            GetComponent<SpriteRenderer>().flipX = true;
             m_turnedLeft = false;
+            m_animator.SetBool("facingRight", true); //Facing Right
         }
 
         //Left - Sprite Flip
         else if (Mathf.Clamp(angle, -170, -10) == angle)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            GetComponent<SpriteRenderer>().flipX = false;
             m_turnedLeft = true;
+            m_animator.SetBool("facingRight", false); //Facing Left
         }
 
         // m_hand.transform.Translate(new Vector3 (angle, 0, 0) * 10f * Time.deltaTime);
@@ -562,6 +595,9 @@ public class VikingController : MonoBehaviour
     public void SetStunned()
     {
         m_isStunned = true;
+        //m_animator.SetInteger("State", 6); // Stunned
+
+
         GetComponent<SpriteRenderer>().color = Color.white;
         Invoke("StunnedCooldown", m_stunnedCoolDown);
         Debug.Log("STUNNED");
@@ -570,6 +606,8 @@ public class VikingController : MonoBehaviour
     private void StunnedCooldown()
     {
         Debug.Log("NotStunned!");
+        m_animator.SetInteger("State", 1); // Idle, not stunned
+
         m_isStunned = false;
         GetComponent<SpriteRenderer>().color = Color.clear;
     }

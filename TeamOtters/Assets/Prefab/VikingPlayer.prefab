@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 143241035801321622}
   - component: {fileID: 54829936284017244}
   - component: {fileID: 114606825063994654}
+  - component: {fileID: 95929624090876370}
   m_Layer: 10
   m_Name: VikingPlayer
   m_TagString: Viking
@@ -88,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 1382873379161574}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.08, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4998595159367928}
   - {fileID: 4040573150492788}
@@ -179,6 +180,24 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 0}
+--- !u!95 &95929624090876370
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1382873379161574}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0ef50fd6071f7464bbddf0fd9c9e176e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114081407186507156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,8 +257,8 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 19
-  m_Radius: 4.5649996
+  m_Height: 2.6
+  m_Radius: 1.1
   m_SlopeLimit: 70
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -4867,9 +4886,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6ba68ce255f4ff640a6a37692ca8b4a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb0301f913aee9447b0f80204c53c7eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 9.13, y: 20.630001}
