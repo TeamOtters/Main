@@ -67,6 +67,14 @@ public class RumbleManager : MonoBehaviour {
         }
     }
 
+    private void OnApplicationQuit()
+    {
+        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
+        GamePad.SetVibration(PlayerIndex.Two, 0f, 0f);
+        GamePad.SetVibration(PlayerIndex.Three, 0f, 0f);
+        GamePad.SetVibration(PlayerIndex.Four, 0f, 0f);
+    }
+
     void TransformRumbleStart()
     {
         GamePad.SetVibration(PlayerIndex.One,   1f, 1f);
