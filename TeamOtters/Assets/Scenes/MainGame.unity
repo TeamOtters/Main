@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 57222203}
   - component: {fileID: 57222205}
   - component: {fileID: 57222204}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 113423054}
   - component: {fileID: 113423056}
   - component: {fileID: 113423055}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (16)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,7 +979,7 @@ GameObject:
   - component: {fileID: 479220875}
   - component: {fileID: 479220877}
   - component: {fileID: 479220876}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1163,7 +1163,7 @@ GameObject:
   - component: {fileID: 536844352}
   - component: {fileID: 536844354}
   - component: {fileID: 536844353}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2182,7 +2182,7 @@ Prefab:
     - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: playerStartViking
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
@@ -2318,7 +2318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerIndex: 2
   m_CurrentScore: 0
-  m_glowEffect: {fileID: 0}
+  m_isGlowing: 0
 --- !u!1 &1151435584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2445,7 +2445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerIndex: 3
   m_CurrentScore: 0
-  m_glowEffect: {fileID: 0}
+  m_isGlowing: 0
 --- !u!1 &1198807179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2484,7 +2484,7 @@ GameObject:
   - component: {fileID: 1206499669}
   - component: {fileID: 1206499671}
   - component: {fileID: 1206499670}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (17)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2687,7 +2687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerIndex: 4
   m_CurrentScore: 0
-  m_glowEffect: {fileID: 0}
+  m_isGlowing: 0
 --- !u!1001 &1296268806
 Prefab:
   m_ObjectHideFlags: 0
@@ -2806,7 +2806,7 @@ GameObject:
   - component: {fileID: 1298448529}
   - component: {fileID: 1298448531}
   - component: {fileID: 1298448530}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (18)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2954,7 +2954,7 @@ GameObject:
   - component: {fileID: 1382225658}
   - component: {fileID: 1382225660}
   - component: {fileID: 1382225659}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3419,7 +3419,7 @@ GameObject:
   - component: {fileID: 1598148883}
   - component: {fileID: 1598148885}
   - component: {fileID: 1598148884}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (19)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3606,7 +3606,7 @@ GameObject:
   - component: {fileID: 1645539648}
   - component: {fileID: 1645539650}
   - component: {fileID: 1645539649}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4008,7 +4008,7 @@ GameObject:
   - component: {fileID: 1865033654}
   - component: {fileID: 1865033656}
   - component: {fileID: 1865033655}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (20)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4259,7 +4259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlayerIndex: 1
   m_CurrentScore: 0
-  m_glowEffect: {fileID: 0}
+  m_isGlowing: 0
 --- !u!1 &1969353076
 GameObject:
   m_ObjectHideFlags: 0
