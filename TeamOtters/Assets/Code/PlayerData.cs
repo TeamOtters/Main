@@ -120,7 +120,7 @@ public class PlayerData : MonoBehaviour
                 pInd.color = new Color32(253, 146, 214, 255);
             }
 
-            if (scoreText != null)
+        if (scoreText != null)
             {
                 scoreText.text = m_CurrentScore.ToString();
             }

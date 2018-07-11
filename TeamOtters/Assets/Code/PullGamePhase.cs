@@ -8,8 +8,6 @@ using UnityEngine.Events;
 
 public class PullGamePhase : MonoBehaviour {
 
-
-    public Scene m_Active;
     public GameObject m_PullGamePhase;
     public Canvas m_Phase2;
     public Canvas m_InGameMenu;
@@ -17,6 +15,7 @@ public class PullGamePhase : MonoBehaviour {
     // Use this for initialization
     void Start () {
         m_PullGamePhase.gameObject.SetActive(true);
+        m_Phase2.gameObject.SetActive(false);
     }
 
     void Update()
@@ -27,7 +26,7 @@ public class PullGamePhase : MonoBehaviour {
         {
             Debug.Log("Valkyrie Found");
             m_Phase2.gameObject.SetActive(true);
-            m_PullGamePhase.gameObject.SetActive(false);
+            
 
         }
 
