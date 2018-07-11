@@ -12,6 +12,7 @@ public class GoalReached : MonoBehaviour {
     private ScoreManager m_scoreManager;
     private int m_carryingScoreBonus;
     private int m_normalScoreBonus;
+    private bool m_hasReachedValhalla=false;
 
 	// Use this for initialization
 	void Start ()
@@ -26,26 +27,29 @@ public class GoalReached : MonoBehaviour {
     {
         int myOldScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
         int myNewScore = 0;
-        if (player.gameObject.CompareTag("Valkyrie") && player.gameObject.GetComponent<ValkyrieController>().isCarrying == (true))
-        {
-            int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-            m_scoreManager.AddToScore(m_carryingScoreBonus, ID);
-            
-            m_Results.gameObject.SetActive(true);
-            StartCoroutine("Wait");
-            myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
-        }
-        else if(player.gameObject.CompareTag("Viking") || player.gameObject.CompareTag("Valkyrie"))
-        {
-            int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-            m_scoreManager.AddToScore(m_normalScoreBonus, ID);
-            myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
 
-            m_Results.gameObject.SetActive(true);
-            StartCoroutine("Wait");
-            myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
-        }
+        if (!m_hasReachedValhalla)
+        {
+            if (player.gameObject.CompareTag("Valkyrie") && player.gameObject.GetComponent<ValkyrieController>().isCarrying == (true))
+            {
+                m_hasReachedValhalla = true;
+                int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
+                m_scoreManager.AddToScore(m_carryingScoreBonus, ID);
 
+                StartCoroutine("Wait");
+                myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
+            }
+            else if (player.gameObject.CompareTag("Viking") || player.gameObject.CompareTag("Valkyrie"))
+            {
+                m_hasReachedValhalla = true;
+                int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
+                m_scoreManager.AddToScore(m_normalScoreBonus, ID);
+                myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
+                StartCoroutine("Wait");
+
+
+            }
+        }
         Debug.Log("I crossed the finish line, my old score was " + myOldScore + "and my new score was " + myNewScore);
 
 
@@ -53,6 +57,8 @@ public class GoalReached : MonoBehaviour {
     private IEnumerator Wait()
     {
         yield return new WaitForSeconds(0.7f);
+        m_Results.gameObject.SetActive(true);
+        m_Results.GetComponentInChildren<Results>().ShowResults();
 
     }
     // Update is called once per frame
