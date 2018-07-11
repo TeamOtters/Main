@@ -12,16 +12,20 @@ public class DetectPickup : MonoBehaviour {
     private string m_collisionTag;
     private ValkyrieController m_valkyrie;
     private bool m_immuneToPickUp = false;
+    private GameObject m_ourParent; // Should be PLAYER DATA 
+    private GameObject m_ourGrandparentLogic; // SHOULD BE LOGIC LAYER
     
 
     private void Start()
     {
         m_collisionTag = string.Empty;
+        m_ourParent = transform.parent.gameObject;
+        m_ourGrandparentLogic = transform.parent.parent.gameObject;
 
     }
 
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         Debug.Log("Viking is colliding with" + other.gameObject.tag);
 
@@ -39,7 +43,8 @@ public class DetectPickup : MonoBehaviour {
     }
 
 
- 
+    
+
     //triggered on collision
     private void GetPickedUp(Collider other)
     {
@@ -50,21 +55,28 @@ public class DetectPickup : MonoBehaviour {
         m_valkyrie.heldRigidbody = GetComponent<Rigidbody>();
 
         //find the object within the colliding valkyrie with the "CarryLocation" tag and assign it as the carry location.
-        m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren<CarryLocation>().gameObject.transform;
+       // m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren<CarryLocation>().gameObject.transform;
+        m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren(typeof(CarryLocation), true).gameObject.transform;
+        
         Debug.Log(m_carryLocation.gameObject.name);
 
+        // move the carryable to the carrying point
+         transform.position = m_carryLocation.position;
+       
+
         // make it as a child of player, so it moves along with player
-        transform.parent = m_carryLocation.transform;
+        m_ourParent.transform.SetParent(m_carryLocation, true);
 
         //double-ensures that the carry location is assigned to the right valkyrie
-        m_carryLocation.transform.parent = m_valkyrie.gameObject.transform;
-
-        // move the carryable to the carrying point
-        transform.position = m_carryLocation.transform.position;
+      //  m_carryLocation.SetParent(m_valkyrie.gameObject.transform, true);
         
-        if(GetComponent<PlayerData>() != null)
+
+        
+        
+        if(GetComponentInParent<PlayerData>() != null)
         {
-            m_valkyrie.heldPlayerIndex = GetComponent<PlayerData>().m_PlayerIndex;
+            m_valkyrie.heldPlayerIndex = GetComponentInParent<PlayerData>().m_PlayerIndex;
+            Debug.Log("We are not null");
         }
 
         // Set the viking to the isCarried state
@@ -78,9 +90,9 @@ public class DetectPickup : MonoBehaviour {
 
     //triggered from the valkyrie script
     public void Dropped()
-    {
+    { 
         // remove as child
-        transform.parent = null;
+        m_ourParent.transform.SetParent(m_ourGrandparentLogic.transform,true);
         
         // Set the viking to be un-carried
         gameObject.GetComponent<VikingController>().SetCarried(false);

@@ -116,7 +116,8 @@ public class VikingController : MonoBehaviour
     void FixedUpdate()
     {
         //Set the boundaries to camera
-        SetBoundaries();
+        if(!m_isCarried)
+           SetBoundaries();
 
         if (!m_isStunned)
         {
