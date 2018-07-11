@@ -16,8 +16,8 @@ public class PullGamePhase : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        SceneManager.LoadScene("Phase1", LoadSceneMode.Additive);
-	}
+        m_PullGamePhase.gameObject.SetActive(true);
+    }
 
     void Update()
     {
@@ -26,10 +26,9 @@ public class PullGamePhase : MonoBehaviour {
         if (valkyrie)
         {
             Debug.Log("Valkyrie Found");
-            //m_PullGamePhase.gameObject.SetActive(false);
             m_Phase2.gameObject.SetActive(true);
-            SceneManager.UnloadSceneAsync("Phase1");
-            
+            m_PullGamePhase.gameObject.SetActive(false);
+
         }
 
         if (m_InGameMenu.enabled)
