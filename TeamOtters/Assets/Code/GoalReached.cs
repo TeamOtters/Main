@@ -40,6 +40,10 @@ public class GoalReached : MonoBehaviour {
             int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
             m_scoreManager.AddToScore(m_normalScoreBonus, ID);
             myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
+
+            m_Results.gameObject.SetActive(true);
+            StartCoroutine("Wait");
+            myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
         }
 
         Debug.Log("I crossed the finish line, my old score was " + myOldScore + "and my new score was " + myNewScore);
@@ -48,7 +52,7 @@ public class GoalReached : MonoBehaviour {
     }
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.7f);
 
     }
     // Update is called once per frame
