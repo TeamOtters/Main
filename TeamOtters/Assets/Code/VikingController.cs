@@ -53,6 +53,14 @@ public class VikingController : MonoBehaviour
 
     private float m_currentHeight;
     private float m_previousHeight;
+
+    private BoundaryHolder m_boundaryHolder;
+
+    private float m_leftBounds;
+    private float m_rightBounds;
+    private float m_topBounds;
+    private float m_bottomBounds;
+    
   
 
 
@@ -121,6 +129,23 @@ public class VikingController : MonoBehaviour
         if (m_isRetracting)
             ProjectileRetractingUpdate();
 
+        if (transform.position.x < m_leftBounds)
+        {
+
+            transform.position = new Vector3(transform.position.x, m_leftBounds, transform.position.z);
+        }
+        if (transform.position.x > m_rightBounds)
+        {
+            transform.position = new Vector3(transform.position.x, m_rightBounds, transform.position.z);
+        }
+        if (transform.position.y < m_bottomBounds)
+        {
+            transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z); // this is where fall penalty should go
+        }
+        if (transform.position.y > m_topBounds)
+        {
+            transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
+        }
         /*if(transform.position.normalized.y <= 0)
         {
             Debug.Log("OJ");
