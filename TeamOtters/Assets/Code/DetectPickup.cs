@@ -17,6 +17,7 @@ public class DetectPickup : MonoBehaviour {
     private void Start()
     {
         m_collisionTag = null;
+
     }
 
 
@@ -50,6 +51,7 @@ public class DetectPickup : MonoBehaviour {
 
         //find the object within the colliding valkyrie with the "CarryLocation" tag and assign it as the carry location.
         m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren<CarryLocation>().gameObject.transform;
+        Debug.Log(m_carryLocation.gameObject.name);
 
         // make it as a child of player, so it moves along with player
         transform.parent = m_carryLocation.transform;

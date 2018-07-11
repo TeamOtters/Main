@@ -56,7 +56,7 @@ public class CameraBehaviourManager : MonoBehaviour {
             
 
             Vector3 move = new Vector3(targetX * dynamicSpeed, target.y * m_panSpeedY * Time.deltaTime, 0);
-            Debug.Log(percentageOfMax);
+
 
             transform.Translate(move, Space.World);
 

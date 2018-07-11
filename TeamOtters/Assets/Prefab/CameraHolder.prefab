@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_valkyrieRaceState: 0
-  m_panSpeedY: 0.07
+  m_panSpeedY: 0.01
   m_panSpeedXMin: 0.003
   m_panSpeedXMax: 0.006
   m_endPanTarget: {fileID: 0}
