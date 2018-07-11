@@ -54,8 +54,8 @@ public class VikingController : MonoBehaviour
     private int m_playersLayer;
     private int m_goThroughPlatformLayer;
 
-    private float m_currentHeight;
-    private float m_previousHeight;
+    private float m_currentVerticalPos;
+    private float m_previousVerticalPos;
     private float m_currentHorizontalPos;
     private float m_previousHorizontalPos;
 
@@ -140,8 +140,8 @@ public class VikingController : MonoBehaviour
         if (m_isRetracting)
             ProjectileRetractingUpdate();
 
-        m_currentHeight = transform.position.y;
-        float travel = m_currentHeight - m_previousHeight;
+        m_currentVerticalPos = transform.position.y;
+        float travel = m_currentVerticalPos - m_previousVerticalPos;
       
 
         // Only do work if meaningful
@@ -150,7 +150,7 @@ public class VikingController : MonoBehaviour
               return;
           }*/
 
-       if(m_currentHeight < m_previousHeight)
+       if(m_currentVerticalPos < m_previousVerticalPos)
         {
             if (m_isJumping)
             {
@@ -167,7 +167,7 @@ public class VikingController : MonoBehaviour
 
     private void LateUpdate()
     {
-        m_previousHeight = m_currentHeight;
+        m_previousVerticalPos = m_currentVerticalPos;
         m_previousHorizontalPos = m_currentHorizontalPos;
     }
 

@@ -30,6 +30,14 @@ public class ValkyrieController : MonoBehaviour
     private float m_topBounds;
     private float m_bottomBounds;
 
+    //Go Through Platform
+    private int m_playersLayer = 10;
+    private int m_goThroughPlatformLayer = 11;
+    private float m_currentVerticalPos;
+    private float m_previousVerticalPos;
+    private bool m_layerIsSet;
+    private bool m_isPressingJump;
+
     public GameObject m_highestScoreEffect;
 
     // Use this for initialization
@@ -63,6 +71,14 @@ public class ValkyrieController : MonoBehaviour
             {
                 rigidbody.AddForce(Vector2.up * m_flightForce);
             }
+
+            if (!m_layerIsSet)
+            {
+                gameObject.layer = m_goThroughPlatformLayer;
+                m_layerIsSet = true;
+            }
+
+            m_isPressingJump = true;
 
         }
 
@@ -142,9 +158,38 @@ public class ValkyrieController : MonoBehaviour
         if (transform.position.y > m_topBounds)
         {
                 transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-        }       
+        }
+
+
+        CheckIfGoingDown();
+       
 
     }
+
+    private void CheckIfGoingDown ()
+    {
+        m_currentVerticalPos = transform.position.y;
+        float travel = m_currentVerticalPos - m_previousVerticalPos;
+
+        if (m_currentVerticalPos < m_previousVerticalPos)
+        {
+            if (m_isPressingJump)
+            {
+                if (m_layerIsSet)
+                {
+                    m_layerIsSet = false;
+                    gameObject.layer = m_playersLayer;
+                    m_isPressingJump = false;
+                }
+            }
+        }
+    }
+
+    private void LateUpdate()
+    {
+        m_previousVerticalPos = m_currentVerticalPos;
+    }
+
 
     public void WrapScreenLeftToRight()
     {
