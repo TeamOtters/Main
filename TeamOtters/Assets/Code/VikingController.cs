@@ -60,10 +60,7 @@ public class VikingController : MonoBehaviour
     private float m_rightBounds;
     private float m_topBounds;
     private float m_bottomBounds;
-    
-  
-
-
+    private Vector3 m_playerSize;
 
 
     // Use this for initialization
@@ -83,6 +80,10 @@ public class VikingController : MonoBehaviour
 
         m_playersLayer = 10;
         m_goThroughPlatformLayer = 11;
+
+
+        m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(VikingController), true).GetComponent<SpriteRenderer>().bounds.extents;
+        m_boundaryHolder = GameController.Instance.boundaryHolder;
 
 
     }
@@ -129,6 +130,13 @@ public class VikingController : MonoBehaviour
         if (m_isRetracting)
             ProjectileRetractingUpdate();
 
+        //set the bounds value every frame to go with updated camera movement
+        m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;// + m_heldCharacterSize.y;
+        m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
+        m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
+        m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
+
+        
         if (transform.position.x < m_leftBounds)
         {
 
@@ -146,6 +154,9 @@ public class VikingController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
         }
+        
+
+
         /*if(transform.position.normalized.y <= 0)
         {
             Debug.Log("OJ");
