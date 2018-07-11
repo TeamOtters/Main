@@ -96,6 +96,7 @@ public class PhaseManager : MonoBehaviour {
         m_phaseSet = true;
         Debug.Log("I am in phase 2!)");
         m_isInPhaseOne = false;
+        GameController.Instance.m_currentPhaseState = 2;
         //Adds the current score of the players to the score list
         for (int i = 0; i < m_players.Length; i++)
         {

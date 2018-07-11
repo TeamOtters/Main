@@ -11,6 +11,7 @@ public class ValkyrieController : MonoBehaviour
     public float m_attackDuration = 1f;
     public float m_attackSpeed = .01f;
     public BoxCollider m_attackCollision;
+    private GameController m_gameController;
 
     internal bool isCarrying;
     internal bool isAttacking;
@@ -43,10 +44,29 @@ public class ValkyrieController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        m_gameController = GameController.Instance;
         m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
         m_player = GameController.Instance.player.GetComponent<Rigidbody>();
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController), true).GetComponent<SpriteRenderer>().bounds.extents;
+        StartCoroutine("ContiniouslyEvaluateScore");
+    }
+
+    IEnumerator ContiniouslyEvaluateScore()
+    {
+        yield return null;
+        while (true)
+        {
+            yield return null;
+            GiveContionousScore();
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void GiveContionousScore()
+    {
+        if (heldRigidbody != null && m_gameController.m_currentPhaseState == 2)
+            m_gameController.m_scoreManager.AddToScore(2, m_playerIndex);
     }
 
     private void FixedUpdate()

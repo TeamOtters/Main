@@ -13,6 +13,7 @@ public class VikingController : MonoBehaviour
     private GameObject m_currentProjectile;
     public GameObject m_hand;
     private Rigidbody m_rb;
+    private GameController m_gameController;
 
     public float m_vikingMovementSpeed = 6.0F;
     public float m_vikingJumpSpeed = 8.0F;
@@ -75,6 +76,7 @@ public class VikingController : MonoBehaviour
     {   
         m_vikingcCharacterController = GetComponent<CharacterController>();
         m_playerData = GetComponentInParent<PlayerData>();
+        m_gameController = GameController.Instance;
 
         if (m_playerData != null)
             m_thisPlayerIndex = m_playerData.m_PlayerIndex;
@@ -96,6 +98,7 @@ public class VikingController : MonoBehaviour
         m_animator.runtimeAnimatorController = Resources.Load("Viking_P" + m_playerIndexString) as RuntimeAnimatorController;
 
         m_animator.SetInteger("State", 0); // Idle
+        StartCoroutine("ContiniouslyEvaluateScore");
     }
 
     private void Update()
@@ -111,6 +114,24 @@ public class VikingController : MonoBehaviour
             m_isGroundedTimer = m_isGroundedOffset;
         }
     }
+
+    IEnumerator ContiniouslyEvaluateScore()
+    {
+        yield return null;
+        while (true)
+        {
+            yield return null;
+            GiveContionousScore();
+            yield return new WaitForSeconds(1f);
+         }
+    }
+
+    private void GiveContionousScore()
+    {
+        if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
+            m_gameController.m_scoreManager.AddToScore(2, m_thisPlayerIndex);
+    }
+
 
 
     void FixedUpdate()
@@ -404,8 +425,9 @@ public class VikingController : MonoBehaviour
             if (m_vikingcCharacterController.isGrounded)
                 return;
 
-            //if (m_projectile == null)
+           // if (m_currentProjectile == null)
             var projectile = Instantiate(Resources.Load(m_loadProjectile.name, typeof(GameObject)), new Vector3(transform.position.x, transform.position.y - 2f, transform.position.z), transform.rotation) as GameObject;
+
             m_currentProjectile = projectile;
             // m_projectile.SetActive(true);
             //m_projectile.transform.position = new Vector3(transform.position.x, transform.position.y - 2f, transform.position.z);

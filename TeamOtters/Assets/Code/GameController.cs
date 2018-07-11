@@ -44,6 +44,8 @@ public class GameController : MonoBehaviour
     private PlayerData m_currentPlayerData;
     private PlayerSpawnPoint[] m_playerSpawnPoints;
     private GameObject m_tempGameObject;
+    [HideInInspector]
+    public int m_currentPhaseState;
 
     public static GameController Instance
     {
@@ -66,6 +68,7 @@ public class GameController : MonoBehaviour
         }
 
         CreatePlayers();
+        
 
     }
 
