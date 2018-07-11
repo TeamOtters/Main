@@ -22,8 +22,8 @@ TagManager:
   - 
   - PostProcessing
   - Platform
-  - 
-  - 
+  - Player
+  - PlayerAllowThroughPlatform
   - 
   - 
   - 

@@ -39,6 +39,8 @@ public class VikingController : MonoBehaviour
     private bool m_isRetracting;
     private bool m_isGrounded;
     private bool m_askForGoundedOffset;
+    private bool m_isJumping;
+    private bool m_layerIsSet;
 
     public float m_stunnedCoolDown = 1f;
 
@@ -46,6 +48,12 @@ public class VikingController : MonoBehaviour
     private string m_playerIndexString;
 
     public GameObject m_highestScoreEffect;
+    private int m_playersLayer;
+    private int m_goThroughPlatformLayer;
+
+    private float m_currentHeight;
+    private float m_previousHeight;
+  
 
 
 
@@ -64,6 +72,10 @@ public class VikingController : MonoBehaviour
 
         m_rb = GetComponent<Rigidbody>();
         m_isGroundedTimer = m_isGroundedOffset;
+
+        m_playersLayer = 10;
+        m_goThroughPlatformLayer = 11;
+
 
     }
 
@@ -109,7 +121,23 @@ public class VikingController : MonoBehaviour
         if (m_isRetracting)
             ProjectileRetractingUpdate();
 
+        /*if(transform.position.normalized.y <= 0)
+        {
+            Debug.Log("OJ");
+            if (m_isJumping)
+            {
+                if (m_layerIsSet)
+                {
+                    m_layerIsSet = false;
+                    gameObject.layer = m_playersLayer;
+                    m_isJumping = false;
+                }
+            }
+        }*/
 
+        m_currentHeight = transform.position.y;
+        float travel = m_currentHeight - m_previousHeight;
+      
 
         // Only do work if meaningful
         /*  if (vNewInput.sqrMagnitude < 0.1f)
@@ -117,6 +145,25 @@ public class VikingController : MonoBehaviour
               return;
           }*/
 
+       if(m_currentHeight < m_previousHeight)
+        {
+            Debug.Log("OJ");
+            if (m_isJumping)
+            {
+                if (m_layerIsSet)
+                {
+                    m_layerIsSet = false;
+                    gameObject.layer = m_playersLayer;
+                    m_isJumping = false;
+                }
+            }
+        }
+
+    }
+
+    private void LateUpdate()
+    {
+        m_previousHeight = m_currentHeight;
     }
 
 
@@ -168,6 +215,23 @@ public class VikingController : MonoBehaviour
         if (collision.collider.CompareTag("Viking"))
         {
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.collider, true);
+        }
+
+
+
+        if(collision.contacts[0].normal.y > 0.1 )
+        {
+            print("First normal of the point that collide: " + collision.contacts[0].normal);
+
+            if (m_isJumping)
+            {
+                if (m_layerIsSet)
+                {
+                    m_layerIsSet = false;
+                    gameObject.layer = m_playersLayer;
+                    m_isJumping = false;
+                }
+            }
         }
 
         /*  // force is how forcefully we will push the player away from the enemy.
@@ -390,6 +454,11 @@ public class VikingController : MonoBehaviour
         {
             m_isGrounded = true;
             m_askForGoundedOffset = false;
+
+            if(m_isJumping)
+            {
+                m_isJumping = false;
+            }
         }
 
         if(!m_vikingcCharacterController.isGrounded)
@@ -405,8 +474,12 @@ public class VikingController : MonoBehaviour
             {
    
                 m_vikingMoveDirection.y =  m_vikingJumpSpeed;
-                
-
+                if (!m_layerIsSet)
+                {
+                    gameObject.layer = m_goThroughPlatformLayer;
+                    m_layerIsSet = true;
+                }
+                m_isJumping = true;
                // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
 
                 //  m_rb.AddForce (transform.TransformDirection(transform.position.x, transform.position.y + 1, transform.position.z) * m_vikingJumpSpeed);

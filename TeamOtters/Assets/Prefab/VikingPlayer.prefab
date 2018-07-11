@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 143241035801321622}
   - component: {fileID: 54829936284017244}
   - component: {fileID: 114606825063994654}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: VikingPlayer
   m_TagString: Viking
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
     type: 2}
   m_hand: {fileID: 0}
   m_vikingMovementSpeed: 15
-  m_vikingJumpSpeed: 21
+  m_vikingJumpSpeed: 23
   m_vikingGravityForce: 50
   m_isGroundedOffset: 0.4
   m_projectileForceX: 36
