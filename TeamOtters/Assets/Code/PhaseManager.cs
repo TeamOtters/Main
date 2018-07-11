@@ -48,7 +48,7 @@ public class PhaseManager : MonoBehaviour {
         }
 
         // DEBUG, Click to phase 2
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             Debug.Log("ShouldSetUpPhase2");
             PhaseTwoSetup();
