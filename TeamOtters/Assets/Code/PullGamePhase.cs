@@ -26,7 +26,7 @@ public class PullGamePhase : MonoBehaviour {
         if (valkyrie)
         {
             Debug.Log("Valkyrie Found");
-            m_PullGamePhase.gameObject.SetActive(false);
+            //m_PullGamePhase.gameObject.SetActive(false);
             m_Phase2.gameObject.SetActive(true);
             SceneManager.UnloadSceneAsync("Phase1");
             

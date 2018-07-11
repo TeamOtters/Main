@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
 public class ScoreManager : MonoBehaviour {
 
@@ -10,8 +12,10 @@ public class ScoreManager : MonoBehaviour {
     private int highestScore = 0;
     private GlowEffect m_glowEffectScript;
     public GameObject m_glowEffect;
+    internal Text scoreText;
 
-    
+ 
+
     //Am the players score I'm getting Higher then the current highestScore? If so, set that score the new highest score! 
     public void SetHighestScore(int score)
     {
@@ -96,7 +100,6 @@ public class ScoreManager : MonoBehaviour {
             }
         }
     }*/
-
 
 
 
