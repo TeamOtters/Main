@@ -131,25 +131,26 @@ public class VikingController : MonoBehaviour
             ProjectileRetractingUpdate();
 
         //set the bounds value every frame to go with updated camera movement
-        m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;// + m_heldCharacterSize.y;
+        m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;
         m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
-        m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
+        m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;
 
-        
+        //Set position to bounds
         if (transform.position.x < m_leftBounds)
         {
-
-            transform.position = new Vector3(transform.position.x, m_leftBounds, transform.position.z);
+            transform.position = new Vector3(m_leftBounds, transform.position.y , transform.position.z);
         }
         if (transform.position.x > m_rightBounds)
         {
-            transform.position = new Vector3(transform.position.x, m_rightBounds, transform.position.z);
+            transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
         }
+        /*
         if (transform.position.y < m_bottomBounds)
         {
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z); // this is where fall penalty should go
         }
+        */
         if (transform.position.y > m_topBounds)
         {
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
@@ -183,7 +184,6 @@ public class VikingController : MonoBehaviour
 
        if(m_currentHeight < m_previousHeight)
         {
-            Debug.Log("OJ");
             if (m_isJumping)
             {
                 if (m_layerIsSet)
