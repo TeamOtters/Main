@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 114606825063994654}
   - component: {fileID: 95929624090876370}
   - component: {fileID: 143665012898978188}
+  - component: {fileID: 114758340321861004}
   m_Layer: 10
   m_Name: VikingPlayer
   m_TagString: Viking
@@ -247,6 +248,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 10
   m_immuneAfterDropDuration: 5
+--- !u!114 &114758340321861004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1382873379161574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36bc4cab43bfeb41af3b1d6194baebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_respawnDuration: 5
 --- !u!143 &143665012898978188
 CharacterController:
   m_ObjectHideFlags: 1
