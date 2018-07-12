@@ -5,22 +5,30 @@ using UnityEngine;
 public class ValkyrieController : MonoBehaviour
 {
     private Animator m_bodyAnimator;
-    private Animator m_wingAnimator;
+    private Animator m_wingAnimator;        
+    private GameController m_gameController;
+
+    public BoxCollider m_attackCollision;
     public float m_speed;
     public float m_flightForce;
     public float m_wrapScreenDelay = 0.5f;
     public float m_attackDuration = 1f;
     public float m_attackSpeed = .01f;
-    public BoxCollider m_attackCollision;
-    private GameController m_gameController;
 
+    internal bool isIdle;
     internal bool isCarrying;
     internal bool isAttacking;
+    internal bool isStunned;
+    internal bool isDropping;
+    internal bool isGliding;
+    internal bool isFlapping;
+    internal bool isCloseToViking;
+    internal bool isDiving;
     internal bool isShielding;
     internal Rigidbody heldRigidbody;
     internal int heldPlayerIndex;
-
     internal int m_playerIndex;
+
     private Rigidbody m_player;
     private Rigidbody m_otherPlayer;
     private Vector3 m_playerSize;
@@ -37,13 +45,12 @@ public class ValkyrieController : MonoBehaviour
     private int m_goThroughPlatformLayer = 11;
     private float m_currentVerticalPos;
     private float m_previousVerticalPos;
+    private float m_currentHorizontalPos;
+    private float m_previousHorizontalPos;
     private bool m_layerIsSet;
     private bool m_isPressingJump;
-
     private bool m_isFacingRight;
-
-    private float m_thisScale;
-
+    private float m_thisScale;    
 
     public GameObject m_highestScoreEffect;
 
@@ -65,6 +72,7 @@ public class ValkyrieController : MonoBehaviour
         m_bodyAnimator.runtimeAnimatorController = Resources.Load("Valkyrie_P" + m_playerIndex.ToString()) as RuntimeAnimatorController;
 
         // Set Idle animation state
+        isIdle = true;
         SetValkyrieAnimationState(0); // Idle
         m_thisScale = transform.localScale.x;
     }
@@ -84,6 +92,55 @@ public class ValkyrieController : MonoBehaviour
     {
         if (heldRigidbody != null && m_gameController.m_currentPhaseState == 2)
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.valkyrieContiniousScore, m_playerIndex);
+    }
+
+    private void Update()
+    {
+        //Anim States
+
+        // Idle
+        if(isIdle)
+            SetValkyrieAnimationState(0);
+
+        // Gliding
+        if (isGliding)
+            SetValkyrieAnimationState(1);
+
+        // Flapping
+        if (isFlapping)
+            SetValkyrieAnimationState(2);
+
+        // Carrying/Not carrying
+        if (isCarrying)
+            SetValkyrieAnimationState(3);
+
+        // Grabby hands!
+        if (isCloseToViking)
+            SetValkyrieAnimationState(4);
+
+        // Dive attack
+        if (isDiving)
+            SetValkyrieAnimationState(5);
+
+        // Diving/melee attack
+        if (isAttacking)
+            SetValkyrieAnimationBool("isAttacking", true); 
+        else
+            SetValkyrieAnimationBool("isAttacking", false); 
+
+        // Stunned
+        if (isStunned)
+            SetValkyrieAnimationBool("isStunned", true);
+        else
+            SetValkyrieAnimationBool("isStunned", false);
+
+        // Dropping a viking
+        if (isDropping)
+            SetValkyrieAnimationBool("isDropping", true);
+        else
+            SetValkyrieAnimationBool("isDropping", false);
+
+
     }
 
     private void FixedUpdate()
@@ -116,8 +173,11 @@ public class ValkyrieController : MonoBehaviour
             }
 
             m_isPressingJump = true;
+            isFlapping = true;
 
         }
+        else
+            isFlapping = false;
 
         // Melee attack/drop Viking mechanic
         if (Input.GetButtonDown("Fire1_P" + m_playerIndex))
@@ -155,12 +215,28 @@ public class ValkyrieController : MonoBehaviour
 
         foreach (Rigidbody rigidbody in myRigidbodies)
         {
-
             rigidbody.AddForce(movement * m_speed);
             /*if (rigidbody.velocity.y > m_maxVelocity)
                 rigidbody.Sleep();
             else
                 rigidbody.AddForce(movement * m_speed);*/
+        }
+
+        m_currentHorizontalPos = transform.position.x;
+        float travelxLeft = m_currentHorizontalPos - m_previousHorizontalPos;
+        float travelxRight = m_currentHorizontalPos + m_previousHorizontalPos;
+
+        // Actually moving
+        if (travelxLeft != m_previousHorizontalPos && travelxRight != m_previousHorizontalPos)
+        {
+            isGliding = true;
+            isIdle = false;
+        }
+
+        if (m_currentHorizontalPos == m_previousHorizontalPos)
+        {
+            isIdle = true;
+            isGliding = false;
         }
 
         //ClampVelocity();
@@ -297,6 +373,7 @@ public class ValkyrieController : MonoBehaviour
             // Set the valkyrie to not be isCarrying
             heldRigidbody.GetComponent<DetectPickup>().Dropped();
             isCarrying = false;
+            isDropping = true;
             heldRigidbody = null;
             heldPlayerIndex = 0;
         }
@@ -311,8 +388,7 @@ public class ValkyrieController : MonoBehaviour
     public void AttackStart()
     {
         Debug.Log("Valkyrie Attack Started");
-
-        SetValkyrieAnimationBool("isAttacking", true); // Attacking
+        
         isAttacking = true;
         m_attackCollision.enabled = true;
     }
@@ -320,8 +396,7 @@ public class ValkyrieController : MonoBehaviour
     public void AttackStop()
     {
         Debug.Log("Valkyrie Attack Stopped");
-
-        SetValkyrieAnimationBool("isAttacking", false); // Attacking
+        
         m_attackCollision.enabled = false;
 
         Debug.Log("Valkyrie Attack Box Collision Enable = " + m_attackCollision.enabled);
