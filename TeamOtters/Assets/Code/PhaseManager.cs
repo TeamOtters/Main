@@ -19,9 +19,11 @@ public class PhaseManager : MonoBehaviour {
     private bool m_hasStartedPhase2 = false;
 
     public Phase2UI m_phase2UI;
+    public Canvas m_Phase1UI;
 
     void Start ()
     {
+        m_Phase1UI.gameObject.SetActive(true);
         //hard coded to 4 atm, if we have a dynamic number of players this might need to change
         m_playerScores.Add(0);
         m_playerScores.Add(0);
