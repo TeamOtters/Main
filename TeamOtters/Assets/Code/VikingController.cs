@@ -657,11 +657,6 @@ public class VikingController : MonoBehaviour
             }
         }
 
-
-
-
-
-
         //Right - Sprite Flip
         if (Mathf.Clamp(angle, 10, 170) == angle)
         {
@@ -690,7 +685,6 @@ public class VikingController : MonoBehaviour
 
     private void CheckWallClinging ()
     {
-
         //Wall Cling
         if (Input.GetButton("Jump_P" + m_playerIndexString) )
         {
@@ -701,9 +695,7 @@ public class VikingController : MonoBehaviour
                     m_isWallClinging = true;
                 }
             }
-        }
-
-       
+        } 
     }
 
    
@@ -717,22 +709,13 @@ public class VikingController : MonoBehaviour
     {
         m_isStunned = true;
         //m_animator.SetInteger("State", 6); // Stunned
-
-
         GetComponent<SpriteRenderer>().color = Color.white;
         Invoke("StunnedCooldown", m_stunnedCoolDown);
-      //  Debug.Log("STUNNED");
     }
 
     private void StunnedCooldown()
     {
-<<<<<<< HEAD
-        //Debug.Log("NotStunned!");
-=======
-      //  Debug.Log("NotStunned!");
->>>>>>> Elvira Major update:
         m_animator.SetInteger("State", 1); // Idle, not stunned
-
         m_isStunned = false;
         GetComponent<SpriteRenderer>().color = Color.clear;
     }

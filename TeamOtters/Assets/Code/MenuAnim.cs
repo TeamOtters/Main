@@ -9,21 +9,20 @@ using System;
 public class MenuAnim : Selectable
 {
     BaseEventData m_base;
-    private bool m_menuShine=false;
+    private bool m_menuShine = false;
 
-    public void Start()
+    protected override void Start()
     {
-        m_menuShine = GetComponentInChildren<Button>().; 
+        base.Start();
+        m_menuShine = GetComponentInChildren<Button>(); 
     }
 
-    public void Update() { 
+    public void Update() 
     {
         if (IsHighlighted(m_base))
-        {
-            Debug.Log ( gameObject.name + "is Highlighted");         }
+            Debug.Log ( gameObject.name + "is Highlighted");
+     
     }
 
-   
-}
 }
 
