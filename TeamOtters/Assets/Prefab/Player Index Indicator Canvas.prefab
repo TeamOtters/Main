@@ -205,7 +205,7 @@ MonoBehaviour:
   - {fileID: 1300562650860394}
   - {fileID: 1106632852610458}
   - {fileID: 1360864166935244}
-  m_yOffset: 65
+  m_yOffset: 40
 --- !u!114 &114285978365554770
 MonoBehaviour:
   m_ObjectHideFlags: 1
