@@ -6,9 +6,11 @@ using System.Linq;
 
 public static class ScorePointInfo
 {
-    public static int playerContiniousScore = 2;
+    //public static int playerContiniousScore = 2;
+    public static int vikingContiniousScore = 2;
+    public static int valkyrieContiniousScore = 10;
     public static int scoreItem = 5;
-    public static int bounceHit = 3;
+    public static int bounceHit = 5;
     public static int firstReachGoal = 10;
     public static int carryingBonus = 20;
     public static int hitOpponent = 2;

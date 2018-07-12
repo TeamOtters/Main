@@ -10,6 +10,10 @@ public class BouncingBall : MonoBehaviour
     internal float m_currentHealth;
     internal bool m_isAlive = true;
 
+    // Sets the different sprites and particle effects for the different stats
+    public GameObject m_BallSprite_Full;
+    public GameObject m_BallSprite_Half;
+    public GameObject m_BallSprite_ThreeLeft;
     public GameObject m_hpBelowHalf;
     public GameObject m_hpThreeHitLeft;
     public GameObject m_ballDeathEffect;
@@ -40,12 +44,15 @@ public class BouncingBall : MonoBehaviour
         m_currentHealth = m_startHealth;
         m_hpBelowHalf.SetActive(false);
         m_hpThreeHitLeft.SetActive(false);
+        m_BallSprite_Full.SetActive(true);
+        m_BallSprite_Half.SetActive(false);
+        m_BallSprite_ThreeLeft.SetActive(false);
 
-        //Calculation for making the ball stay within camera view. 
+    //Calculation for making the ball stay within camera view. 
         m_boundaryHolder = GameController.Instance.boundaryHolder;
-        m_ballSize = GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents;
-        Debug.Log(GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents);
-
+        m_ballSize = transform.Find("BallHP_Full").GetComponent<SpriteRenderer>().bounds.extents;
+        //;GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents;
+        Debug.Log(m_ballSize);
         m_axeDamage = 10;
         //(GetComponent<ProjectileBehaviour>().m_projectileDamage);
 
@@ -113,18 +120,24 @@ public class BouncingBall : MonoBehaviour
 
         }
 
-        if (m_currentHealth < m_startHealth/2 && m_currentHealth > m_axeDamage *3 && m_hasHalfHPEffect == false)
+        //Sets the second state when the ball has half its HP left
+        if (m_currentHealth <= m_startHealth/2 && m_currentHealth > m_axeDamage *3 && m_hasHalfHPEffect == false)
         {
             Debug.Log("New state: The ball has " + m_currentHealth + " health left! and axedamage = "+ m_axeDamage*3);
+            GetComponent<BouncingBall>().m_BallSprite_Full.SetActive(false);
+            GetComponent<BouncingBall>().m_BallSprite_Half.SetActive(true);
             GetComponent<BouncingBall>().m_hpBelowHalf.SetActive(true);
             m_hasHalfHPEffect = true;
         }
-
+        //Sets the third state when the ball can only take 3 more hits
         if (m_currentHealth < m_startHealth/2 && m_currentHealth <= m_axeDamage * 3 && m_has3HitLeftEffect == false)
         {
             Debug.Log("New state: The ball can only take 3 more hits!!");
             GetComponent<BouncingBall>().m_hpBelowHalf.SetActive(false);
+            GetComponent<BouncingBall>().m_BallSprite_Half.SetActive(false);
+            GetComponent<BouncingBall>().m_BallSprite_ThreeLeft.SetActive(true);
             GetComponent<BouncingBall>().m_hpThreeHitLeft.SetActive(true);
+
             m_hasHalfHPEffect = false;
             m_has3HitLeftEffect = true;
         }

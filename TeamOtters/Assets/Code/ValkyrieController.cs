@@ -66,7 +66,7 @@ public class ValkyrieController : MonoBehaviour
     private void GiveContionousScore()
     {
         if (heldRigidbody != null && m_gameController.m_currentPhaseState == 2)
-            m_gameController.m_scoreManager.AddToScore(ScorePointInfo.playerContiniousScore, m_playerIndex);
+            m_gameController.m_scoreManager.AddToScore(ScorePointInfo.valkyrieContiniousScore, m_playerIndex);
     }
 
     private void FixedUpdate()

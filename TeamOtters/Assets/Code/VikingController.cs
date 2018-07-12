@@ -225,7 +225,7 @@ public class VikingController : MonoBehaviour
     private void GiveContionousScore()
     {
         if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
-            m_gameController.m_scoreManager.AddToScore(ScorePointInfo.playerContiniousScore, m_thisPlayerIndex);
+            m_gameController.m_scoreManager.AddToScore(ScorePointInfo.vikingContiniousScore, m_thisPlayerIndex);
     }
     private bool m_animIsFiring;
 
