@@ -30,13 +30,14 @@ public class VikingRespawn : MonoBehaviour
     public void Respawn()
     {
         Debug.Log("Respawn called");
-        transform.position = new Vector3(Mathf.Lerp(m_vikingController.m_leftBounds, m_vikingController.m_rightBounds, 0.5f), m_vikingController.m_topBounds + 5f, transform.position.z);
+        transform.position = new Vector3(Mathf.Lerp(m_vikingController.m_leftBounds, m_vikingController.m_rightBounds, 0.5f), m_vikingController.m_topBounds + 5f, m_gameController.snapGridZ);
+        transform.rotation = Quaternion.identity;
 
         //we want isCarried to be false because we want the viking to be pickup-able when they respawn
         m_vikingController.SetCarried(false);
 
         //and then we want to assign the rigidbody stuff to exactly what we need for them to be pickupable when they respawn
-        gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        gameObject.GetComponent<Rigidbody>().isKinematic = false;
         gameObject.GetComponent<Rigidbody>().useGravity = false;
         gameObject.GetComponent<Rigidbody>().detectCollisions = true;
         gameObject.GetComponent<CharacterController>().enabled = false;
@@ -53,7 +54,7 @@ public class VikingRespawn : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         //reset everything to their original values yaaay
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
+        gameObject.GetComponent<Rigidbody>().isKinematic = true;
         gameObject.GetComponent<Rigidbody>().useGravity = true;
         gameObject.GetComponent<Rigidbody>().detectCollisions = true;
         gameObject.GetComponent<CharacterController>().enabled = true;
