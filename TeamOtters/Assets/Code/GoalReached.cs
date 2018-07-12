@@ -18,7 +18,8 @@ public class GoalReached : MonoBehaviour {
 	void Start ()
     {
         m_gameController = GameController.Instance;
-       /* m_scoreManager = m_gameController.m_scoreManager;
+        m_scoreManager = m_gameController.m_scoreManager;
+        /*
         m_normalScoreBonus = m_gameController.firstReachGoal;
         m_carryingScoreBonus = m_gameController.carryingBonus;*/
 	}

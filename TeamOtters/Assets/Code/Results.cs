@@ -17,7 +17,7 @@ public class Results : MonoBehaviour {
         m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
 	}
-
+/*
     class ScoreResults
     {
         public ScoreResults(int index, int _score)
@@ -29,19 +29,23 @@ public class Results : MonoBehaviour {
         public int playerIndex;
         public int score;
     }
+    */
 
     public void ShowResults ()
     {
         m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
-        List<ScoreResults> scores = new List<ScoreResults>();
+        List<ScoreRanking> scores = new List<ScoreRanking>();
+
+        scores = m_scoreManager.m_ranks;
+        /*
         for (int i = 0; i < 4; i++)
         {
             scores.Add(new ScoreResults(m_scoreManager.m_players[i].m_PlayerIndex, m_scoreManager.m_players[i].m_CurrentScore));
         }
-
+        
         scores.Sort((b, a) => a.score.CompareTo(b.score));
-
+        */
         for (int i = 0; i < scores.Count; i++)
         {
             m_rankButtons[i].GetComponent<Text>().text = "P" + scores[i].playerIndex.ToString() + " : " + scores[i].score.ToString();
