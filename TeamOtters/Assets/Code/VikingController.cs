@@ -742,7 +742,7 @@ public class VikingController : MonoBehaviour
     {
         m_isStunned = true;
         //m_animator.SetInteger("State", 6); // Stunned
-        GetComponent<SpriteRenderer>().color = Color.white;
+        //GetComponent<SpriteRenderer>().color = Color.white;
         Invoke("StunnedCooldown", m_stunnedCoolDown);
     }
 
@@ -750,6 +750,6 @@ public class VikingController : MonoBehaviour
     {
         m_animator.SetInteger("State", 1); // Idle, not stunned
         m_isStunned = false;
-        GetComponent<SpriteRenderer>().color = Color.clear;
+        //GetComponent<SpriteRenderer>().color = Color.clear;
     }
 }
