@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2123,6 +2123,18 @@ Prefab:
       propertyPath: scoreText.Array.data[3]
       value: 
       objectReference: {fileID: 90667631}
+    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: playerDataHolder
+      value: 
+      objectReference: {fileID: 1191832021298734, guid: 98defa2f692fe1d42b696cd603b24bca,
+        type: 2}
+    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: playerComponents
+      value: 
+      objectReference: {fileID: 114198510458735384, guid: e45ba722d31b20b47b81e0f7f5baf752,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0

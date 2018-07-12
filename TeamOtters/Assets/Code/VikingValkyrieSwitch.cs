@@ -13,6 +13,9 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     private bool m_isValkyrie;
     private Transform m_parentTransform;
     private GameObject m_scoreText;
+    internal GameObject m_transformParticles;
+    private GameObject m_particleSpawnPointViking;
+    private GameObject m_particleSpawnPointValkyrie;
 
 	// Use this for initialization
 	void Start ()
@@ -20,8 +23,19 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //initialize all components
         if (transform.childCount != 0)
         {
+            //gets character objects and creating a spawn point for the particle on each gameobject
             m_vikingCharacter = GetComponentInChildren(typeof(VikingController), true).gameObject;
+            
+            m_particleSpawnPointViking = new GameObject("particleSpawnPointViking");
+            m_particleSpawnPointViking.transform.parent = m_vikingCharacter.transform;
+            m_particleSpawnPointViking.transform.position = m_vikingCharacter.GetComponent<SpriteRenderer>().bounds.center;
+
             m_valkyrieCharacter = GetComponentInChildren(typeof(ValkyrieController), true).gameObject;
+            m_particleSpawnPointValkyrie = new GameObject("particleSpawnPointValkyrie");
+            m_particleSpawnPointValkyrie.transform.parent = m_valkyrieCharacter.transform;
+            m_particleSpawnPointValkyrie.transform.position = m_valkyrieCharacter.transform.Find("body_sprite").GetComponent<SpriteRenderer>().bounds.center;
+
+            //rest of the components
             m_playerData = GetComponent<PlayerData>();
             m_scoreText = GetComponentInChildren<Text>().gameObject.transform.parent.gameObject;
             m_parentTransform = this.gameObject.transform;
@@ -47,16 +61,37 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     // Switch to Viking
     public void SwitchToViking()
     {
-        //Activating viking, childing valkyrie to viking and deactivating valkyrie
+        //Activating viking
         m_isValkyrie = false;
         m_vikingCharacter.SetActive(true);
+        //childing all relevant objects to their positions
         m_vikingCharacter.transform.parent = m_parentTransform;
         m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
         m_scoreText.transform.parent = m_vikingCharacter.transform;
+        m_transformParticles.transform.parent = m_particleSpawnPointViking.transform;
+        m_transformParticles.transform.position= m_particleSpawnPointViking.transform.position;
+        //transformation effect
+        TransformationEffect();
+        //deactivate valkyrie
         m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
         m_valkyrieCharacter.SetActive(false);
 
 
+    }
+
+    private void Update() // this is only for debug purposes, nothing should need to live in here!
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            if(m_isValkyrie)
+            {
+                SwitchToViking();
+            }
+            else
+            {
+                SwitchToValkyrie();
+            }
+        }
     }
 
     // Switch to Valkyrie
@@ -65,10 +100,25 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
         m_valkyrieCharacter.SetActive(true);
+        //childing all relevant objects to their positions
         m_valkyrieCharacter.transform.parent = m_parentTransform;
         m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
         m_scoreText.transform.parent = m_valkyrieCharacter.transform;
+        m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
+        m_transformParticles.transform.position = m_particleSpawnPointValkyrie.transform.position;
+        //transformation effect
+        TransformationEffect();
+        //deactivate viking
         m_vikingCharacter.SetActive(false);
+    }
+
+    void TransformationEffect()
+    {
+        ParticleSystem [] particles = m_transformParticles.GetComponentsInChildren<ParticleSystem>();
+        foreach(ParticleSystem particle in particles)
+        {
+            particle.Play();
+        }
     }
 
 }

@@ -18,11 +18,18 @@ public class GameController : MonoBehaviour
     public PhaseManager phaseManager;
     public CameraBehaviourManager cameraManager;
     public SnapPositionController snapPositionController;
-    public PlayerData playerData;
+
+    public PlayerComponents playerComponents;
+    /*
     public GameObject vikingPrefab;
     public GameObject valkyriePrefab;
     public GameObject scorePrefab;
+    public GameObject transformParticles;
+    */
+
     public GameObject logicLayer;
+   
+
 
     public RumbleManager rumbleManager;
     private SnapablePlayers snapablePlayers;
@@ -127,9 +134,11 @@ public class GameController : MonoBehaviour
             m_currentPlayerData.scoreText = myNewPlayer.GetComponentInChildren<Text>();
 
             //instantiates children (viking, valkyrie and score prefabs)
-            GameObject myNewVikingCharacter = Instantiate(vikingPrefab, myNewPlayer.transform);
-            GameObject myNewValkyrieCharacter = Instantiate(valkyriePrefab, myNewPlayer.transform);
-            GameObject myNewPlayerScoreUI = Instantiate(scorePrefab, myNewPlayer.transform);
+            GameObject myNewVikingCharacter = Instantiate(playerComponents.vikingPrefab, myNewPlayer.transform);
+            GameObject myNewValkyrieCharacter = Instantiate(playerComponents.valkyriePrefab, myNewPlayer.transform);
+            GameObject myNewPlayerScoreUI = Instantiate(playerComponents.scorePrefab, myNewPlayer.transform);
+            GameObject myTransformParticles = Instantiate(playerComponents.transformParticles, myNewPlayer.transform);
+            myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_transformParticles = myTransformParticles;
             phaseManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();
 			m_scoreManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();      
 
