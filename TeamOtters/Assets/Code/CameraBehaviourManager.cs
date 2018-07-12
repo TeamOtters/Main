@@ -34,7 +34,7 @@ public class CameraBehaviourManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void LateUpdate () {
+	void Update () {
 		
 
         if(m_valkyrieRaceState)

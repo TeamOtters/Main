@@ -32,8 +32,8 @@ public class ValkyrieAttackDetect : MonoBehaviour {
                 // Add to the score of the valkyrie when you successfully attack another valkyrie
                 if (m_scoreManager != null)
                 {
-                    m_scoreManager.AddToScore(m_gameController.hitOpponent, m_playerData.m_PlayerIndex);
-                    Debug.Log("I hit a valkyrie and got " + m_gameController.hitOpponent + "points!");
+                    m_scoreManager.AddToScore(ScorePointInfo.hitOpponent, m_playerData.m_PlayerIndex);
+                    Debug.Log("I hit a valkyrie and got " + ScorePointInfo.hitOpponent + "points!");
                 }
                 else
                 {

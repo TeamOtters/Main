@@ -79,7 +79,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             if (m_scoreManager != null)
             {
-                m_scoreManager.AddToScore( m_gameController.bounceHit, m_playerID); 
+                m_scoreManager.AddToScore( ScorePointInfo.bounceHit, m_playerID); 
             }
 
             if (m_scoreManager == null)
@@ -89,7 +89,7 @@ public class ProjectileBehaviour : MonoBehaviour {
         {
             if (collision.collider.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex != m_playerID)
             {
-                m_scoreManager.AddToScore(m_gameController.hitOpponent, m_playerID);
+                m_scoreManager.AddToScore(ScorePointInfo.hitOpponent, m_playerID);
                 Debug.Log("Viking hit valkyrie");
             }
         }

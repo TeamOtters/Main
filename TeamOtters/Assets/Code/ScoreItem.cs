@@ -20,7 +20,7 @@ public class ScoreItem : MonoBehaviour {
         {
              m_scoringPlayer = collisionInfo.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
 
-            m_scoreManagerCloud.AddToScore(10, m_scoringPlayer);
+            m_scoreManagerCloud.AddToScore(ScorePointInfo.scoreItem, m_scoringPlayer);
             Debug.Log("Player" + m_scoringPlayer + "Scored 10 points for  touching Cloud");
             Destroy(gameObject);
         }

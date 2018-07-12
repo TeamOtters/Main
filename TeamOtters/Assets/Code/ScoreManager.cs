@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+public static class ScorePointInfo
+{
+    public static int playerContiniousScore = 2;
+    public static int scoreItem = 5;
+    public static int bounceHit = 3;
+    public static int firstReachGoal = 10;
+    public static int carryingBonus = 20;
+    public static int hitOpponent = 2;
+}
+
+
 public class ScoreManager : MonoBehaviour {
 
     internal PlayerData[] m_players= { null, null, null, null };
@@ -13,7 +24,8 @@ public class ScoreManager : MonoBehaviour {
     private GlowEffect m_glowEffectScript;
     public GameObject m_glowEffect;
     public Text[] scoreText;
- 
+    //public static ScorePointInfo scorePointInfo { get; }
+    
 
     //Am the players score I'm getting Higher then the current highestScore? If so, set that score the new highest score! 
     public void SetHighestScore(int score)
@@ -40,6 +52,8 @@ public class ScoreManager : MonoBehaviour {
         //SetHighestPlayerScore(playerIndex-1);
 
     }
+
+   
 
     //Additions by Vivienne
 

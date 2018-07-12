@@ -18,9 +18,9 @@ public class GoalReached : MonoBehaviour {
 	void Start ()
     {
         m_gameController = GameController.Instance;
-        m_scoreManager = m_gameController.m_scoreManager;
+       /* m_scoreManager = m_gameController.m_scoreManager;
         m_normalScoreBonus = m_gameController.firstReachGoal;
-        m_carryingScoreBonus = m_gameController.carryingBonus;
+        m_carryingScoreBonus = m_gameController.carryingBonus;*/
 	}
 
     private void OnTriggerEnter(Collider player)
@@ -34,7 +34,7 @@ public class GoalReached : MonoBehaviour {
             {
                 m_hasReachedValhalla = true;
                 int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-                m_scoreManager.AddToScore(m_carryingScoreBonus, ID);
+                m_scoreManager.AddToScore(ScorePointInfo.carryingBonus, ID);
 
                 StartCoroutine("Wait");
                 myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
@@ -43,7 +43,7 @@ public class GoalReached : MonoBehaviour {
             {
                 m_hasReachedValhalla = true;
                 int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-                m_scoreManager.AddToScore(m_normalScoreBonus, ID);
+                m_scoreManager.AddToScore(ScorePointInfo.firstReachGoal, ID);
                 myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
                 StartCoroutine("Wait");
 

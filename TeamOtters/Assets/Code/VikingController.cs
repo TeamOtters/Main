@@ -42,11 +42,14 @@ public class VikingController : MonoBehaviour
     private bool m_isGrounded;
     private bool m_askForGoundedOffset;
     private bool m_isJumping;
+    private bool m_goThroughPlatformDown;
     private bool m_isWallJumping;
     private bool m_layerIsSet;
-    
+    private bool m_isWallClinging;
+
 
     public float m_stunnedCoolDown = 1f;
+    private float m_wallStickCoolDown = 0.3f;
 
     private int m_thisPlayerIndex;
     private string m_playerIndexString;
@@ -104,13 +107,13 @@ public class VikingController : MonoBehaviour
 
         m_animator.SetInteger("State", 0); // Idle
         StartCoroutine("ContiniouslyEvaluateScore");
+        StartCoroutine("ContinouslySetBoundaries");
     }
 
     private void Update()
     {
         //Set the boundaries to camera
-        if (!m_isCarried)
-            SetBoundaries();
+
 
         if (m_askForGoundedOffset)
                 m_isGroundedTimer -= Time.deltaTime;
@@ -120,6 +123,49 @@ public class VikingController : MonoBehaviour
             m_isGrounded = false;
             m_askForGoundedOffset = false;
             m_isGroundedTimer = m_isGroundedOffset;
+        }
+
+
+        //float travel = m_currentVerticalPos - m_previousVerticalPos;
+
+        if (m_currentVerticalPos < m_previousVerticalPos)
+        {
+             if (m_isJumping)
+             {
+                if (m_layerIsSet)
+                {
+                    m_layerIsSet = false;
+                    gameObject.layer = m_playersLayer;
+                    m_isJumping = false;
+                }
+             }
+
+            CheckWallClinging();
+        }
+
+        if(m_goThroughPlatformDown)
+        {
+            if(m_vikingcCharacterController.isGrounded)
+            {
+                m_goThroughPlatformDown = false;
+                gameObject.layer = m_playersLayer;
+                m_layerIsSet = false;
+            }
+        }
+
+
+    }
+
+    IEnumerator ContinouslySetBoundaries()
+    {
+        yield return null;
+        while (true)
+        {
+            yield return null;
+            //Set the boundaries to camera
+            if (!m_isCarried)
+            SetBoundaries();
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -137,10 +183,8 @@ public class VikingController : MonoBehaviour
     private void GiveContionousScore()
     {
         if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
-            m_gameController.m_scoreManager.AddToScore(2, m_thisPlayerIndex);
+            m_gameController.m_scoreManager.AddToScore(ScorePointInfo.playerContiniousScore, m_thisPlayerIndex);
     }
-
-
 
     void FixedUpdate()
     {
@@ -158,6 +202,7 @@ public class VikingController : MonoBehaviour
             VikingMovement();
 
         }
+
         else
         {
             m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
@@ -168,29 +213,20 @@ public class VikingController : MonoBehaviour
             ProjectileRetractingUpdate();
 
         m_currentVerticalPos = transform.position.y;
-        float travel = m_currentVerticalPos - m_previousVerticalPos;
-      
 
-        // Only do work if meaningful
-        /*  if (vNewInput.sqrMagnitude < 0.1f)
-          {
-              return;
-          }*/
+        
 
-       if(m_currentVerticalPos < m_previousVerticalPos)
-        {
-            if (m_isJumping)
-            {
-                if (m_layerIsSet)
-                {
-                    m_layerIsSet = false;
-                    gameObject.layer = m_playersLayer;
-                    m_isJumping = false;
-                }
-            }
+            // float travel = m_currentVerticalPos - m_previousVerticalPos;
+
+
+            // Only do work if meaningful
+            /*  if (vNewInput.sqrMagnitude < 0.1f)
+              {
+                  return;
+              }*/
+
+
         }
-
-    }
 
     private void LateUpdate()
     {
@@ -353,7 +389,6 @@ public class VikingController : MonoBehaviour
                 m_currentProjectile.GetComponent<Rigidbody>().AddForce(transform.TransformDirection(-m_projectileForceX, m_projectileForceY, 0) * m_projectileSpeed);
                 m_currentProjectile.gameObject.GetComponent<ProjectileBehaviour>().m_playerData = m_playerData;
                 m_currentProjectile.GetComponent<SpriteRenderer>().flipX = false;
-
             }
 
             else
@@ -537,11 +572,11 @@ public class VikingController : MonoBehaviour
         }
 
         //Jumping
-        if (m_isGrounded && !m_isCarried)
+        if (m_isGrounded && !m_isCarried || transform.position.y == m_bottomBounds && !m_isCarried)
         {
-            if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
+            if (Input.GetButtonDown("Jump_P" + m_playerIndexString) && angle != 180)
             {
-                
+               
                 m_vikingMoveDirection.y =  m_vikingJumpSpeed;
                 if (!m_layerIsSet)
                 {
@@ -561,6 +596,26 @@ public class VikingController : MonoBehaviour
 
         }
 
+        //Press Down From Platform
+        if (m_vikingcCharacterController.isGrounded && !m_isCarried)
+        {
+            if (Input.GetButtonDown("Jump_P" + m_playerIndexString) && angle == 180)
+            {
+               
+                if (!m_layerIsSet)
+                {
+                    Debug.Log("go");
+                    gameObject.layer = m_goThroughPlatformLayer;
+                    m_layerIsSet = true;
+                }
+
+                m_goThroughPlatformDown = true;
+                m_animator.SetInteger("State", 0); //Idle
+                
+            }
+
+        }
+
         //Movement Air
         if (!m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
@@ -568,31 +623,47 @@ public class VikingController : MonoBehaviour
             m_animator.SetInteger("State", 3); //Falling
         }
 
-        //Wall Jump
-        if (!m_vikingcCharacterController.isGrounded && !m_isCarried && !m_isWallJumping)
-        {
-            if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
-            {
-                if(transform.position.x == m_leftBounds || transform.position.x == m_rightBounds)
-                {
-                    m_vikingMoveDirection.y = m_vikingJumpSpeed -2f;
-                    
-                    if (!m_layerIsSet)
-                    {
-                        gameObject.layer = m_goThroughPlatformLayer;
-                        m_layerIsSet = true;
-                    }
 
-                    m_isJumping = true;
-                    m_isWallJumping = true;
+        //Wall Jump
+        if (Input.GetButtonDown("Jump_P" + m_playerIndexString))
+        {
+            if (!m_vikingcCharacterController.isGrounded && !m_isCarried && !m_isWallJumping)
+            {
+                {
+                    if (transform.position.x == m_leftBounds || transform.position.x == m_rightBounds)
+                    {
+                        m_vikingMoveDirection.y = m_vikingJumpSpeed - 2f;
+
+                        if (!m_layerIsSet)
+                        {
+                            gameObject.layer = m_goThroughPlatformLayer;
+                            m_layerIsSet = true;
+                        }
+
+                        m_isJumping = true;
+                        m_isWallJumping = true;
+                    }
                 }
             }
         }
 
 
+        //Release Wall Cling
+        if (Input.GetButtonUp("Jump_P" + m_playerIndexString) && m_isWallClinging)
+        {
+            if (transform.position.x == m_leftBounds || transform.position.x == m_rightBounds)
+            {
+                m_isWallClinging = false;
+            }
+        }
 
-            //Right - Sprite Flip
-            if (Mathf.Clamp(angle, 10, 170) == angle)
+
+
+
+
+
+        //Right - Sprite Flip
+        if (Mathf.Clamp(angle, 10, 170) == angle)
         {
             GetComponent<SpriteRenderer>().flipX = true;
             m_turnedLeft = false;
@@ -610,8 +681,29 @@ public class VikingController : MonoBehaviour
         // m_hand.transform.Translate(new Vector3 (angle, 0, 0) * 10f * Time.deltaTime);
         //m_hand.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
-        m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
+        if (!m_isWallClinging)
+        {
+            m_vikingMoveDirection.y -= m_vikingGravityForce * Time.deltaTime;
+            m_vikingcCharacterController.Move(m_vikingMoveDirection * Time.deltaTime);
+        }
+    }
+
+    private void CheckWallClinging ()
+    {
+
+        //Wall Cling
+        if (Input.GetButton("Jump_P" + m_playerIndexString) )
+        {
+            if (!m_vikingcCharacterController.isGrounded && !m_isCarried)
+            {
+                if (transform.position.x == m_leftBounds || transform.position.x == m_rightBounds)
+                {
+                    m_isWallClinging = true;
+                }
+            }
+        }
+
+       
     }
 
    
@@ -629,12 +721,16 @@ public class VikingController : MonoBehaviour
 
         GetComponent<SpriteRenderer>().color = Color.white;
         Invoke("StunnedCooldown", m_stunnedCoolDown);
-        Debug.Log("STUNNED");
+      //  Debug.Log("STUNNED");
     }
 
     private void StunnedCooldown()
     {
+<<<<<<< HEAD
         //Debug.Log("NotStunned!");
+=======
+      //  Debug.Log("NotStunned!");
+>>>>>>> Elvira Major update:
         m_animator.SetInteger("State", 1); // Idle, not stunned
 
         m_isStunned = false;
