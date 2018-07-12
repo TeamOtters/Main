@@ -180,7 +180,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1173794344469006}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8.944406, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children:
   - {fileID: 4951687772054874}
@@ -310,8 +310,8 @@ MonoBehaviour:
   m_BallSprite_Full: {fileID: 1134054393200348}
   m_BallSprite_Half: {fileID: 1054677955195544}
   m_BallSprite_ThreeLeft: {fileID: 1771767297483392}
-  m_hpBelowHalf: {fileID: 0}
-  m_hpThreeHitLeft: {fileID: 0}
+  m_hpBelowHalf: {fileID: 1054677955195544}
+  m_hpThreeHitLeft: {fileID: 1771767297483392}
   m_ballDeathEffect: {fileID: 1432418845525510, guid: 6a98bade033940d4fbb9b35724998270,
     type: 2}
   m_hasHalfHPEffect: 0
