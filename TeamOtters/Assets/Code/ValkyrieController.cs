@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ValkyrieController : MonoBehaviour
 {
+
     private Animator m_bodyAnimator;
     private Animator m_wingAnimator;        
     private GameController m_gameController;
@@ -11,6 +12,17 @@ public class ValkyrieController : MonoBehaviour
     public BoxCollider m_attackCollision;
     public float m_speed;
     public float m_flightForce;
+
+    public float m_valkyrieMovementSpeed;
+    public float m_valkyriePhysicsJumpSpeed;
+    public float m_valkyrieAddedGravityForce;
+    public float m_valkyrieDiveForce;
+    public float m_extraPowerJump;
+    private Vector3 m_vikingMoveDirection = Vector3.zero;
+    public float m_physicsSpeed;
+
+    //public float m_flightForce;
+
     public float m_wrapScreenDelay = 0.5f;
     public float m_attackDuration = 1f;
     public float m_attackSpeed = .01f;
@@ -58,13 +70,15 @@ public class ValkyrieController : MonoBehaviour
     private float m_thisScale;    
 
     public GameObject m_highestScoreEffect;
+    private CharacterController m_valkyrieCharacterController;
 
     // Use this for initialization
     void Start()
     {
+        m_valkyrieCharacterController = GetComponent<CharacterController>();
         m_gameController = GameController.Instance;
         m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
-        m_player = GameController.Instance.player.GetComponent<Rigidbody>();
+        m_player = GetComponent<Rigidbody>();
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_playerSize = m_bodySprite.bounds.size;
 
@@ -83,6 +97,11 @@ public class ValkyrieController : MonoBehaviour
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
 
+
+    private void FixedUpdate()
+    {
+        ValkyrieMovement();
+        StephsOriginalMovement();
     }
 
     IEnumerator ContiniouslyEvaluateScore()
@@ -102,7 +121,7 @@ public class ValkyrieController : MonoBehaviour
         {
             yield return null;
             //Set the boundaries to camera
-             SetBoundaries();
+            SetBoundaries();
             yield return new WaitForEndOfFrame();
         }
     }
@@ -173,6 +192,7 @@ public class ValkyrieController : MonoBehaviour
         if (transform.position.x < m_leftBounds)
             WrapScreenLeftToRight();
 
+
         if (transform.position.x > m_rightBounds)
             WrapScreenRightToLeft();
 
@@ -181,25 +201,85 @@ public class ValkyrieController : MonoBehaviour
       
         if (transform.position.y > m_topBounds)
             transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
+
+
+        if (transform.position.x > m_rightBounds)
+            WrapScreenRightToLeft();
+
+        if (transform.position.y < m_bottomBounds)
+            transform.position = new Vector3(transform.position.x, m_bottomBounds, m_gameController.snapGridZ);
+
+        if (transform.position.y > m_topBounds)
+            transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
+
     }
 
-    private void FixedUpdate()
+    private void ValkyrieMovement ()
+    {
+        Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString()), 0.0f);
+        var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString())) * Mathf.Rad2Deg;
+
+        //Movement by speed (not physics) 
+            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString()),0.0f);
+            m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
+            m_vikingMoveDirection *= m_valkyrieMovementSpeed;
+
+     
+        //Normal flap
+        if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
+         {
+            m_player.velocity = Vector3.zero;
+            m_player.angularVelocity = Vector3.zero;       
+            m_player.AddForce(Vector3.up * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+        }
+
+        //up
+        else if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()) && Mathf.Clamp(angle, -10, 10) == angle && angle != -1)
+        {
+            m_player.velocity = Vector3.zero;
+            m_player.angularVelocity = Vector3.zero;
+            m_player.AddForce(Vector3.up * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed  + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange); 
+        }
+
+        //Right
+        else if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()) && Mathf.Clamp(angle, 10, 170) == angle)
+        {
+            m_player.velocity = Vector3.zero;
+            m_player.angularVelocity = Vector3.zero;
+            m_player.AddForce(Vector3.right * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange);   
+        }
+
+        //Left
+        else if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()) && Mathf.Clamp(angle, -170, -10) == angle)
+        {
+            m_player.velocity = Vector3.zero;
+            m_player.angularVelocity = Vector3.zero;
+            m_player.AddForce(Vector3.left * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+           
+        }
+        //Dive
+        if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()) && angle == 180)
+        {
+            m_player.velocity = Vector3.zero;
+            m_player.angularVelocity = Vector3.zero;
+            m_player.AddForce(Vector3.down * Mathf.Sqrt(m_valkyrieDiveForce * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+        }
+
+        //Movement by speed (not physics)
+        m_vikingMoveDirection.y -= m_valkyrieAddedGravityForce * Time.deltaTime;
+        transform.Translate(m_vikingMoveDirection, Space.World);
+
+    }
+
+    private void StephsOriginalMovement()
     {
         // Basic movement input
-        var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
-        var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
-
-        Rigidbody[] myRigidbodies = GetComponents<Rigidbody>();
+        var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_physicsSpeed* Time.deltaTime;
+        var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_physicsSpeed * Time.deltaTime;
 
         // Flight movement input
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
         {
-            Debug.Log("Valkyrie Jump");
-            foreach (Rigidbody rigidbody in myRigidbodies)
-            {
-                rigidbody.AddForce(Vector2.up * m_flightForce);
-            }
-
             if (!m_layerIsSet)
             {
                 gameObject.layer = m_goThroughPlatformLayer;
@@ -242,19 +322,11 @@ public class ValkyrieController : MonoBehaviour
             }
         }
 
-        // Move
-        //transform.Translate(x, y, transform.position.z);	
+
+        //Floating 
         Vector3 movement = new Vector3(x, y, 0f);
-
-
-        foreach (Rigidbody rigidbody in myRigidbodies)
-        {
-            rigidbody.AddForce(movement * m_speed);
-            /*if (rigidbody.velocity.y > m_maxVelocity)
-                rigidbody.Sleep();
-            else
-                rigidbody.AddForce(movement * m_speed);*/
-        }
+		m_player.AddForce(movement * m_speed);
+ 
 
         m_currentHorizontalPos = transform.position.x;
         float travelxLeft = m_currentHorizontalPos - m_previousHorizontalPos;
@@ -307,8 +379,6 @@ public class ValkyrieController : MonoBehaviour
             SetValkyrieAnimationBool("facingRight",false); // Facing left
             
         }
-
-
     }
 
     private void SetValkyrieAnimationBool(string boolString, bool enable)
@@ -321,6 +391,12 @@ public class ValkyrieController : MonoBehaviour
     {
         m_wingAnimator.SetInteger("State", state);
         m_bodyAnimator.SetInteger("State", state);
+
+     //Floating 
+        Vector3 movement = new Vector3(x, y + m_physicsSpeed, 0f);
+        m_player.AddForce(movement* m_physicsSpeed);
+
+        CheckIfGoingDown();
     }
 
     private void CheckIfGoingDown ()
