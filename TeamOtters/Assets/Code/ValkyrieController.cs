@@ -5,6 +5,7 @@ using UnityEngine;
 public class ValkyrieController : MonoBehaviour
 {
     private Animator m_bodyAnimator;
+    private Animator m_wingAnimator;
     public float m_speed;
     public float m_flightForce;
     public float m_wrapScreenDelay = 0.5f;
@@ -39,6 +40,11 @@ public class ValkyrieController : MonoBehaviour
     private bool m_layerIsSet;
     private bool m_isPressingJump;
 
+    private bool m_isFacingRight;
+
+    private float m_thisScale;
+
+
     public GameObject m_highestScoreEffect;
 
     // Use this for initialization
@@ -51,9 +57,16 @@ public class ValkyrieController : MonoBehaviour
         m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController), true).GetComponent<SpriteRenderer>().bounds.extents;
         StartCoroutine("ContiniouslyEvaluateScore");
 
-        //assign an animator controller based on player index
+        //wing animator
+        m_wingAnimator = GetComponent<Animator>();
+
+        //assign the valkyries body animator controller based on player index
         m_bodyAnimator = transform.Find("body_sprite").GetComponent<Animator>();
         m_bodyAnimator.runtimeAnimatorController = Resources.Load("Valkyrie_P" + m_playerIndex.ToString()) as RuntimeAnimatorController;
+
+        // Set Idle animation state
+        SetValkyrieAnimationState(0); // Idle
+        m_thisScale = transform.localScale.x;
     }
 
     IEnumerator ContiniouslyEvaluateScore()
@@ -110,7 +123,7 @@ public class ValkyrieController : MonoBehaviour
         if (Input.GetButtonDown("Fire1_P" + m_playerIndex))
         {
             if (isAttacking == false)
-            {
+            {                
                 Invoke("AttackStart", m_attackSpeed);
 
                 if (heldRigidbody != null)
@@ -118,7 +131,7 @@ public class ValkyrieController : MonoBehaviour
                     DropPickup();
                 }
 
-                Invoke("AttackStop", m_attackDuration);
+                Invoke("AttackStop", m_attackDuration);                
             }
         }
 
@@ -186,8 +199,44 @@ public class ValkyrieController : MonoBehaviour
 
 
         CheckIfGoingDown();
-       
 
+        var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString())) * Mathf.Rad2Deg;
+
+        //Right - Sprite Flip
+        if (Mathf.Clamp(angle, 10, 170) == angle)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -m_thisScale;
+            transform.localScale = scale;
+          
+            SetValkyrieAnimationBool("facingRight", true); // Facing right
+           
+        }
+
+        //Left - Sprite Flip
+        else if (Mathf.Clamp(angle, -170, -10) == angle)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = +m_thisScale;
+            transform.localScale = scale;
+
+            SetValkyrieAnimationBool("facingRight",false); // Facing left
+            
+        }
+
+
+    }
+
+    private void SetValkyrieAnimationBool(string boolString, bool enable)
+    {
+        m_wingAnimator.SetBool(boolString, enable); 
+        m_bodyAnimator.SetBool(boolString, enable); 
+    }
+
+    private void SetValkyrieAnimationState(int state)
+    {
+        m_wingAnimator.SetInteger("State", state);
+        m_bodyAnimator.SetInteger("State", state);
     }
 
     private void CheckIfGoingDown ()
@@ -263,6 +312,7 @@ public class ValkyrieController : MonoBehaviour
     {
         Debug.Log("Valkyrie Attack Started");
 
+        SetValkyrieAnimationBool("isAttacking", true); // Attacking
         isAttacking = true;
         m_attackCollision.enabled = true;
     }
@@ -271,6 +321,7 @@ public class ValkyrieController : MonoBehaviour
     {
         Debug.Log("Valkyrie Attack Stopped");
 
+        SetValkyrieAnimationBool("isAttacking", false); // Attacking
         m_attackCollision.enabled = false;
 
         Debug.Log("Valkyrie Attack Box Collision Enable = " + m_attackCollision.enabled);
