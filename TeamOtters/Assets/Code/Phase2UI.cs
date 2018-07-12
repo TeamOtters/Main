@@ -43,8 +43,8 @@ public class Phase2UI: MonoBehaviour {
 
     private IEnumerator RankDelay(int index)
     {
-        yield return new WaitForSeconds(0.2f);
-        if (index < m_scoreManager.scoreText.Length)
+        yield return new WaitForSeconds(0.8f);
+        if (index < (m_scoreManager.scoreText.Length)-1)
         {
             index++;
             ActivateScoreboard(index);
@@ -54,7 +54,7 @@ public class Phase2UI: MonoBehaviour {
 
     public void ActivateScoreboard(int index)
     {
-        m_scoreManager.scoreText[index].transform.parent.gameObject.SetActive(true);
+        m_scoreManager.scoreText[(m_scoreManager.m_ranks[index].playerIndex)-1].transform.parent.gameObject.SetActive(true);
         StartCoroutine(RankDelay(index));
     }
 
