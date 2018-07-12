@@ -9,9 +9,12 @@ public class CameraBehaviourManager : MonoBehaviour {
     private bool m_valkyrieRaceState;
 
     public float m_panSpeedY = 0.1f;
-    public float m_panSpeedXMin = 0.1f;
-    public float m_panSpeedXMax = 0.1f;
     public GameObject m_endPanTarget;
+    
+    [SerializeField]
+    private AnimationCurve m_speedCurve;
+    
+
     public float m_panXAmount;
 
     private float targetX;
@@ -26,6 +29,15 @@ public class CameraBehaviourManager : MonoBehaviour {
     void Start ()
     {
         targetX = m_panXAmount;
+        /*
+        m_speedCurve.AddKey(-m_panXAmount, m_panSpeedXMin);
+        m_speedCurve.AddKey(0, m_panSpeedXMax);
+        m_speedCurve.AddKey(m_panXAmount, m_panSpeedXMin);
+        for (int i = 0; i < m_speedCurve.keys.Length; ++i)
+        {
+            m_speedCurve.SmoothTangents(i, 0); //zero weight means average
+        }
+        */
     }
 
     public void SetRaceState (bool enable)
@@ -42,19 +54,20 @@ public class CameraBehaviourManager : MonoBehaviour {
             Vector3 pos = Camera.main.transform.position;
             Vector3 rot = Camera.main.transform.rotation.eulerAngles;
             Vector3 target = m_endPanTarget.transform.position;
-            
 
 
+            /*
             float maxDistance = m_panXAmount * 2;
-
+            
             float percentageOfMax = Mathf.Abs(pos.x-targetX) / maxDistance;
             // clamp the value to 0-1 so we don't have to do a comparison
             percentageOfMax = Mathf.Clamp01(percentageOfMax);
 
             float dynamicSpeed;
             dynamicSpeed = Mathf.Lerp(m_panSpeedXMax, m_panSpeedXMin, percentageOfMax);
-            
+            */
 
+            float dynamicSpeed = m_speedCurve.Evaluate(pos.x);
             Vector3 move = new Vector3(targetX * dynamicSpeed, target.y * m_panSpeedY * Time.deltaTime, 0);
 
 
