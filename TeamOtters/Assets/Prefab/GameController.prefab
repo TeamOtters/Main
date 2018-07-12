@@ -60,23 +60,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1599413924832970
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4427844529852280}
-  - component: {fileID: 114411074648067334}
-  - component: {fileID: 114473235066853268}
-  m_Layer: 0
-  m_Name: PlayerDataHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1678900779606746
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +180,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4299416604753702
 Transform:
@@ -211,7 +194,6 @@ Transform:
   m_Children:
   - {fileID: 4814963833399124}
   - {fileID: 4227347536493268}
-  - {fileID: 4427844529852280}
   - {fileID: 4463452976695208}
   - {fileID: 4644318207929426}
   - {fileID: 4468252205985162}
@@ -220,19 +202,6 @@ Transform:
   - {fileID: 4631893018456488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4427844529852280
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1599413924832970}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4463452976695208
 Transform:
@@ -245,7 +214,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4468252205985162
 Transform:
@@ -258,7 +227,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4542255557892598
 Transform:
@@ -271,7 +240,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4631893018456488
 Transform:
@@ -284,7 +253,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4644318207929426
 Transform:
@@ -297,7 +266,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4299416604753702}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4814963833399124
 Transform:
@@ -357,6 +326,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_glowEffect: {fileID: 0}
+  scoreText:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &114319279279604970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -376,6 +350,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   m_phase2Duration: 5000
+  m_phase2Delay: 3
   m_bouncingBall: {fileID: 0}
 --- !u!114 &114358465408991534
 MonoBehaviour:
@@ -390,32 +365,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreBall: {fileID: 0}
   m_positionsZ: []
---- !u!114 &114411074648067334
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1599413924832970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d23cd5101e83c94e90db2e577cc2486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PlayerIndex: 1
-  m_CurrentScore: 0
-  m_glowEffect: {fileID: 0}
---- !u!114 &114473235066853268
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1599413924832970}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c983d71dd6d94049a8e246c73174bed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_startViking: 1
 --- !u!114 &114685679974192610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -454,7 +403,8 @@ MonoBehaviour:
   phaseManager: {fileID: 114319279279604970}
   cameraManager: {fileID: 0}
   snapPositionController: {fileID: 114358465408991534}
-  playerData: {fileID: 114411074648067334}
+  playerData: {fileID: 114309342825866170, guid: 98defa2f692fe1d42b696cd603b24bca,
+    type: 2}
   vikingPrefab: {fileID: 1382873379161574, guid: d875cbbb7adccae478c3bd6b0b69825e,
     type: 2}
   valkyriePrefab: {fileID: 1624163314470624, guid: 706abe77cea331c4483780848c9a7b49,
@@ -471,6 +421,7 @@ MonoBehaviour:
   carryingBonus: 20
   hitOpponent: 10
   snapGridZ: 0
+  m_currentPhaseState: 0
 --- !u!114 &114937836959872220
 MonoBehaviour:
   m_ObjectHideFlags: 1
