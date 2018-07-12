@@ -8,7 +8,7 @@ public class PlayerData : MonoBehaviour
 {
     public int m_PlayerIndex = 1;
     public int m_CurrentScore = 0;
-    public Text scoreText;
+    public Text playerIndicatorText;
     internal Text pInd;
     private GameController m_gameController;
     private PhaseManager m_phaseManager;
@@ -23,10 +23,9 @@ public class PlayerData : MonoBehaviour
     void Start()
     {
         m_gameController = GameController.Instance;
-        pInd = GetComponentInChildren<Text>();
+        //pInd = GetComponentInChildren<Text>();
         m_phaseManager = m_gameController.phaseManager;
         m_scoreManager = m_gameController.m_scoreManager;
-        scoreText = GetComponentInChildren<Text>();
 
 
 
@@ -102,7 +101,7 @@ public class PlayerData : MonoBehaviour
                 mySwitchScript.SwitchToValkyrie();
             }
         }
-
+       /*
        if (pInd != null)
         {
            
@@ -125,6 +124,7 @@ public class PlayerData : MonoBehaviour
                 pInd.color = new Color32(253, 146, 214, 255);
             }
         }
+        */
 
 
 

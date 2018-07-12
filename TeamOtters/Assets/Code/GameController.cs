@@ -131,12 +131,12 @@ public class GameController : MonoBehaviour
             m_currentPlayerData = myNewPlayer.GetComponent<PlayerData>();
             m_currentPlayerData.m_PlayerIndex = i + 1;
             m_currentPlayerData.m_CurrentScore = 0;
-            m_currentPlayerData.scoreText = myNewPlayer.GetComponentInChildren<Text>();
+            //m_currentPlayerData.playerIndicatorText = myNewPlayer.GetComponentInChildren<Text>();
 
             //instantiates children (viking, valkyrie and score prefabs)
             GameObject myNewVikingCharacter = Instantiate(playerComponents.vikingPrefab, myNewPlayer.transform);
             GameObject myNewValkyrieCharacter = Instantiate(playerComponents.valkyriePrefab, myNewPlayer.transform);
-            GameObject myNewPlayerScoreUI = Instantiate(playerComponents.scorePrefab, myNewPlayer.transform);
+            //GameObject myNewPlayerScoreUI = Instantiate(playerComponents.scorePrefab, myNewPlayer.transform);
             GameObject myTransformParticles = Instantiate(playerComponents.transformParticles, myNewPlayer.transform);
             myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_transformParticles = myTransformParticles;
             phaseManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();

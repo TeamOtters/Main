@@ -37,7 +37,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
 
             //rest of the components
             m_playerData = GetComponent<PlayerData>();
-            m_scoreText = GetComponentInChildren<Text>().gameObject.transform.parent.gameObject;
+            //m_scoreText = GetComponentInChildren<Text>().gameObject.transform.parent.gameObject;
             m_parentTransform = this.gameObject.transform;
         }
         else
@@ -67,7 +67,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //childing all relevant objects to their positions
         m_vikingCharacter.transform.parent = m_parentTransform;
         m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
-        m_scoreText.transform.parent = m_vikingCharacter.transform;
+        //m_scoreText.transform.parent = m_vikingCharacter.transform;
         m_transformParticles.transform.parent = m_particleSpawnPointViking.transform;
         m_transformParticles.transform.position= m_particleSpawnPointViking.transform.position;
         //transformation effect
@@ -103,7 +103,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //childing all relevant objects to their positions
         m_valkyrieCharacter.transform.parent = m_parentTransform;
         m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
-        m_scoreText.transform.parent = m_valkyrieCharacter.transform;
+        //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
         m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
         m_transformParticles.transform.position = m_particleSpawnPointValkyrie.transform.position;
         //transformation effect
