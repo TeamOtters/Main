@@ -67,23 +67,19 @@ public class ProjectileBehaviour : MonoBehaviour {
 
         //Set position to bounds
         if (transform.position.x < m_leftBounds)
-        {
             transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
-        }
+
         if (transform.position.x > m_rightBounds)
-        {
             transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
-        }
 
         if (transform.position.y < m_bottomBounds )
-        {
             transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
-        }
 
         if (transform.position.y > m_topBounds)
-        {
             transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-        }
+
+        if (transform.position.x == m_rightBounds || transform.position.x == m_leftBounds || transform.position.y == m_topBounds || transform.position.y == m_bottomBounds)
+            DisableRagdoll();
     }
 
 
@@ -93,7 +89,8 @@ public class ProjectileBehaviour : MonoBehaviour {
         if(!m_hit)
             transform.Rotate(0, 0, m_rotationSpeed * Time.deltaTime, Space.Self);
 
-        
+       
+
     }
     
 
