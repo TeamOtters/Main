@@ -12,8 +12,10 @@ public class CameraBehaviourManager : MonoBehaviour {
     public GameObject m_endPanTarget;
     
     [SerializeField]
-    private AnimationCurve m_speedCurve;
-    
+    private AnimationCurve m_speedCurveX;
+    [SerializeField]
+    private AnimationCurve m_speedCurveY;
+
 
     public float m_panXAmount;
 
@@ -55,6 +57,7 @@ public class CameraBehaviourManager : MonoBehaviour {
             Vector3 rot = Camera.main.transform.rotation.eulerAngles;
             Vector3 target = m_endPanTarget.transform.position;
 
+            float relativeYPos = (target.y - pos.y)/target.y;
 
             /*
             float maxDistance = m_panXAmount * 2;
@@ -67,8 +70,9 @@ public class CameraBehaviourManager : MonoBehaviour {
             dynamicSpeed = Mathf.Lerp(m_panSpeedXMax, m_panSpeedXMin, percentageOfMax);
             */
 
-            float dynamicSpeed = m_speedCurve.Evaluate(pos.x);
-            Vector3 move = new Vector3(targetX * dynamicSpeed, target.y * m_panSpeedY * Time.deltaTime, 0);
+            float dynamicSpeedX = m_speedCurveX.Evaluate(pos.x);
+            float speedModifierY = m_speedCurveY.Evaluate(relativeYPos);
+            Vector3 move = new Vector3(targetX * dynamicSpeedX, target.y * m_panSpeedY *speedModifierY * Time.deltaTime, 0);
 
 
             transform.Translate(move, Space.World);
@@ -91,7 +95,7 @@ public class CameraBehaviourManager : MonoBehaviour {
 
 
             //Set the new target x value for moving from left to right
-            if (Mathf.Clamp(pos.x, targetX - 0.5f, targetX + 0.5f) == pos.x)
+            if (Mathf.Clamp(pos.x, targetX - 0.05f, targetX + 0.055f) == pos.x)
                 targetX = -targetX;
 
             //Stop Camera pan when we reached goal
