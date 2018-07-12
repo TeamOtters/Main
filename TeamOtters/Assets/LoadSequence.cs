@@ -13,7 +13,9 @@ public class LoadSequence : MonoBehaviour {
     public Canvas m_Phase2;
     private bool m_phase2 = false;
     private int m_playerRank;
-    public GameObject m_phase2Prompt; 
+    public GameObject m_phase2Prompt;
+    private int pIndex;
+    private bool isInCoroutine = false;
 
 
 
@@ -24,27 +26,66 @@ public class LoadSequence : MonoBehaviour {
         m_scoreManager = m_gameController.m_scoreManager;
     }
 
-    public void Update()
+    
+
+//Start Splitting LoadSequence 
+
+    public void ShowPrompt()
     {
-        if (!m_Phase2)
+        m_phase2Prompt.gameObject.SetActive(true);
+    }
+
+    
+
+
+    
+    private IEnumerator RankDelay(int index)
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (index<m_scoreManager.scoreText.Length)
         {
-            m_phase2Prompt.gameObject.SetActive(true);
-            StartCoroutine("LoadDelay");
-            
-           
+            index++;
+            ActivateScoreboard(index);
+        }
+
+    }
+
+    private void ActivateScoreboard(int index)
+    {
+
+        m_scoreManager.scoreText[index].transform.parent.gameObject.SetActive(true);
+        StartCoroutine(RankDelay(index));
+        Debug.Log("Player" + index + "is loaded");
+    }
+}
+
+/*
+ *  public GameObject m_PullGamePhase;
+    public Canvas m_Phase2;
+    public Canvas m_InGameMenu;
+    private bool m_Phase2Active=false;
+
+    // Use this for initialization
+    void Start () {
+        m_Phase2.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (!m_Phase2Active) { 
+        GameObject valkyrie = GameObject.FindGameObjectWithTag("Valkyrie");
+
+
+        if (valkyrie)
+        {
+            Debug.Log("Valkyrie Found");
+            m_Phase2.gameObject.SetActive(true);
+                m_Phase2Active = true;
+
+        }
         }
     }
 
-    private IEnumerator LoadDelay()
-    {
-        yield return new WaitForSeconds(1.0f);
-        m_phase2Prompt.gameObject.SetActive(false);
 
-    }
 
-    private IEnumerator RankDelay()
-    {
-        yield return new WaitForSeconds(0.2f);
-
-    }
-}
+*/

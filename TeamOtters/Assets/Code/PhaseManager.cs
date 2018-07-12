@@ -16,6 +16,9 @@ public class PhaseManager : MonoBehaviour {
 
     private List<int> m_playerScores = new List<int>();
     private bool m_phaseSet = false;
+    private bool m_hasStartedPhase2 = false;
+
+    public Phase2UI m_phase2UI;
 
     void Start ()
     {
@@ -56,9 +59,11 @@ public class PhaseManager : MonoBehaviour {
         }
 
         //wait for camera shake to end before phase 2 begins
-        if (GameController.Instance.rumbleManager.transformShakeComplete == true)
+        if (GameController.Instance.rumbleManager.transformShakeComplete == true && !m_hasStartedPhase2)
        {
             // Begin Phase 2
+            m_hasStartedPhase2 = true;
+            m_phase2UI.ActivateScoreboard(0);
             Invoke("BeginPhaseTwo", m_phase2Delay);      
        }
         
@@ -87,6 +92,7 @@ public class PhaseManager : MonoBehaviour {
 
     void BeginPhaseTwo()
     {
+        m_phase2UI.HidePrompt();
         StartCoroutine(PhaseTwoDuration(m_phase2Duration));
     }
 
@@ -95,6 +101,7 @@ public class PhaseManager : MonoBehaviour {
     {
         m_phaseSet = true;
         Debug.Log("I am in phase 2!)");
+        m_phase2UI.ShowPrompt();
         m_isInPhaseOne = false;
         GameController.Instance.m_currentPhaseState = 2;
         //Adds the current score of the players to the score list
@@ -113,12 +120,6 @@ public class PhaseManager : MonoBehaviour {
         //local variables to keep track of the highest scores and corresponding indexes
         int highest = 0;
         int highestIndex = -1;
-
-        /*
-        OLD CODE FOR 2 VIKINGS
-        int second = 0;
-        int secondIndex = -1;
-        */
 
         for (int i = 0; i < m_playerScores.Count; i++)
         {
@@ -156,6 +157,7 @@ public class PhaseManager : MonoBehaviour {
     //Sets the game state back to phase one after a limited time
     IEnumerator PhaseTwoDuration(float phaseDuration)
     {
+        Debug.Log("phase2");
         GameController.Instance.cameraManager.SetRaceState(true);
 
         yield return new WaitForSeconds(phaseDuration);

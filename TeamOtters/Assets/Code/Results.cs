@@ -50,6 +50,7 @@ public class Results : MonoBehaviour {
         {
             m_rankButtons[i].GetComponent<Text>().text = "P" + scores[i].playerIndex.ToString() + " : " + scores[i].score.ToString();
             m_rankButtons.OrderByDescending(m_rankButtons => m_rankButtons);
+
         }
     }
 	

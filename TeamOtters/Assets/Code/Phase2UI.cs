@@ -7,31 +7,55 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 public class Phase2UI: MonoBehaviour {
-
-    public GameObject m_PullGamePhase;
+    private GameController m_gameController;
+    private ScoreManager m_scoreManager;
     public Canvas m_Phase2;
-    public Canvas m_InGameMenu;
-    private bool m_Phase2Active=false;
+    private bool m_phase2 = false;
+    private int m_playerRank;
+    public GameObject m_phase2Prompt;
+    private int pIndex;
+    private bool isInCoroutine = false;
+
+
 
     // Use this for initialization
-    void Start () {
-        m_Phase2.gameObject.SetActive(false);
+    public void Start()
+    {
+        m_gameController = GameController.Instance;
+        m_scoreManager = m_gameController.m_scoreManager;
     }
 
-    void Update()
+
+
+    //Start Splitting LoadSequence 
+
+    public void ShowPrompt()
     {
-        if (!m_Phase2Active) { 
-        GameObject valkyrie = GameObject.FindGameObjectWithTag("Valkyrie");
+        m_phase2Prompt.gameObject.SetActive(true);
+    }
+
+    public void HidePrompt()
+    {
+        m_phase2Prompt.gameObject.SetActive(false);
+    }
 
 
-        if (valkyrie)
+
+    private IEnumerator RankDelay(int index)
+    {
+        yield return new WaitForSeconds(0.2f);
+        if (index < m_scoreManager.scoreText.Length)
         {
-            Debug.Log("Valkyrie Found");
-            m_Phase2.gameObject.SetActive(true);
-                m_Phase2Active = true;
+            index++;
+            ActivateScoreboard(index);
+        }
 
-        }
-        }
+    }
+
+    public void ActivateScoreboard(int index)
+    {
+        m_scoreManager.scoreText[index].transform.parent.gameObject.SetActive(true);
+        StartCoroutine(RankDelay(index));
     }
 
 }
