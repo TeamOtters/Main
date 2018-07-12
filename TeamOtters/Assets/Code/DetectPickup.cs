@@ -15,10 +15,12 @@ public class DetectPickup : MonoBehaviour {
     private GameObject m_ourParent; // Should be PLAYER DATA 
     private GameObject m_ourGrandparentLogic; // SHOULD BE LOGIC LAYER
     internal bool m_isPickedUp = false;
+    private GameController m_gameController;
     
 
     private void Start()
     {
+        m_gameController = GameController.Instance;
         m_collisionTag = string.Empty;
         m_ourParent = transform.parent.gameObject;
         m_ourGrandparentLogic = transform.parent.parent.gameObject;
@@ -97,7 +99,9 @@ public class DetectPickup : MonoBehaviour {
         // Set the viking to be un-carried
         m_isPickedUp= false;
         gameObject.GetComponent<VikingController>().SetCarried(false);
-        transform.position = new Vector3(transform.position.x, transform.position.y - gameObject.GetComponent<SpriteRenderer>().bounds.extents.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y - gameObject.GetComponent<SpriteRenderer>().bounds.extents.y, m_gameController.snapGridZ);
+        transform.rotation = Quaternion.identity;
+
         StartCoroutine(ImmuneAfterDrop(m_immuneAfterDropDuration));
     }
 

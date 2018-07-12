@@ -57,6 +57,8 @@ public class VikingController : MonoBehaviour
     public GameObject m_highestScoreEffect;
     private int m_playersLayer;
     private int m_goThroughPlatformLayer;
+    public float m_isThroughPlatformOffset;
+    private float m_goThroughPlatformsTimer;
 
     private float m_currentVerticalPos;
     private float m_previousVerticalPos;
@@ -91,6 +93,7 @@ public class VikingController : MonoBehaviour
 
         m_rb = GetComponent<Rigidbody>();
         m_isGroundedTimer = m_isGroundedOffset;
+        m_goThroughPlatformsTimer = m_isThroughPlatformOffset;
 
         m_playersLayer = 10;
         m_goThroughPlatformLayer = 11;
@@ -125,6 +128,18 @@ public class VikingController : MonoBehaviour
             m_isGroundedTimer = m_isGroundedOffset;
         }
 
+        if (m_goThroughPlatformDown)
+            m_goThroughPlatformsTimer-= Time.deltaTime;
+
+        if (m_goThroughPlatformsTimer <= 0.001f)
+        {
+            m_goThroughPlatformDown = false;
+            m_goThroughPlatformsTimer = m_isThroughPlatformOffset;
+            
+           
+        }
+        
+
 
         //float travel = m_currentVerticalPos - m_previousVerticalPos;
 
@@ -141,17 +156,31 @@ public class VikingController : MonoBehaviour
              }
 
             CheckWallClinging();
+
+            if (!m_goThroughPlatformDown)
+            {
+                if (m_layerIsSet )
+                {
+                   // m_goThroughPlatformDown = false;
+                    gameObject.layer = m_playersLayer;
+                    m_layerIsSet = false;
+
+                }
+            }
+
         }
 
-        if(m_goThroughPlatformDown)
+        
+
+
+        /*if (m_vikingcCharacterController.isGrounded )
         {
-            if(m_vikingcCharacterController.isGrounded)
-            {
-                m_goThroughPlatformDown = false;
-                gameObject.layer = m_playersLayer;
-                m_layerIsSet = false;
-            }
-        }
+            gameObject.layer = m_playersLayer;
+        }*/
+
+
+
+
 
 
     }
@@ -311,17 +340,19 @@ public class VikingController : MonoBehaviour
         m_isCarried = enable;
         if (m_isCarried)
         {
-            gameObject.GetComponent<Rigidbody>().isKinematic = true;
+            //don't do IsKinematic bool check for this feature
             gameObject.GetComponent<Rigidbody>().useGravity = false;
             gameObject.GetComponent<Rigidbody>().detectCollisions = false;
             gameObject.GetComponent<CharacterController>().enabled = false;
+            gameObject.layer = m_goThroughPlatformLayer;
         }
         else
         {
-            gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            //don't do IsKinematic bool check for this feature
             gameObject.GetComponent<Rigidbody>().useGravity = true;
             gameObject.GetComponent<Rigidbody>().detectCollisions = true;
             gameObject.GetComponent<CharacterController>().enabled = true;
+            gameObject.layer = m_playersLayer;
         }
 
     }
@@ -349,6 +380,7 @@ public class VikingController : MonoBehaviour
         if (transform.position.y < m_bottomBounds && !m_vikingRespawn.m_hasRespawned && !m_detectPickup.m_isPickedUp)
         {
             m_vikingRespawn.Respawn();// this is where fall penalty should go
+            gameObject.layer = m_playersLayer; //Make sure we don't fall through platforms! 
         }
         
         if (transform.position.y > m_topBounds)
@@ -607,9 +639,10 @@ public class VikingController : MonoBehaviour
                     Debug.Log("go");
                     gameObject.layer = m_goThroughPlatformLayer;
                     m_layerIsSet = true;
+                    m_goThroughPlatformDown = true;
                 }
 
-                m_goThroughPlatformDown = true;
+                
                 m_animator.SetInteger("State", 0); //Idle
                 
             }

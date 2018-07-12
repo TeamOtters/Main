@@ -235,6 +235,7 @@ MonoBehaviour:
   m_isStunned: 0
   m_stunnedCoolDown: 1
   m_highestScoreEffect: {fileID: 1273620019449506}
+  m_isThroughPlatformOffset: 0.4
 --- !u!114 &114606825063994654
 MonoBehaviour:
   m_ObjectHideFlags: 1
