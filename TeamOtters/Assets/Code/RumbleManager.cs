@@ -16,11 +16,15 @@ public class RumbleManager : MonoBehaviour {
     public float transform_fadeInTime = 2.5f;
     public float transform_fadeOutTime = 3f;
 
-    [Header("Hit React Camera Shake Settings")]
+    [Header("Ball Hit Camera Shake Settings")]
     public float hitReact_magnitude;
     public float hitReact_roughness;
     public float hitReact_fadeInTime;
     public float hitReact_fadeOutTime;
+
+    // Player stunned rumble
+    // Player transform during phase 2 - small shake and vibration
+    // Pickup vibrates
 
     public bool transformShakeComplete;
     public bool hitReactShakeComplete;
@@ -67,32 +71,31 @@ public class RumbleManager : MonoBehaviour {
         }
     }
 
+    // Stop all controller vibrations on quitting the game
     private void OnApplicationQuit()
     {
-        GamePad.SetVibration(PlayerIndex.One, 0f, 0f);
-        GamePad.SetVibration(PlayerIndex.Two, 0f, 0f);
-        GamePad.SetVibration(PlayerIndex.Three, 0f, 0f);
-        GamePad.SetVibration(PlayerIndex.Four, 0f, 0f);
+        for (int i = 0; i < m_controllerIndex.Length; i++)
+        {
+            GamePad.SetVibration(m_controllerIndex[i], 0f, 0f);
+        }
     }
 
     void TransformRumbleStart()
     {
-        GamePad.SetVibration(PlayerIndex.One,   1f, 1f);
-        GamePad.SetVibration(PlayerIndex.Two,   1f, 1f);
-        GamePad.SetVibration(PlayerIndex.Three, 1f, 1f);
-        GamePad.SetVibration(PlayerIndex.Four,  1f, 1f);
-
-        //Debug.Log("StartingRumble");
+        for (int i = 0; i < m_controllerIndex.Length; i++)
+        {
+            //Debug.Log("StartingRumble");
+            GamePad.SetVibration(m_controllerIndex[i], 1f, 1f);
+        }        
     }
 
     void TransformRumbleStop()
     {
-        GamePad.SetVibration(PlayerIndex.One,   0f, 0f);
-        GamePad.SetVibration(PlayerIndex.Two,   0f, 0f);
-        GamePad.SetVibration(PlayerIndex.Three, 0f, 0f);
-        GamePad.SetVibration(PlayerIndex.Four,  0f, 0f);
-
-        //Debug.Log("StoppingRumble");
+        for (int i = 0; i < m_controllerIndex.Length; i++)
+        {
+            //Debug.Log("StoppingRumble");
+            GamePad.SetVibration(m_controllerIndex[i], 0f, 0f);
+        }        
     }    
 
     public void TransformShakeStart()
