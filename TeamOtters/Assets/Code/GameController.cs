@@ -20,17 +20,18 @@ public class GameController : MonoBehaviour
     public SnapPositionController snapPositionController;
 
     public PlayerComponents playerComponents;
+    
+    public PlayerData playerData;
+    public AudioManager audioManager;
     /*
     public GameObject vikingPrefab;
     public GameObject valkyriePrefab;
     public GameObject scorePrefab;
     public GameObject transformParticles;
     */
+    
 
     public GameObject logicLayer;
-   
-
-
     public RumbleManager rumbleManager;
     private SnapablePlayers snapablePlayers;
 

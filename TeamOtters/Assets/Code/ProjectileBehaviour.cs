@@ -42,6 +42,7 @@ public class ProjectileBehaviour : MonoBehaviour {
 
         StartCoroutine("ContinouslySetBoundaries");
 
+     
     }
 
     IEnumerator ContinouslySetBoundaries()
