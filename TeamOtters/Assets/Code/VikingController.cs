@@ -118,8 +118,21 @@ public class VikingController : MonoBehaviour
         //Set the boundaries to camera
 
 
+        if (Input.GetButtonDown("Fire1_P" + m_playerIndexString) && !m_isStunned)
+        {
+            if (!m_animIsFiring)
+            {
+                m_animator.SetBool("isThrowing", true); // Catching (using same as throwing anim for now)
+                m_animIsFiring = true;
+
+                Invoke("SetThrowAnimFalse", 0.5f);
+            }
+        }
+
+
+
         if (m_askForGoundedOffset)
-                m_isGroundedTimer -= Time.deltaTime;
+            m_isGroundedTimer -= Time.deltaTime;
 
         if(m_isGroundedTimer <= 0.0f)
         {
@@ -214,6 +227,16 @@ public class VikingController : MonoBehaviour
         if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.playerContiniousScore, m_thisPlayerIndex);
     }
+    private bool m_animIsFiring;
+
+  
+    //Invoked
+    private void SetThrowAnimFalse()
+    {
+        m_animIsFiring = false;
+        m_animator.SetBool("isThrowing", false);
+    }
+ 
 
     void FixedUpdate()
     {
@@ -223,10 +246,22 @@ public class VikingController : MonoBehaviour
             if (Input.GetButtonDown("Fire1_P" + m_playerIndexString))
             {
                 if (m_currentAmmo != 0)
-                    VikingFire();
+                {
+                    VikingFire();                    
+                }
                 else if (m_currentAmmo == 0 && !m_isRetracting)
-                    RetractProjectile();
+                {
+                    
+                    RetractProjectile();                    
+                }
             }
+
+
+           /* if (Input.GetButtonUp("Fire1_P" + m_playerIndexString))
+            {
+                 m_animator.SetBool("isThrowing", false); // Not Throwing/Catching
+                
+            }*/
 
             VikingMovement();
 
@@ -340,6 +375,8 @@ public class VikingController : MonoBehaviour
         m_isCarried = enable;
         if (m_isCarried)
         {
+            m_animator.SetInteger("State", 4); // Carried
+
             //don't do IsKinematic bool check for this feature
             gameObject.GetComponent<Rigidbody>().useGravity = false;
             gameObject.GetComponent<Rigidbody>().detectCollisions = false;
@@ -395,9 +432,7 @@ public class VikingController : MonoBehaviour
     {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
-        Debug.Log("Fire");
-
-        //m_animator.SetInteger("State", 3); //Throwing
+        Debug.Log("Fire");       
 
         if (m_fireCooldownOn)
             return;
@@ -529,9 +564,7 @@ public class VikingController : MonoBehaviour
 
         m_currentProjectile.GetComponent<ProjectileBehaviour>().SetRetractingState(true);
 
-        m_isRetracting = true;
-
-        //m_animator.SetInteger("State", 4); // Catching
+        m_isRetracting = true;      
 
     }
 
@@ -608,7 +641,8 @@ public class VikingController : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump_P" + m_playerIndexString) && angle != 180)
             {
-               
+                m_animator.SetInteger("State", 2); //Jumping
+
                 m_vikingMoveDirection.y =  m_vikingJumpSpeed;
                 if (!m_layerIsSet)
                 {
@@ -618,7 +652,7 @@ public class VikingController : MonoBehaviour
 
                 m_isJumping = true;
 
-                m_animator.SetInteger("State",2); //Jumping
+                
                 // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
 
                 //  m_rb.AddForce (transform.TransformDirection(transform.position.x, transform.position.y + 1, transform.position.z) * m_vikingJumpSpeed);
@@ -653,7 +687,8 @@ public class VikingController : MonoBehaviour
         if (!m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
             m_vikingMoveDirection.x = transform.TransformDirection(vNewInput).x * m_vikingMovementSpeed;
-            m_animator.SetInteger("State", 3); //Falling
+            if(!m_isJumping && !m_isWallJumping && !m_isWallClinging)
+                m_animator.SetInteger("State", 3); //Falling
         }
 
 
@@ -736,6 +771,8 @@ public class VikingController : MonoBehaviour
     {
         yield return new WaitForSeconds(m_rapidFireSpeed);
         m_fireCooldownOn = false;
+
+        m_animator.SetBool("isThrowing", false);
     }
 
     public void SetStunned()
