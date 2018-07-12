@@ -40,6 +40,7 @@ public class GameController : MonoBehaviour
 
     public int numberOfPlayers = 4; //could this number read from number of plugged in controllers or menu in case we want to support more than 4 players?
     public bool playerStartViking = true;
+    public float startGameDuration = 1.7f;
 
     /*public int bounceHit = 10;
     public int firstReachGoal = 10;
@@ -49,7 +50,7 @@ public class GameController : MonoBehaviour
     public float snapGridZ = 0f;
 
     //used when creating the new players automatically
-    private GameObject[] m_players;
+    private List<GameObject> m_players = new List<GameObject>();
     private PlayerData m_currentPlayerData;
     private PlayerSpawnPoint[] m_playerSpawnPoints;
     private GameObject m_tempGameObject;
@@ -145,12 +146,48 @@ public class GameController : MonoBehaviour
 
             snapPositionController.m_positionsZ.Add(myNewVikingCharacter.gameObject);
             snapPositionController.m_positionsZ.Add(myNewValkyrieCharacter.gameObject);
+            m_players.Add(myNewPlayer);
         }
 
     }
 
+    private void Start()
+    {
+        StartCoroutine(LateStart());
+    }
 
+    IEnumerator LateStart()
+    {
+        yield return new WaitForEndOfFrame();
+        SetPlayerInactiveOnStart();
 
     }
+
+    void SetPlayerInactiveOnStart()
+    {
+        foreach (GameObject player in m_players)
+        {
+            player.SetActive(false);
+            StartCoroutine(StartGameDuration(startGameDuration));
+        }
+    }
+
+    IEnumerator StartGameDuration(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        SetPlayersActive();
+
+    }
+
+    void SetPlayersActive()
+    {
+        foreach (GameObject player in m_players)
+        {
+            player.SetActive(true);
+        }
+    }
+
+
+}
 
     // Menu scene swap logic here? Check out https://www.youtube.com/watch?v=CPKAgyp8cno

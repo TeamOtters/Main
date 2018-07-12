@@ -352,6 +352,9 @@ MonoBehaviour:
   m_phase2Duration: 5000
   m_phase2Delay: 3
   m_bouncingBall: {fileID: 0}
+  m_dragon: {fileID: 0}
+  m_phase2UI: {fileID: 0}
+  m_Phase1UI: {fileID: 0}
 --- !u!114 &114358465408991534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -403,23 +406,14 @@ MonoBehaviour:
   phaseManager: {fileID: 114319279279604970}
   cameraManager: {fileID: 0}
   snapPositionController: {fileID: 114358465408991534}
-  playerData: {fileID: 114309342825866170, guid: 98defa2f692fe1d42b696cd603b24bca,
-    type: 2}
-  vikingPrefab: {fileID: 1382873379161574, guid: d875cbbb7adccae478c3bd6b0b69825e,
-    type: 2}
-  valkyriePrefab: {fileID: 1624163314470624, guid: 706abe77cea331c4483780848c9a7b49,
-    type: 2}
-  scorePrefab: {fileID: 1463135725327858, guid: 4f81a21ecc2bca44fb346bcf0fdb3b76,
+  playerComponents: {fileID: 114198510458735384, guid: e45ba722d31b20b47b81e0f7f5baf752,
     type: 2}
   logicLayer: {fileID: 0}
   rumbleManager: {fileID: 114069718216160198}
   m_scoreManager: {fileID: 114275491395381406}
   numberOfPlayers: 4
   playerStartViking: 1
-  bounceHit: 10
-  firstReachGoal: 10
-  carryingBonus: 20
-  hitOpponent: 10
+  startGameDuration: 1.5
   snapGridZ: 0
   m_currentPhaseState: 0
 --- !u!114 &114937836959872220
