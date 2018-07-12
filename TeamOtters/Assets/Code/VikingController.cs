@@ -99,7 +99,7 @@ public class VikingController : MonoBehaviour
         m_goThroughPlatformLayer = 11;
 
 
-        m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(VikingController), true).GetComponent<SpriteRenderer>().bounds.extents;
+        m_playerSize = GetComponent<SpriteRenderer>().bounds.extents;
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_vikingRespawn = GetComponent<VikingRespawn>();
         m_detectPickup = GetComponent<DetectPickup>();
@@ -395,7 +395,7 @@ public class VikingController : MonoBehaviour
     }
 
 
-    //From Fixed Update
+    //End of Frame(after camera has rendered )
     private void SetBoundaries()
     {
 		//set the bounds value every frame to go with updated camera movement

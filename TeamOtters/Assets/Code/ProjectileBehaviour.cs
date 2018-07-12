@@ -16,6 +16,14 @@ public class ProjectileBehaviour : MonoBehaviour {
     private ScoreManager m_scoreManager;
     private int m_platformLayer;
 
+    internal float m_leftBounds;
+    internal float m_rightBounds;
+    internal float m_topBounds;
+    internal float m_bottomBounds;
+
+    private BoundaryHolder m_boundaryHolder;
+    private Vector3 m_projectileSize;
+
 
     // Use this for initialization
     void Start ()
@@ -29,7 +37,55 @@ public class ProjectileBehaviour : MonoBehaviour {
         m_platformLayer = LayerMask.GetMask("Platform");
         m_scoreManager = m_gameController.m_scoreManager;
 
+        m_boundaryHolder = GameController.Instance.boundaryHolder;
+        m_projectileSize = GetComponent<SpriteRenderer>().bounds.extents;
+
+        StartCoroutine("ContinouslySetBoundaries");
+
     }
+
+    IEnumerator ContinouslySetBoundaries()
+    {
+        yield return null;
+        while (true)
+        {
+            yield return null;
+            //Set the boundaries to camera
+            SetBoundaries();
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    //End of Frame(after camera has rendered )
+    private void SetBoundaries()
+    {
+        //set the bounds value every frame to go with updated camera movement
+        m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_projectileSize.y;
+        m_topBounds = m_boundaryHolder.playerBoundary.Up - m_projectileSize.y;
+        m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_projectileSize.x;
+        m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_projectileSize.x;
+
+        //Set position to bounds
+        if (transform.position.x < m_leftBounds)
+        {
+            transform.position = new Vector3(m_leftBounds, transform.position.y, transform.position.z);
+        }
+        if (transform.position.x > m_rightBounds)
+        {
+            transform.position = new Vector3(m_rightBounds, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.y < m_bottomBounds )
+        {
+            transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
+        }
+
+        if (transform.position.y > m_topBounds)
+        {
+            transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
+        }
+    }
+
 
     private void Update()
     {

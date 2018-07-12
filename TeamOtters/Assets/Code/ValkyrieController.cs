@@ -15,6 +15,11 @@ public class ValkyrieController : MonoBehaviour
     public float m_attackDuration = 1f;
     public float m_attackSpeed = .01f;
 
+
+    public SpriteRenderer m_bodySprite;
+    public BoxCollider m_attackCollision;
+    private GameController m_gameController;
+
     internal bool isIdle;
     internal bool isCarrying;
     internal bool isAttacking;
@@ -61,8 +66,7 @@ public class ValkyrieController : MonoBehaviour
         m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
         m_player = GameController.Instance.player.GetComponent<Rigidbody>();
         m_boundaryHolder = GameController.Instance.boundaryHolder;
-        m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController), true).GetComponent<SpriteRenderer>().bounds.extents;
-        StartCoroutine("ContiniouslyEvaluateScore");
+        m_playerSize = m_bodySprite.bounds.size;
 
         //wing animator
         m_wingAnimator = GetComponent<Animator>();
@@ -75,6 +79,10 @@ public class ValkyrieController : MonoBehaviour
         isIdle = true;
         SetValkyrieAnimationState(0); // Idle
         m_thisScale = transform.localScale.x;
+
+        StartCoroutine("ContiniouslyEvaluateScore");
+        StartCoroutine("ContinouslySetBoundaries");
+
     }
 
     IEnumerator ContiniouslyEvaluateScore()
@@ -85,6 +93,17 @@ public class ValkyrieController : MonoBehaviour
             yield return null;
             GiveContionousScore();
             yield return new WaitForSeconds(1f);
+        }
+    }
+    IEnumerator ContinouslySetBoundaries()
+    {
+        yield return null;
+        while (true)
+        {
+            yield return null;
+            //Set the boundaries to camera
+             SetBoundaries();
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -140,17 +159,32 @@ public class ValkyrieController : MonoBehaviour
         else
             SetValkyrieAnimationBool("isDropping", false);
 
-
     }
 
-    private void FixedUpdate()
+    private void SetBoundaries()
     {
         //set the bounds value every frame to go with updated camera movement
         m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;// + m_heldCharacterSize.y;
         m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
         m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
+   
+        // Clamp movement and wrap screen logic
+        if (transform.position.x < m_leftBounds)
+            WrapScreenLeftToRight();
 
+        if (transform.position.x > m_rightBounds)
+            WrapScreenRightToLeft();
+
+        if (transform.position.y < m_bottomBounds)
+            transform.position = new Vector3(transform.position.x, m_bottomBounds, m_gameController.snapGridZ);
+      
+        if (transform.position.y > m_topBounds)
+            transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
+    }
+
+    private void FixedUpdate()
+    {
         // Basic movement input
         var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
         var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_speed * Time.deltaTime;
@@ -173,17 +207,17 @@ public class ValkyrieController : MonoBehaviour
             }
 
             m_isPressingJump = true;
-            isFlapping = true;
+			isFlapping = true;
 
         }
-        else
-            isFlapping = false;
+		else
+		isFlapping = false;
 
         // Melee attack/drop Viking mechanic
         if (Input.GetButtonDown("Fire1_P" + m_playerIndex))
         {
             if (isAttacking == false)
-            {                
+            {
                 Invoke("AttackStart", m_attackSpeed);
 
                 if (heldRigidbody != null)
@@ -191,7 +225,7 @@ public class ValkyrieController : MonoBehaviour
                     DropPickup();
                 }
 
-                Invoke("AttackStop", m_attackDuration);                
+                Invoke("AttackStop", m_attackDuration);
             }
         }
 
@@ -246,33 +280,7 @@ public class ValkyrieController : MonoBehaviour
         {
             m_canWrapScreen = true;
         }*/
-
-        // Clamp movement and wrap screen logic
-        if (transform.position.x < m_leftBounds)
-        {
-            //GetComponent<SpriteRenderer>().enabled = false; //hide character in foreground
-            //Invoke("WrapScreenLeftToRight", m_wrapScreenDelay);            
-            //GetComponent<SpriteRenderer>().enabled = true; //show character appearing after delay
-
-            WrapScreenLeftToRight();
-        }
-        if (transform.position.x > m_rightBounds)
-        {
-            //GetComponent<SpriteRenderer>().enabled = false; //hide character in foreground
-            //Invoke("WrapScreenRightToLeft", m_wrapScreenDelay);
-            //GetComponent<SpriteRenderer>().enabled = true; //show character appearing after delay
-
-            WrapScreenRightToLeft();
-        }
-        if (transform.position.y < m_bottomBounds)
-        {
-                transform.position = new Vector3(transform.position.x, m_bottomBounds, transform.position.z);
-        }
-        if (transform.position.y > m_topBounds)
-        {
-                transform.position = new Vector3(transform.position.x, m_topBounds, transform.position.z);
-        }
-
+      
 
         CheckIfGoingDown();
 
