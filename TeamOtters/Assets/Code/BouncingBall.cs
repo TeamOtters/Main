@@ -10,7 +10,12 @@ public class BouncingBall : MonoBehaviour
     internal float m_currentHealth;
     internal bool m_isAlive = true;
 
+    public GameObject m_hpBelowHalf;
+    public GameObject m_hpThreeHitLeft;
     public GameObject m_ballDeathEffect;
+    public bool m_hasHalfHPEffect = false;
+    public bool m_has3HitLeftEffect = false;
+    int m_axeDamage;
 
     //Setting ball speed
     public Rigidbody rb;
@@ -33,11 +38,16 @@ public class BouncingBall : MonoBehaviour
     void Start()
     {
         m_currentHealth = m_startHealth;
+        m_hpBelowHalf.SetActive(false);
+        m_hpThreeHitLeft.SetActive(false);
 
         //Calculation for making the ball stay within camera view. 
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_ballSize = GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents;
         Debug.Log(GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents);
+
+        m_axeDamage = 10;
+        //(GetComponent<ProjectileBehaviour>().m_projectileDamage);
 
         Vector3 m_currentVelocity = rb.velocity;
 
@@ -102,6 +112,22 @@ public class BouncingBall : MonoBehaviour
             rb.velocity = new Vector3(5, 5, 0);
 
         }
+
+        if (m_currentHealth < m_startHealth/2 && m_currentHealth > m_axeDamage *3 && m_hasHalfHPEffect == false)
+        {
+            Debug.Log("New state: The ball has " + m_currentHealth + " health left! and axedamage = "+ m_axeDamage*3);
+            GetComponent<BouncingBall>().m_hpBelowHalf.SetActive(true);
+            m_hasHalfHPEffect = true;
+        }
+
+        if (m_currentHealth < m_startHealth/2 && m_currentHealth <= m_axeDamage * 3 && m_has3HitLeftEffect == false)
+        {
+            Debug.Log("New state: The ball can only take 3 more hits!!");
+            GetComponent<BouncingBall>().m_hpBelowHalf.SetActive(false);
+            GetComponent<BouncingBall>().m_hpThreeHitLeft.SetActive(true);
+            m_hasHalfHPEffect = false;
+            m_has3HitLeftEffect = true;
+        }
     }
 
     void OnCollisionEnter(Collision collisionInfo)
@@ -156,6 +182,8 @@ public class BouncingBall : MonoBehaviour
     {
         m_isAlive = false;
         GameObject effect = (GameObject)Instantiate(m_ballDeathEffect, transform.position, Quaternion.identity);
+        m_hpThreeHitLeft.SetActive(false);
+        m_has3HitLeftEffect = false;
         gameObject.SetActive(false);
         Destroy(effect, 5f);
     }
