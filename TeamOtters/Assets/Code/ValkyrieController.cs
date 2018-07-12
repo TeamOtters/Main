@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ValkyrieController : MonoBehaviour
 {
-
+    private Animator m_bodyAnimator;
     public float m_speed;
     public float m_flightForce;
     public float m_wrapScreenDelay = 0.5f;
@@ -50,6 +50,10 @@ public class ValkyrieController : MonoBehaviour
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_playerSize = GameController.Instance.player.GetComponentInChildren(typeof(ValkyrieController), true).GetComponent<SpriteRenderer>().bounds.extents;
         StartCoroutine("ContiniouslyEvaluateScore");
+
+        //assign an animator controller based on player index
+        m_bodyAnimator = transform.Find("body_sprite").GetComponent<Animator>();
+        m_bodyAnimator.runtimeAnimatorController = Resources.Load("Valkyrie_P" + m_playerIndex.ToString()) as RuntimeAnimatorController;
     }
 
     IEnumerator ContiniouslyEvaluateScore()

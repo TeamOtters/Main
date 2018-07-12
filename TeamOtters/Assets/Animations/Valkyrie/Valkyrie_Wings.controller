@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Valkyrie_P2
+  m_Name: Valkyrie_Wings
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: State
@@ -601,10 +601,10 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: 42d8a1b0306d5dc4d8be8ad454f48cb9, type: 2}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: facingRight
   m_CycleOffsetParameter: 
   m_TimeParameter: 
 --- !u!1102 &1102296075945756312
@@ -626,7 +626,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: b813bf6e10398f049b7321994441136b, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
@@ -651,7 +651,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: cb1af43206afb934f81aeaf7b4390162, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
@@ -676,7 +676,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1c70c083a2ec9ab41ade762da0aee868, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
@@ -701,7 +701,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3a018743db7858b48a1c87f27d6e6d28, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
@@ -726,7 +726,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: 44510dd96de11a6428744e86616078ef, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
@@ -751,7 +751,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: fc753e8f87d9b0d4bb557036c7f6d420, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
@@ -776,7 +776,7 @@ AnimatorState:
   m_MirrorParameterActive: 1
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bfd3c97b94ff8484eb77b6fbb37b3472, type: 2}
+  m_Motion: {fileID: 7400000, guid: d08ef5b811775f7438448c1b9a320b88, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: facingRight
