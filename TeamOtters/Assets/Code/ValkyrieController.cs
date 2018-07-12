@@ -9,10 +9,6 @@ public class ValkyrieController : MonoBehaviour
     private Animator m_wingAnimator;        
     private GameController m_gameController;
 
-    public BoxCollider m_attackCollision;
-    public float m_speed;
-    public float m_flightForce;
-
     public float m_valkyrieMovementSpeed;
     public float m_valkyriePhysicsJumpSpeed;
     public float m_valkyrieAddedGravityForce;
@@ -30,7 +26,6 @@ public class ValkyrieController : MonoBehaviour
 
     public SpriteRenderer m_bodySprite;
     public BoxCollider m_attackCollision;
-    private GameController m_gameController;
 
     internal bool isIdle;
     internal bool isCarrying;
@@ -96,12 +91,6 @@ public class ValkyrieController : MonoBehaviour
 
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
-
-
-    private void FixedUpdate()
-    {
-        ValkyrieMovement();
-        StephsOriginalMovement();
     }
 
     IEnumerator ContiniouslyEvaluateScore()
@@ -132,12 +121,22 @@ public class ValkyrieController : MonoBehaviour
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.valkyrieContiniousScore, m_playerIndex);
     }
 
+
+    private void FixedUpdate()
+    {
+        //Physics based stuff
+        ValkyrieMovement();
+    }
+
     private void Update()
     {
+        //Nothing physics based in here anymore
+        StephsOriginalMovement();
+
         //Anim States
 
         // Idle
-        if(isIdle)
+        if (isIdle)
             SetValkyrieAnimationState(0);
 
         // Gliding
@@ -269,14 +268,18 @@ public class ValkyrieController : MonoBehaviour
         m_vikingMoveDirection.y -= m_valkyrieAddedGravityForce * Time.deltaTime;
         transform.Translate(m_vikingMoveDirection, Space.World);
 
+        // Basic movement input
+        var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_physicsSpeed * Time.deltaTime;
+        var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_physicsSpeed * Time.deltaTime;
+
+        //Floating 
+        Vector3 movement = new Vector3(x, y + m_physicsSpeed, 0f);
+        m_player.AddForce(movement * m_physicsSpeed);
+
     }
 
     private void StephsOriginalMovement()
-    {
-        // Basic movement input
-        var x = Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()) * m_physicsSpeed* Time.deltaTime;
-        var y = Input.GetAxis("Vertical_P" + m_playerIndex.ToString()) * m_physicsSpeed * Time.deltaTime;
-
+    {    
         // Flight movement input
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
         {
@@ -322,12 +325,6 @@ public class ValkyrieController : MonoBehaviour
             }
         }
 
-
-        //Floating 
-        Vector3 movement = new Vector3(x, y, 0f);
-		m_player.AddForce(movement * m_speed);
- 
-
         m_currentHorizontalPos = transform.position.x;
         float travelxLeft = m_currentHorizontalPos - m_previousHorizontalPos;
         float travelxRight = m_currentHorizontalPos + m_previousHorizontalPos;
@@ -352,7 +349,7 @@ public class ValkyrieController : MonoBehaviour
         {
             m_canWrapScreen = true;
         }*/
-      
+  
 
         CheckIfGoingDown();
 
@@ -391,12 +388,6 @@ public class ValkyrieController : MonoBehaviour
     {
         m_wingAnimator.SetInteger("State", state);
         m_bodyAnimator.SetInteger("State", state);
-
-     //Floating 
-        Vector3 movement = new Vector3(x, y + m_physicsSpeed, 0f);
-        m_player.AddForce(movement* m_physicsSpeed);
-
-        CheckIfGoingDown();
     }
 
     private void CheckIfGoingDown ()
