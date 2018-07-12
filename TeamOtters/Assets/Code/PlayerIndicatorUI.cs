@@ -24,9 +24,8 @@ public class PlayerIndicatorUI : MonoBehaviour
         for (int i = 0; i < m_playerTexts.Length; i++)
         {
             Text myText = m_playerTexts[i].GetComponent<Text>();
-            string playerIndicator = myText.text;
             int playerIndex = m_gameController.phaseManager.m_players[i].m_PlayerIndex;
-            playerIndicator = ("P" + m_gameController.phaseManager.m_players[i].m_PlayerIndex);
+            myText.text = ("P" + playerIndex.ToString());
             
             //Raven's colors here
             if (playerIndex == 1)
@@ -46,9 +45,14 @@ public class PlayerIndicatorUI : MonoBehaviour
                 myText.color = new Color32(253, 146, 214, 255);
             }
             MoveUIToPlayer(i);
-            
+            SetActiveState(i);
         }
 	}
+    private void SetActiveState(int playerIndex)
+    {
+        m_playerTexts[playerIndex].gameObject.SetActive(m_gameController.phaseManager.m_players[playerIndex].gameObject.activeSelf);
+
+    }
 
     private void MoveUIToPlayer(int index)
     {
