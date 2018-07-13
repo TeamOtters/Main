@@ -9,6 +9,7 @@ public class FloatingPlatforms : MonoBehaviour {
     public UnityEvent m_onCollisionEvent;
     private float m_originalPos;
     private bool m_bounce;
+    private float cloudMoveDist = 0.5f;
 
 
     public enum PlatformType
@@ -37,9 +38,9 @@ public class FloatingPlatforms : MonoBehaviour {
         
         if (col.gameObject.CompareTag("Viking"))
         {
-            m_bounce = true;
-            //m_onCollisionEvent.Invoke();
-
+            //m_bounce = true;
+            m_onCollisionEvent.Invoke();
+            cloudMoveDist = 1f;
           
           
 
@@ -48,15 +49,23 @@ public class FloatingPlatforms : MonoBehaviour {
         }
     }
 
+    public void SetBounceTrue ()
+    {
+       m_bounce = false;
+    }
+
     private bool m_invoked;
     private void CloudBounce()
     {
-        var cloudMoveDist = 0.5f;
- 
+        cloudMoveDist = 0.5f;
 
+        if (!m_bounce)
+        {
             transform.position = new Vector3(transform.position.x,
             m_originalPos + ((float)Mathf.Sin(Time.time) * cloudMoveDist),
             0);
+        }
+        
     }
 
   
