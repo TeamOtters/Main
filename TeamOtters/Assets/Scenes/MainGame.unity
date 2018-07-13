@@ -172,6 +172,26 @@ Prefab:
       propertyPath: logicLayer
       value: 
       objectReference: {fileID: 1072945318}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_bouncingBall
+      value: 
+      objectReference: {fileID: 382614073}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_phase2UI
+      value: 
+      objectReference: {fileID: 1337124447}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Phase1UI
+      value: 
+      objectReference: {fileID: 1784358455}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Level
+      value: 
+      objectReference: {fileID: 1666476305}
     - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: scoreText.Array.data[0]
@@ -227,26 +247,6 @@ Prefab:
       propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 1694802282}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_bouncingBall
-      value: 
-      objectReference: {fileID: 382614073}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_phase2UI
-      value: 
-      objectReference: {fileID: 1337124447}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Phase1UI
-      value: 
-      objectReference: {fileID: 1784358455}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Level
-      value: 
-      objectReference: {fileID: 1666476305}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
