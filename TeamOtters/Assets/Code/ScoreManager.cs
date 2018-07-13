@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
+using UnityEngine.Animations; 
 
 public static class ScorePointInfo
 {
@@ -14,7 +16,10 @@ public static class ScorePointInfo
     public static int firstReachGoal = 10;
     public static int carryingBonus = 20;
     public static int hitOpponent = 2;
+    
 }
+
+   
 
 public class ScoreRanking
 {
@@ -39,6 +44,7 @@ public class ScoreManager : MonoBehaviour {
     private GameController m_gameController;
     public GameObject m_glowEffect;
     public Text[] scoreText;
+    
 
     public PlayerScoreUI m_playerScoreUI;
 
@@ -74,7 +80,11 @@ public class ScoreManager : MonoBehaviour {
     public void AddToScore(int points, int playerIndex)
     {
         m_players[playerIndex-1].m_CurrentScore += points;
-       //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
+        scoreText[playerIndex - 1].GetComponent<Animation>().Play(); 
+        
+       
+    
+        //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
         //Sending playerIndex of player that just scored
         //SetHighestPlayerScore(playerIndex-1);
     }
@@ -88,6 +98,7 @@ public class ScoreManager : MonoBehaviour {
         for (int i = 0; i < m_players.Length; i++)
         {
             scoreText[i].text = m_players[i].m_CurrentScore.ToString();
+
         }
         
         //m_ranks will be a reflection of the players rank
@@ -98,6 +109,8 @@ public class ScoreManager : MonoBehaviour {
         }
 
     }
+
+ 
 
     private void UpdateScoreRanking()
     {
