@@ -29,6 +29,8 @@ public class PhaseManager : MonoBehaviour {
 
     private RumbleManager m_rumbleManager;
 
+    public GameObject m_Level;  
+
 
     void Start ()
     {
@@ -123,6 +125,7 @@ public class PhaseManager : MonoBehaviour {
     {
         m_phaseSet = true;
         SceneManager.LoadScene("MainGame_Level", LoadSceneMode.Additive);
+        m_Level.gameObject.SetActive(false);
         m_phase2UI.ShowPrompt();
         m_isInPhaseOne = false;
         GameController.Instance.m_currentPhaseState = 2;
