@@ -7,7 +7,7 @@ using XInputDotNetPure;
 
 public class PhaseManager : MonoBehaviour {
 
-    public bool m_isInPhaseOne = true;
+    internal bool m_isInPhaseOne = true;
     public bool m_startInPhaseOne = true;
     public PlayerData[] m_players;
 
@@ -18,7 +18,8 @@ public class PhaseManager : MonoBehaviour {
 
     private List<int> m_playerScores = new List<int>();
     private bool m_phaseSet = false;
-    private bool m_hasStartedPhase2 = false;
+    private bool m_hasActivatedPhase2 = false;
+    private bool m_shouldActivatePhase2 = false;
 
     public Phase2UI m_phase2UI;
     public Canvas m_Phase1UI;
@@ -71,13 +72,17 @@ public class PhaseManager : MonoBehaviour {
         }
 
         //wait for camera shake to end before phase 2 begins
-        if (!m_hasStartedPhase2 && m_rumbleManager.phaseOneTransformRumbling == false)
+        if (m_shouldActivatePhase2)
         {
-            // Begin Phase 2
-            m_hasStartedPhase2 = true;
-            m_phase2UI.ActivateScoreboard(0);
-            Invoke("BeginPhaseTwo", m_phase2StartDelay);
-        }       
+            Debug.Log("Starting phase 2");
+            if (!m_hasActivatedPhase2 && m_rumbleManager.phaseOneTransformRumbling == false)
+            {
+                // Begin Phase 2
+                m_hasActivatedPhase2 = true;
+                m_phase2UI.ActivateScoreboard(0);
+                Invoke("BeginPhaseTwo", m_phase2StartDelay);
+            }
+        }
     }   
 
     // Phase one logic should be contained here
@@ -99,13 +104,9 @@ public class PhaseManager : MonoBehaviour {
             m_bouncingBall.Respawn();
             Debug.Log("Bouncing ball respawn triggered");
         }
+        m_dragon.SetActive(false);
     }
     
-    void BeginPhaseTwo()
-    {
-        m_phase2UI.HidePrompt();
-        StartCoroutine(PhaseTwoDuration(m_phase2Duration));
-    }
 
     IEnumerator BeforePhase2Duration(float duration)
     {
@@ -171,6 +172,13 @@ public class PhaseManager : MonoBehaviour {
                 }
             }
         }
+        m_shouldActivatePhase2 = true;
+    }
+
+    void BeginPhaseTwo()
+    {
+        m_phase2UI.HidePrompt();
+        StartCoroutine(PhaseTwoDuration(m_phase2Duration));
     }
 
     //Sets the game state back to phase one after a limited time
@@ -182,6 +190,7 @@ public class PhaseManager : MonoBehaviour {
         yield return new WaitForSeconds(phaseDuration);
         PhaseOneSetup();
         m_phaseSet = false;
+        m_shouldActivatePhase2 = false;
     }
    
 }
