@@ -17,12 +17,17 @@ public class Phase2UI: MonoBehaviour {
     private bool isInCoroutine = false;
 
 
+    public float[] m_rankScale;
+
+    private Vector3 targetScale;  
+
 
     // Use this for initialization
     public void Start()
     {
         m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
+
     }
 
 
@@ -40,10 +45,29 @@ public class Phase2UI: MonoBehaviour {
     }
 
 
+    public void Update()
+    {
+        for (int i=0; i<m_scoreManager.m_ranks.Count; i++)
+        {
+            targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
+            Text scaleText = m_scoreManager.scoreText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
+            Transform scaleV = scaleText.transform.parent; 
+            scaleV.localScale = new Vector3(scaleV.localScale.x * targetScale.x, scaleV.localScale.y * targetScale.y, 1);
+
+            
+        }
+
+        if (m_scoreManager.m_ranks[0].playerIndex == 1)
+        {
+            m_scoreManager.scoreText[(m_scoreManager.m_ranks[0].playerIndex) - 1].transform.parent.GetComponent<Button>().Select();
+        }
+
+    }
+
 
     private IEnumerator RankDelay(int index)
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
         if (index < (m_scoreManager.scoreText.Length)-1)
         {
             index++;
