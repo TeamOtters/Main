@@ -40,6 +40,8 @@ public class ScoreManager : MonoBehaviour {
     public GameObject m_glowEffect;
     public Text[] scoreText;
 
+    public PlayerScoreUI m_playerScoreUI;
+
     //public static ScorePointInfo scorePointInfo { get; }
 
     private void Start()
@@ -71,13 +73,10 @@ public class ScoreManager : MonoBehaviour {
 
     public void AddToScore(int points, int playerIndex)
     {
-
         m_players[playerIndex-1].m_CurrentScore += points;
        //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
-
         //Sending playerIndex of player that just scored
         //SetHighestPlayerScore(playerIndex-1);
-
     }
 
    
