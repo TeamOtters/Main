@@ -10,8 +10,10 @@ public class PhaseManager : MonoBehaviour {
     public bool m_isInPhaseOne = true;
     public bool m_startInPhaseOne = true;
     public PlayerData[] m_players;
+
+    public float m_beforePhase2Delay = 2f;
+    public float m_phase2StartDelay = 3f;
     public float m_phase2Duration = 10f;
-    public float m_phase2Delay = 3f;
     public BouncingBall m_bouncingBall;
 
     private List<int> m_playerScores = new List<int>();
@@ -20,6 +22,9 @@ public class PhaseManager : MonoBehaviour {
 
     public Phase2UI m_phase2UI;
     public Canvas m_Phase1UI;
+
+    public GameObject m_dragon;
+
 
     void Start ()
     {
@@ -40,6 +45,7 @@ public class PhaseManager : MonoBehaviour {
         {
             PhaseTwoSetup();
         }
+        m_dragon.SetActive(false);
        
         
 	}	
@@ -50,7 +56,7 @@ public class PhaseManager : MonoBehaviour {
 		if(!m_bouncingBall.m_isAlive && !m_phaseSet)
         {
             Debug.Log("ShouldSetUpPhase2");
-            PhaseTwoSetup();
+            StartCoroutine(BeforePhase2Duration(m_beforePhase2Delay));
         }
 
         // DEBUG, Click to phase 2
@@ -66,7 +72,7 @@ public class PhaseManager : MonoBehaviour {
             // Begin Phase 2
             m_hasStartedPhase2 = true;
             m_phase2UI.ActivateScoreboard(0);
-            Invoke("BeginPhaseTwo", m_phase2Delay);      
+            Invoke("BeginPhaseTwo", m_phase2StartDelay);      
        }
         
     }   
@@ -91,11 +97,19 @@ public class PhaseManager : MonoBehaviour {
             Debug.Log("Bouncing ball respawn triggered");
         }
     }
-
+    
     void BeginPhaseTwo()
     {
         m_phase2UI.HidePrompt();
         StartCoroutine(PhaseTwoDuration(m_phase2Duration));
+    }
+
+    IEnumerator BeforePhase2Duration(float duration)
+    {
+        m_dragon.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        PhaseTwoSetup();
+        m_dragon.SetActive(false);
     }
 
     //Set the two characters with highest score to Valkyries

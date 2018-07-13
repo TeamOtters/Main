@@ -128,9 +128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_valkyrieRaceState: 0
-  m_panSpeedY: 0.015
+  m_panSpeedY: 0.01
   m_endPanTarget: {fileID: 0}
-  m_speedCurveX:
+  m_speedCurveXWhileMoving:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -163,6 +163,90 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_speedCurveXWhileStatic:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.13
+      value: 0.03
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0
+      value: 0.16
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.13
+      value: 0.03
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  m_intensityCurveXWhileMoving:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.49958053
+      value: 1.0009284
+      inSlope: 0.0046812845
+      outSlope: 0.0046812845
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.79328823
+      value: 1.9020678
+      inSlope: 0.08562528
+      outSlope: 0.08562528
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.65028375
+    - serializedVersion: 3
+      time: 0.9492378
+      value: 2.4680467
+      inSlope: 2.2217453
+      outSlope: 2.2217453
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12039956
+      outWeight: 1
+    - serializedVersion: 3
+      time: 1
+      value: 2.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_speedCurveY:
     serializedVersion: 2
     m_Curve:
@@ -176,14 +260,59 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.9382864
-      value: 1
+      time: 0.58548456
+      value: 1.0199101
+      inSlope: 0.002370693
+      outSlope: 0.30794922
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.14622101
+      outWeight: 0.16810572
+    - serializedVersion: 3
+      time: 0.69190496
+      value: 2.841796
+      inSlope: 0.002190564
+      outSlope: 0.002190564
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.7963926
+      value: 2.8398106
+      inSlope: -0.03625438
+      outSlope: -0.03625438
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.86392635
+      value: 2.8187783
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.8812885
+      value: 2.7697413
+      inSlope: -11.15613
+      outSlope: -11.15613
+      tangentMode: 0
+      weightedMode: 0
       inWeight: 1
-      outWeight: 0.99480474
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.91601276
+      value: 1.0123982
+      inSlope: -25.153625
+      outSlope: -0.03070769
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.27529544
+      outWeight: 0.79517895
     - serializedVersion: 3
       time: 1
       value: 1
@@ -196,7 +325,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_panXAmount: 0.2
+  m_panXAmountWhileMoving: 0.2
+  m_panXAmountWhileStatic: 0.13
 --- !u!114 &114460563340998320
 MonoBehaviour:
   m_ObjectHideFlags: 1

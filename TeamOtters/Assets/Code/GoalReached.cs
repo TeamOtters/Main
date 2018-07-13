@@ -29,6 +29,10 @@ public class GoalReached : MonoBehaviour {
         int myOldScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
         int myNewScore = 0;
 
+        if(m_hasReachedValhalla)
+        {
+            GameController.Instance.cameraManager.m_shouldShake = false;
+        }
         if (!m_hasReachedValhalla)
         {
             if (player.gameObject.CompareTag("Valkyrie") && player.gameObject.GetComponent<ValkyrieController>().isCarrying == (true))
