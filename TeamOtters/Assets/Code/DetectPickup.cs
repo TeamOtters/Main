@@ -34,8 +34,11 @@ public class DetectPickup : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if(!m_isPickedUp)
+        if (!m_isPickedUp)
             GrabbyHandCheck();
+        else
+            m_rumbleManager.GrabbyHandsVibrate(0, transform.parent.GetComponent<PlayerData>().m_PlayerIndex);
+
     }
 
     void GrabbyHandCheck()
@@ -54,21 +57,22 @@ public class DetectPickup : MonoBehaviour {
 
                     // linear falloff of effect
                     float proximity = (transform.position - valkyrie.transform.position).magnitude;
-                    float rumblePercent = ExtensionMethods.Remap(proximity, maxDistanceForGrabbyHands, 1.5f, 0, 0.8f);
+                    float rumblePercent = ExtensionMethods.Remap(proximity, maxDistanceForGrabbyHands, 1.5f, 0, 0.8f);                    
 
-                    m_rumbleManager.GrabbyHandsVibrate(rumblePercent, valkyrieIndex);
-                    m_rumbleManager.GrabbyHandsVibrate(rumblePercent, vikingIndex);
-
-                    valkyrie.isCloseToViking = true;
-
-                    if (m_isPickedUp)
+                    if (valkyrie.isCarrying || m_isPickedUp)
                     {
                         valkyrie.isCloseToViking = false;
-                        valkyrie.isCarrying = true;
 
                         m_rumbleManager.GrabbyHandsVibrate(0, valkyrieIndex);
                         m_rumbleManager.GrabbyHandsVibrate(0, vikingIndex);
-                    }              
+                    }        
+                    else if (!valkyrie.isCarrying && !m_isPickedUp)
+                    {
+                        m_rumbleManager.GrabbyHandsVibrate(rumblePercent, valkyrieIndex);
+                        m_rumbleManager.GrabbyHandsVibrate(rumblePercent, vikingIndex);
+
+                        valkyrie.isCloseToViking = true;
+                    }
                 }
             }
         }
@@ -109,7 +113,7 @@ public class DetectPickup : MonoBehaviour {
         m_carryLocation = m_valkyrie.gameObject.GetComponentInChildren(typeof(CarryLocation), true).gameObject.transform;
 
         // move the carryable to the carrying point
-         transform.position = m_carryLocation.position;
+        transform.position = m_carryLocation.position;
        
 
         // make it as a child of player, so it moves along with player
