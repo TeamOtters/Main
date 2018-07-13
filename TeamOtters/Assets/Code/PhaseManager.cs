@@ -10,8 +10,7 @@ public class PhaseManager : MonoBehaviour {
 
     [Header ("Settings")]
     public bool m_startInPhaseOne = true;
-    public float m_beforePhase2Delay = 2f;
-    public float m_phase2StartDelay = 3f;
+    public float m_phaseTransformationDuration = 2f;
     public float m_phase2Duration = 10f;
     
     [Header ("Objects")]
@@ -28,11 +27,10 @@ public class PhaseManager : MonoBehaviour {
     internal bool m_isInPhaseOne = true;
     private List<int> m_playerScores = new List<int>();
     private bool m_phaseSet = false;
-    private bool m_hasActivatedPhase2 = false;
-    private bool m_shouldActivatePhase2 = false;
     private RumbleManager m_rumbleManager;
     private GameController m_gameController;
     private ScoreManager m_scoreManager;
+    internal bool m_phaseTransformationActive = false;
 
     void Start ()
     {
@@ -72,7 +70,7 @@ public class PhaseManager : MonoBehaviour {
         
         if ((!m_bouncingBall.m_isAlive && !m_phaseSet)|| Input.GetKeyDown(KeyCode.P))
         {
-            StartCoroutine(TransformationDuration(m_beforePhase2Delay));
+            StartCoroutine(TransformationDuration(m_phaseTransformationDuration));
         }
         
     }
@@ -102,11 +100,13 @@ public class PhaseManager : MonoBehaviour {
     //dramatic moment before phase 2 start
     IEnumerator TransformationDuration(float duration)
     {
+        m_phaseTransformationActive = true;
         m_dragon.SetActive(true);
         m_rumbleManager.PhaseOneShake();
         yield return new WaitForSeconds(duration);
         PhaseTwoSetup();
         m_dragon.SetActive(false);
+        m_phaseTransformationActive = false;
     }
 
     IEnumerator CharacterTransformation()
@@ -131,7 +131,6 @@ public class PhaseManager : MonoBehaviour {
                 if (mySwitchScript != null)
                 {
                     // valkyrie transform camera shake + rumble
-                    m_shouldActivatePhase2 = true;
                     mySwitchScript.SwitchToValkyrie();
                     m_phase2UI.HidePrompt();
                     m_phase2UI.ActivateScoreboard(0);
