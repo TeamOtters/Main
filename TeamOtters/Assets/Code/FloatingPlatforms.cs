@@ -21,7 +21,6 @@ public class FloatingPlatforms : MonoBehaviour {
     private void Start()
     {
         m_originalPos = this.transform.position.y;
-        m_rb = GetComponent<Rigidbody>();
     }
 
     private void Update()
