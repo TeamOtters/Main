@@ -130,7 +130,7 @@ public class PhaseManager : MonoBehaviour {
         for (int i = 0; i < m_players.Length; i++)
         {
             if (m_playerScores != null && i <= m_playerScores.Count)
-            {M
+            {
                 m_playerScores[i] = m_players[i].m_CurrentScore;
             }
             else
