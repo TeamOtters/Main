@@ -44,6 +44,9 @@ public class ScoreManager : MonoBehaviour {
     private GameController m_gameController;
     public GameObject m_glowEffect;
     public Text[] scoreText;
+    public Text[] gainScore;
+
+    private PlayerIndicatorUI m_playerUI;
     
 
     public PlayerScoreUI m_playerScoreUI;
@@ -80,16 +83,28 @@ public class ScoreManager : MonoBehaviour {
     public void AddToScore(int points, int playerIndex)
     {
         m_players[playerIndex-1].m_CurrentScore += points;
-        scoreText[playerIndex - 1].GetComponent<Animation>().Play(); 
+        scoreText[playerIndex - 1].GetComponent<Animation>().Play();
+
+        //RPG Hit!
+
+        gainScore[playerIndex - 1].gameObject.SetActive(true);
+        gainScore[playerIndex - 1].text = ("+" + points.ToString());
+        gainScore[playerIndex - 1].GetComponent<Animation>().Play();
         
-       
-    
+
+    }
+
+ 
+
         //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
         //Sending playerIndex of player that just scored
         //SetHighestPlayerScore(playerIndex-1);
-    }
+    
+  
+    
 
-   
+
+
 
     //Additions by Vivienne
 

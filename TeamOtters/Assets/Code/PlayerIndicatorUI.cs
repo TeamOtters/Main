@@ -8,8 +8,10 @@ public class PlayerIndicatorUI : MonoBehaviour
 {
     public RectTransform canvasRect;
     public GameObject[] m_playerTexts;
+    public GameObject[] m_gainScore; 
     public float m_yOffset;
     private GameController m_gameController;
+    private ScoreManager m_scoreManager; 
 
 
 	void Start ()
@@ -26,35 +28,38 @@ public class PlayerIndicatorUI : MonoBehaviour
             Text myText = m_playerTexts[i].GetComponent<Text>();
             int playerIndex = m_gameController.phaseManager.m_players[i].m_PlayerIndex;
             myText.text = ("P" + playerIndex.ToString());
-            
+
+                       
             //Raven's colors here
             if (playerIndex == 1)
             {
-                myText.color = new Color32(170, 253, 255, 255);
+                myText.color = new Color32(47, 94, 0, 255);
             }
             else if (playerIndex == 2)
             {
-                myText.color = new Color32(153, 232, 157, 255);
+                myText.color = new Color32(255, 112, 222, 255);
             }
             else if (playerIndex == 3)
             {
-                myText.color = new Color32(212, 142, 108, 255);
+                myText.color = new Color32(47, 56, 255, 255);
             }
             else if (playerIndex == 4)
             {
-                myText.color = new Color32(253, 146, 214, 255);
+                myText.color = new Color32(207, 122, 1, 255);
             }
             MoveUIToPlayer(i);
             SetActiveState(i);
         }
 	}
+
+    
     private void SetActiveState(int playerIndex)
     {
         m_playerTexts[playerIndex].gameObject.SetActive(m_gameController.phaseManager.m_players[playerIndex].gameObject.activeSelf);
 
     }
 
-    private void MoveUIToPlayer(int index)
+    public void MoveUIToPlayer(int index)
     {
         RectTransform rectTransform = m_playerTexts[index].GetComponent<RectTransform>();
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
