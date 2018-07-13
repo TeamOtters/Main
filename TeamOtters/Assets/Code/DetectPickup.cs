@@ -16,6 +16,11 @@ public class DetectPickup : MonoBehaviour {
     private GameObject m_ourGrandparentLogic; // SHOULD BE LOGIC LAYER
     internal bool m_isPickedUp = false;
     private GameController m_gameController;
+
+    // Grabby hands variables
+    public float maxDistanceForGrabbyHands = 6f;
+    private float distanceFromValkyrie;
+    private RumbleManager m_rumbleManager;
     
 
     private void Start()
@@ -24,9 +29,50 @@ public class DetectPickup : MonoBehaviour {
         m_collisionTag = string.Empty;
         m_ourParent = transform.parent.gameObject;
         m_ourGrandparentLogic = transform.parent.parent.gameObject;
-
+        m_rumbleManager = GameController.Instance.rumbleManager;
     }
 
+    private void FixedUpdate()
+    {
+        if(!m_isPickedUp)
+            GrabbyHandCheck();
+    }
+
+    void GrabbyHandCheck()
+    {
+        Collider[] objectsInRange = Physics.OverlapSphere(transform.position, maxDistanceForGrabbyHands);
+        foreach (Collider other in objectsInRange)
+        {
+            if (other.gameObject.tag == "Valkyrie")
+            {
+                ValkyrieController valkyrie = other.gameObject.GetComponent<ValkyrieController>();
+
+                if (valkyrie != null)
+                {
+                    int valkyrieIndex = valkyrie.transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
+                    int vikingIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
+
+                    // linear falloff of effect
+                    float proximity = (transform.position - valkyrie.transform.position).magnitude;
+                    float rumblePercent = ExtensionMethods.Remap(proximity, maxDistanceForGrabbyHands, 1.5f, 0, 0.8f);
+
+                    m_rumbleManager.GrabbyHandsVibrate(rumblePercent, valkyrieIndex);
+                    m_rumbleManager.GrabbyHandsVibrate(rumblePercent, vikingIndex);
+
+                    valkyrie.isCloseToViking = true;
+
+                    if (m_isPickedUp)
+                    {
+                        valkyrie.isCloseToViking = false;
+                        valkyrie.isCarrying = true;
+
+                        m_rumbleManager.GrabbyHandsVibrate(0, valkyrieIndex);
+                        m_rumbleManager.GrabbyHandsVibrate(0, vikingIndex);
+                    }              
+                }
+            }
+        }
+    }
 
     void OnTriggerStay(Collider other)
     {
@@ -70,10 +116,7 @@ public class DetectPickup : MonoBehaviour {
         m_ourParent.transform.SetParent(m_carryLocation, true);
 
         //double-ensures that the carry location is assigned to the right valkyrie
-      //  m_carryLocation.SetParent(m_valkyrie.gameObject.transform, true);
-        
-
-        
+      //  m_carryLocation.SetParent(m_valkyrie.gameObject.transform, true);    
         
         if(GetComponentInParent<PlayerData>() != null)
         {
