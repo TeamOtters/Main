@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
 using XInputDotNetPure;
+using UnityEngine.SceneManagement;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -121,6 +122,7 @@ public class PhaseManager : MonoBehaviour {
     void PhaseTwoSetup()
     {
         m_phaseSet = true;
+        SceneManager.LoadScene("MainGame_Level", LoadSceneMode.Additive);
         m_phase2UI.ShowPrompt();
         m_isInPhaseOne = false;
         GameController.Instance.m_currentPhaseState = 2;
@@ -128,7 +130,7 @@ public class PhaseManager : MonoBehaviour {
         for (int i = 0; i < m_players.Length; i++)
         {
             if (m_playerScores != null && i <= m_playerScores.Count)
-            {
+            {M
                 m_playerScores[i] = m_players[i].m_CurrentScore;
             }
             else
