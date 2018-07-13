@@ -113,7 +113,7 @@ public class RumbleManager : MonoBehaviour
         // DEBUG, E to test rumble
         if(Input.GetKeyDown(KeyCode.E))
         {            
-            PlayerStunnedVibrate(0);
+            PlayerStunnedVibrate(1);
         }
 
         // DEBUG, R to test rumble
@@ -224,13 +224,13 @@ public class RumbleManager : MonoBehaviour
     {
         for (int i = 0; i < m_controllerIndex.Length; i++)
         {
-            SingleControllerVibrate(vibrateStrength, i);
+            SingleControllerVibrate(vibrateStrength, i+1);
         }
     }
 
     void SingleControllerVibrate(float vibrateStrength, int playerIndex)
     {
-        GamePad.SetVibration(m_controllerIndex[playerIndex], vibrateStrength, vibrateStrength);
+        GamePad.SetVibration(m_controllerIndex[playerIndex-1], vibrateStrength, vibrateStrength);
     }
 
     //------------------------------------------------------------------
