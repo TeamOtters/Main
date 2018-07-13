@@ -129,8 +129,6 @@ public class VikingController : MonoBehaviour
             }
         }
 
-
-
         if (m_askForGoundedOffset)
             m_isGroundedTimer -= Time.deltaTime;
 
@@ -147,14 +145,8 @@ public class VikingController : MonoBehaviour
         if (m_goThroughPlatformsTimer <= 0.001f)
         {
             m_goThroughPlatformDown = false;
-            m_goThroughPlatformsTimer = m_isThroughPlatformOffset;
-            
-           
-        }
-        
-
-
-        //float travel = m_currentVerticalPos - m_previousVerticalPos;
+            m_goThroughPlatformsTimer = m_isThroughPlatformOffset;      
+        }        
 
         if (m_currentVerticalPos < m_previousVerticalPos)
         {
@@ -180,10 +172,15 @@ public class VikingController : MonoBehaviour
 
                 }
             }
-
         }
 
-        
+        if (m_isStunned)
+            m_animator.SetBool("isStunned", true);
+        else
+            m_animator.SetBool("isStunned", false);
+
+
+
 
 
         /*if (m_vikingcCharacterController.isGrounded )
