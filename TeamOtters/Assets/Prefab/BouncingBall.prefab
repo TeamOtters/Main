@@ -312,7 +312,7 @@ MonoBehaviour:
   m_BallSprite_ThreeLeft: {fileID: 1771767297483392}
   m_hpBelowHalf: {fileID: 1054677955195544}
   m_hpThreeHitLeft: {fileID: 1771767297483392}
-  m_ballDeathEffect: {fileID: 1432418845525510, guid: 6a98bade033940d4fbb9b35724998270,
+  m_ballDeathEffect: {fileID: 1370002527301472, guid: 66726ab492a415d4c80d60be44a41858,
     type: 2}
   m_hasHalfHPEffect: 0
   m_has3HitLeftEffect: 0
