@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class VikingController : MonoBehaviour
 {
-    private Animator m_animator;
     private float m_vikingSpeedForce;
     private CharacterController m_vikingcCharacterController;
     private VikingProjectiles m_vikingProjectiles;
@@ -14,6 +13,7 @@ public class VikingController : MonoBehaviour
     public GameObject m_hand;
     private Rigidbody m_rb;
     private GameController m_gameController;
+    private Animator m_animator;
 
     public float m_vikingMovementSpeed = 6.0F;
     public float m_vikingJumpSpeed = 8.0F;
@@ -21,7 +21,6 @@ public class VikingController : MonoBehaviour
     private Vector3 m_vikingMoveDirection = Vector3.zero;
     public float m_isGroundedOffset;
     private float m_isGroundedTimer;
-
 
     public float m_projectileForceX;
     public float m_projectileForceY;
@@ -32,21 +31,25 @@ public class VikingController : MonoBehaviour
     private bool m_fireCooldownOn;
     // private int m_allowedAmmo = 1;
     private int m_currentAmmo = 1;
-
-    public bool m_isStunned;
-    private bool m_isCarried;
-    private bool m_isIdle;
+    
     private bool m_collided;
     private bool m_turnedLeft;
-    private bool m_isRetracting;
     private bool m_isGrounded;
     private bool m_askForGoundedOffset;
-    private bool m_isJumping;
     private bool m_goThroughPlatformDown;
     private bool m_isWallJumping;
     private bool m_layerIsSet;
-    private bool m_isWallClinging;
 
+    // Bools used by anims
+    internal bool m_isIdle;
+    internal bool m_isWalking;
+    internal bool m_isJumping;
+    internal bool m_isFalling;
+    internal bool m_isCarried;
+    internal bool m_isWallClinging;
+    internal bool m_isStunned;
+    internal bool m_isThrowing;
+    internal bool m_isRetracting;    
 
     public float m_stunnedCoolDown = 1f;
     private float m_wallStickCoolDown = 0.3f;
@@ -64,6 +67,7 @@ public class VikingController : MonoBehaviour
     private float m_previousVerticalPos;
     private float m_currentHorizontalPos;
     private float m_previousHorizontalPos;
+    private float m_thisScale;
 
     private BoundaryHolder m_boundaryHolder;
 
@@ -73,11 +77,7 @@ public class VikingController : MonoBehaviour
     internal float m_bottomBounds;
     private Vector3 m_playerSize;
     private VikingRespawn m_vikingRespawn;
-    private DetectPickup m_detectPickup;
-
-
-
-
+    private DetectPickup m_detectPickup;    
 
     // Use this for initialization
     void Start()
@@ -97,20 +97,34 @@ public class VikingController : MonoBehaviour
 
         m_playersLayer = 10;
         m_goThroughPlatformLayer = 11;
-
+        m_turnedLeft = true;
 
         m_playerSize = GetComponent<SpriteRenderer>().bounds.extents;
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_vikingRespawn = GetComponent<VikingRespawn>();
         m_detectPickup = GetComponent<DetectPickup>();
 
+        m_thisScale = transform.localScale.x;
+
         //assign an animator controller based on player index
         m_animator = transform.gameObject.GetComponent<Animator>();
         m_animator.runtimeAnimatorController = Resources.Load("Viking_P" + m_playerIndexString) as RuntimeAnimatorController;
+        
+        // Set Idle animation state
+        m_isIdle = true;
 
-        m_animator.SetInteger("State", 0); // Idle
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
+    }
+
+    void SetVikingAnimationState(int stateIndex)
+    {
+        m_animator.SetInteger("State", stateIndex);
+    }
+
+    void SetVikingAnimationBool(string boolString, bool value)
+    {
+        m_animator.SetBool(boolString, value);
     }
 
     private void OnEnable()
@@ -125,10 +139,9 @@ public class VikingController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1_P" + m_playerIndexString) && !m_isStunned)
         {
-            if (!m_animIsFiring)
-            {
-                m_animator.SetBool("isThrowing", true); // Catching (using same as throwing anim for now)
-                m_animIsFiring = true;
+            if (!m_isThrowing)
+            {               
+                m_isRetracting = true;
 
                 Invoke("SetThrowAnimFalse", 0.5f);
             }
@@ -161,9 +174,18 @@ public class VikingController : MonoBehaviour
                 {
                     m_layerIsSet = false;
                     gameObject.layer = m_playersLayer;
-                    m_isJumping = false;
                 }
+                m_isJumping = false;
+
+                if(!m_isGrounded)
+                    m_isFalling = true;
+            }
+             else
+             {
+                m_isJumping = true;
+                m_isFalling = false;
              }
+
 
             CheckWallClinging();
 
@@ -177,26 +199,59 @@ public class VikingController : MonoBehaviour
 
                 }
             }
-        }
+        }        
 
-        if (m_isStunned)
-            m_animator.SetBool("isStunned", true);
+        //---------------------------------------------------------
+        // Anim States
+        //---------------------------------------------------------
+
+        // Idle
+        if (m_isIdle)
+            SetVikingAnimationState(0);
+
+        // Walking
+        if (m_isWalking)
+            SetVikingAnimationState(1);
+
+        // Jumping
+        if (m_isJumping)
+            SetVikingAnimationState(2);
+
+        // Falling
+        if (m_isFalling)
+            SetVikingAnimationState(3);
+
+        // Carried by valkyrie
+        if (m_isCarried)
+            SetVikingAnimationState(4);
+
+        // Wall Clinging
+        if (m_isWallClinging)
+            SetVikingAnimationState(5);
+
+        // Throwing axe
+        if (m_isThrowing)
+            SetVikingAnimationBool("isThrowing", true);
         else
-            m_animator.SetBool("isStunned", false);
+            SetVikingAnimationBool("isThrowing", false);
 
+        // Stunned
+        if (m_isStunned)
+            SetVikingAnimationBool("isStunned", true);
+        else
+            SetVikingAnimationBool("isStunned", false);
 
+        // Catching axe
+        if (m_isRetracting)
+            SetVikingAnimationBool("isCatching", true);
+        else
+            SetVikingAnimationBool("isCatching", false);
 
-
-
-        /*if (m_vikingcCharacterController.isGrounded )
-        {
-            gameObject.layer = m_playersLayer;
-        }*/
-
-
-
-
-
+        // Facing right
+        if (m_turnedLeft)
+            SetVikingAnimationBool("facingRight", false);
+        else
+            SetVikingAnimationBool("facingRight", true);
 
     }
 
@@ -229,15 +284,13 @@ public class VikingController : MonoBehaviour
         if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.vikingContiniousScore, m_thisPlayerIndex);
     }
-    private bool m_animIsFiring;
 
   
     //Invoked
-    private void SetThrowAnimFalse()
+    /*private void SetThrowAnimFalse()
     {
-        m_animIsFiring = false;
-        m_animator.SetBool("isThrowing", false);
-    }
+        m_isThrowing = false;
+    }*/
  
 
     void FixedUpdate()
@@ -252,18 +305,10 @@ public class VikingController : MonoBehaviour
                     VikingFire();                    
                 }
                 else if (m_currentAmmo == 0 && !m_isRetracting)
-                {
-                    
+                {                    
                     RetractProjectile();                    
                 }
             }
-
-
-           /* if (Input.GetButtonUp("Fire1_P" + m_playerIndexString))
-            {
-                 m_animator.SetBool("isThrowing", false); // Not Throwing/Catching
-                
-            }*/
 
             VikingMovement();
 
@@ -377,8 +422,6 @@ public class VikingController : MonoBehaviour
         m_isCarried = enable;
         if (m_isCarried)
         {
-            m_animator.SetInteger("State", 4); // Carried
-
             //don't do IsKinematic bool check for this feature
             gameObject.GetComponent<Rigidbody>().useGravity = false;
             gameObject.GetComponent<Rigidbody>().detectCollisions = false;
@@ -606,17 +649,22 @@ public class VikingController : MonoBehaviour
             // Actually moving
             if (travelxLeft != m_previousHorizontalPos && travelxRight != m_previousHorizontalPos)
             {
-                m_animator.SetInteger("State", 1); //Walking
+                m_isIdle = false;
+                m_isWalking = true;
             }
             
             if (m_currentHorizontalPos == m_previousHorizontalPos)
             {                
                 m_isIdle = true;
-                m_animator.SetInteger("State", 0); // Idle
+                m_isWalking = false;
             }
             //m_vikingcCharacterController.SimpleMove(m_vikingMoveDirection * m_vikingMovementSpeed);
         }
-        
+
+        if (m_vikingcCharacterController.isGrounded && !m_isCarried && !m_isStunned && !m_isThrowing && !m_isRetracting)
+        {
+            m_isIdle = true;
+        }
 
         if (m_vikingcCharacterController.isGrounded)
         {
@@ -628,14 +676,11 @@ public class VikingController : MonoBehaviour
 
             if (m_isJumping)
                 m_isJumping = false;
-
-
         }
 
         if (!m_vikingcCharacterController.isGrounded)
         {
             m_askForGoundedOffset = true;
-
         }
 
         //Jumping
@@ -643,8 +688,6 @@ public class VikingController : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump_P" + m_playerIndexString) && angle != 180)
             {
-                m_animator.SetInteger("State", 2); //Jumping
-
                 m_vikingMoveDirection.y =  m_vikingJumpSpeed;
                 if (!m_layerIsSet)
                 {
@@ -653,7 +696,6 @@ public class VikingController : MonoBehaviour
                 }
 
                 m_isJumping = true;
-
                 
                 // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
 
@@ -668,30 +710,27 @@ public class VikingController : MonoBehaviour
         if (m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
             if (Input.GetButtonDown("Jump_P" + m_playerIndexString) && angle == 180)
-            {
-               
+            {               
                 if (!m_layerIsSet)
                 {
                     Debug.Log("go");
                     gameObject.layer = m_goThroughPlatformLayer;
                     m_layerIsSet = true;
                     m_goThroughPlatformDown = true;
-                }
-
-                
-                m_animator.SetInteger("State", 0); //Idle
-                
+                }                
             }
-
         }
 
         //Movement Air
         if (!m_vikingcCharacterController.isGrounded && !m_isCarried)
         {
             m_vikingMoveDirection.x = transform.TransformDirection(vNewInput).x * m_vikingMovementSpeed;
-            if(!m_isJumping && !m_isWallJumping && !m_isWallClinging)
-                m_animator.SetInteger("State", 3); //Falling
+            if(!m_isJumping && !m_isWallJumping && !m_isWallClinging && !m_isIdle && !m_isStunned && !m_isThrowing && !m_isRetracting)
+                m_isFalling = true; //Falling
+            
         }
+        if (m_vikingcCharacterController.isGrounded && !m_isCarried)
+            m_isFalling = false; //Falling
 
 
         //Wall Jump
@@ -717,7 +756,6 @@ public class VikingController : MonoBehaviour
             }
         }
 
-
         //Release Wall Cling
         if (Input.GetButtonUp("Jump_P" + m_playerIndexString) && m_isWallClinging)
         {
@@ -730,17 +768,21 @@ public class VikingController : MonoBehaviour
         //Right - Sprite Flip
         if (Mathf.Clamp(angle, 10, 170) == angle)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            Vector3 scale = transform.localScale;
+            scale.x = -m_thisScale;
+            transform.localScale = scale;
+
             m_turnedLeft = false;
-            m_animator.SetBool("facingRight", true); //Facing Right
         }
 
         //Left - Sprite Flip
         else if (Mathf.Clamp(angle, -170, -10) == angle)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            Vector3 scale = transform.localScale;
+            scale.x = +m_thisScale;
+            transform.localScale = scale;
+
             m_turnedLeft = true;
-            m_animator.SetBool("facingRight", false); //Facing Left
         }
 
         // m_hand.transform.Translate(new Vector3 (angle, 0, 0) * 10f * Time.deltaTime);
@@ -767,28 +809,23 @@ public class VikingController : MonoBehaviour
             }
         } 
     }
-
    
     IEnumerator FireCoolDown()
     {
         yield return new WaitForSeconds(m_rapidFireSpeed);
         m_fireCooldownOn = false;
 
-        m_animator.SetBool("isThrowing", false);
+        m_isThrowing = false;
     }
 
     public void SetStunned(float duration)
     {
         m_isStunned = true;
-        //m_animator.SetInteger("State", 6); // Stunned
-        //GetComponent<SpriteRenderer>().color = Color.white;
         Invoke("StunnedCooldown", duration);
     }
 
     private void StunnedCooldown()
     {
-        m_animator.SetInteger("State", 1); // Idle, not stunned
         m_isStunned = false;
-        //GetComponent<SpriteRenderer>().color = Color.clear;
     }
 }
