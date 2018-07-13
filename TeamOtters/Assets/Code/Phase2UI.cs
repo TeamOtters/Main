@@ -17,7 +17,6 @@ public class Phase2UI : MonoBehaviour
     private int pIndex;
     private bool isInCoroutine = false;
 
-
     public float[] m_rankScale;
 
     private Vector3 targetScale;
@@ -54,26 +53,29 @@ public class Phase2UI : MonoBehaviour
 
     public void Update()
     {
-        for (int i = 0; i < m_scoreManager.m_ranks.Count; i++)
+        if(m_phase2)
         {
-            /*
-            Debug.Log(i);
-            targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
-            Text scaleText = m_scoreManager.scoreText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
-            Transform scaleV = scaleText.transform.parent;
-            scaleV.localScale = new Vector3(scaleV.localScale.x * targetScale.x, scaleV.localScale.y * targetScale.y, 1);
-            /*
-            if (i==0)
+
+            for (int i = 0; i < m_scoreManager.m_ranks.Count; i++)
             {
-                HSprite.transform.parent = scaleV;
-                HSprite.transform.position = scaleV.transform.position;
-                HSprite.transform.localScale = scaleV.transform.localScale; 
+                targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
+                Text scaleText = m_scoreManager.scoreText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
+                Transform scaleV = scaleText.transform.parent;
+                scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
+
+                if (i==0)
+                {
+                   
+                    HSprite.transform.parent = scaleV;
+                    HSprite.transform.position = scaleV.transform.position;
+                    HSprite.transform.localScale = scaleV.transform.localScale;
+                    HSprite.gameObject.SetActive(true); 
+                }
+
+
             }
-            */
-            
-
         }
-
+        
        
     }
 
@@ -93,17 +95,9 @@ public class Phase2UI : MonoBehaviour
     {
         m_scoreManager.scoreText[(m_scoreManager.m_ranks[index].playerIndex) - 1].transform.parent.gameObject.SetActive(true);
         StartCoroutine(RankDelay(index));
+        m_phase2 = true;
     }
 
-    /*public void ChangeImage()
-    {
-        if (scoreBoard.image.sprite == NSprite)
-            scoreBoard.image.sprite = HSprite;
-        else
-        {
-            scoreBoard.image.sprite = NSprite;
-        }
-
-    }*/
+ 
 }
 
