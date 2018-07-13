@@ -25,6 +25,8 @@ public class PhaseManager : MonoBehaviour {
 
     public GameObject m_dragon;
 
+    private RumbleManager m_rumbleManager;
+
 
     void Start ()
     {
@@ -34,6 +36,8 @@ public class PhaseManager : MonoBehaviour {
         m_playerScores.Add(0);
         m_playerScores.Add(0);
         m_playerScores.Add(0);
+
+        m_rumbleManager = GameController.Instance.rumbleManager;
         
 
         //allows the devs to set the starting phase
@@ -67,14 +71,13 @@ public class PhaseManager : MonoBehaviour {
         }
 
         //wait for camera shake to end before phase 2 begins
-        if (GameController.Instance.rumbleManager.transformShakeComplete == true && !m_hasStartedPhase2)
-       {
+        if (!m_hasStartedPhase2 && m_rumbleManager.phaseOneTransformRumbling == false)
+        {
             // Begin Phase 2
             m_hasStartedPhase2 = true;
             m_phase2UI.ActivateScoreboard(0);
-            Invoke("BeginPhaseTwo", m_phase2StartDelay);      
-       }
-        
+            Invoke("BeginPhaseTwo", m_phase2StartDelay);
+        }       
     }   
 
     // Phase one logic should be contained here
@@ -162,7 +165,7 @@ public class PhaseManager : MonoBehaviour {
                 if (mySwitchScript != null)
                 {
                     // valkyrie transform camera shake + rumble
-                    GameController.Instance.rumbleManager.TransformShakeStart();
+                    m_rumbleManager.PhaseOneShake();
 
                     mySwitchScript.SwitchToValkyrie();
                 }
