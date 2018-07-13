@@ -93,6 +93,12 @@ public class ValkyrieController : MonoBehaviour
         StartCoroutine("ContinouslySetBoundaries");
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine("ContiniouslyEvaluateScore");
+        StartCoroutine("ContinouslySetBoundaries");
+    }
+
     IEnumerator ContiniouslyEvaluateScore()
     {
         yield return null;

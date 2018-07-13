@@ -70,7 +70,7 @@ public class CameraBehaviourManager : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 
         if (m_shouldShake)
         {
@@ -81,41 +81,13 @@ public class CameraBehaviourManager : MonoBehaviour {
             {
                 percentage = (ExtensionMethods.Remap(pos.y, startPosY, target.y, 0, 1));
                 target = m_endPanTarget.transform.position;
-
-                /*
-                float maxDistance = m_panXAmount * 2;
-
-                float percentageOfMax = Mathf.Abs(pos.x-targetX) / maxDistance;
-                // clamp the value to 0-1 so we don't have to do a comparison
-                percentageOfMax = Mathf.Clamp01(percentageOfMax);
-
-                float dynamicSpeed;
-                dynamicSpeed = Mathf.Lerp(m_panSpeedXMax, m_panSpeedXMin, percentageOfMax);
-                */
+                
 
                 float dynamicSpeedX = m_speedCurveXWhileMoving.Evaluate(pos.x);
                 float intensityModifierX = m_intensityCurveXWhileMoving.Evaluate(percentage);
                 float speedModifierY = m_speedCurveY.Evaluate(percentage);
                 move = new Vector3(targetXMoving * dynamicSpeedX * intensityModifierX, target.y * m_panSpeedY * speedModifierY * Time.deltaTime, 0);
-
-                //Debug.Log("Percentage is " + percentage + " and my modifier is " + speedModifierY);
-
                 
-
-                //Vector3 move = new Vector3(0f * m_panSpeedX, target.y * m_panSpeedY * Time.deltaTime, 0);
-                
-
-                /* Rotation stuff, let's deal with this later
-                float step = rotationSpeed * Time.deltaTime;
-                Vector3 targetRotation = new Vector3(0f,Time.deltaTime * rotationSpeed, 0f);
-
-                Camera.main.transform.Rotate(targetRotation, Space.Self);
-
-
-                if (rot.y == targetYRotation)
-                    targetYRotation = -targetYRotation;
-                */
-
 
                 //Set the new target x value for moving from left to right
                 if (Mathf.Clamp(pos.x, targetXMoving - 0.05f, targetXMoving + 0.055f) == pos.x)

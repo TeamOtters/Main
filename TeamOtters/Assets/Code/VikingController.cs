@@ -113,10 +113,15 @@ public class VikingController : MonoBehaviour
         StartCoroutine("ContinouslySetBoundaries");
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine("ContiniouslyEvaluateScore");
+        StartCoroutine("ContinouslySetBoundaries");
+    }
+
     private void Update()
     {
         //Set the boundaries to camera
-
 
         if (Input.GetButtonDown("Fire1_P" + m_playerIndexString) && !m_isStunned)
         {
@@ -326,7 +331,7 @@ public class VikingController : MonoBehaviour
         if (collision.gameObject.CompareTag("Projectile"))
         {
             if (collision.gameObject.GetComponent<ProjectileBehaviour>().m_playerID != m_thisPlayerIndex)
-                SetStunned();
+                SetStunned(m_stunnedCoolDown);
 
         }
 
@@ -772,12 +777,12 @@ public class VikingController : MonoBehaviour
         m_animator.SetBool("isThrowing", false);
     }
 
-    public void SetStunned()
+    public void SetStunned(float duration)
     {
         m_isStunned = true;
         //m_animator.SetInteger("State", 6); // Stunned
         //GetComponent<SpriteRenderer>().color = Color.white;
-        Invoke("StunnedCooldown", m_stunnedCoolDown);
+        Invoke("StunnedCooldown", duration);
     }
 
     private void StunnedCooldown()

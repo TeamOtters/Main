@@ -150,7 +150,7 @@ public class BouncingBall : MonoBehaviour
         //Stun players touching bouncingBall.
         if (collisionInfo.gameObject.CompareTag("Player") || collisionInfo.gameObject.CompareTag("Viking"))
         {
-            collisionInfo.gameObject.GetComponent<VikingController>().SetStunned();
+            collisionInfo.gameObject.GetComponent<VikingController>().SetStunned(collisionInfo.gameObject.GetComponent<VikingController>().m_stunnedCoolDown);
         }
 
         else
