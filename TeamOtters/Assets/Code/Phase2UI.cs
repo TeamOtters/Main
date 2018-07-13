@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using UnityEngine.Animations;
 
 public class Phase2UI : MonoBehaviour
 {
@@ -22,22 +21,10 @@ public class Phase2UI : MonoBehaviour
 
     private Vector3 targetScale;
 
+   // public GameObject NSprite;
     public GameObject HSprite;
-    private bool scored=false;
+   // public Button scoreBoard;
 
-    // Grow parameters
-    public float approachSpeed = 0.02f;
-    public float growthBound = 2f;
-    public float shrinkBound = 0.5f;
-    private float currentRatio = 1;
-
-    // The object we're trying to manipulate
-    private Button scoreBoard;
-
-    // And something to do the manipulating
-    private Coroutine routine;
-    private bool keepGoing = true;
-    private bool closeEnough = false;
 
 
 
@@ -68,15 +55,13 @@ public class Phase2UI : MonoBehaviour
     {
         if(m_phase2)
         {
-            //Scoreboard Load Sequencing
+
             for (int i = 0; i < m_scoreManager.m_ranks.Count; i++)
             {
                 targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
                 Text scaleText = m_scoreManager.scoreText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
                 Transform scaleV = scaleText.transform.parent;
                 scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
-                
-     
 
                 if (i==0)
                 {
@@ -87,53 +72,12 @@ public class Phase2UI : MonoBehaviour
                     HSprite.gameObject.SetActive(true); 
                 }
 
-                if (!scored)
-                {
-                    scoreBoard = scaleV.gameObject.GetComponent<Button>();
-                    this.routine = StartCoroutine(this.Pulse());
-                }
-                
 
             }
         }
         
        
     }
-
-
-    IEnumerator Pulse()
-    {
-        // Run this indefinitely
-        while (keepGoing)
-        {
-            // Get bigger for a few seconds
-            while (this.currentRatio != this.growthBound)
-            {
-                // Determine the new ratio to use
-                currentRatio = Mathf.MoveTowards(currentRatio, growthBound, approachSpeed);
-
-                // Update our text element
-                this.gameObject.transform.localScale = Vector3.one * currentRatio;
-                Debug.Log ("Growing!");
-
-                yield return new WaitForEndOfFrame();
-            }
-
-            // Shrink for a few seconds
-            while (this.currentRatio != this.shrinkBound)
-            {
-                // Determine the new ratio to use
-                currentRatio = Mathf.MoveTowards(currentRatio, shrinkBound, approachSpeed);
-
-                // Update our text element
-                this.gameObject.transform.localScale = Vector3.one * currentRatio;
-                Debug.Log("Shrinking!");
-
-                yield return new WaitForEndOfFrame();
-            }
-        }
-    }
-
 
 
     private IEnumerator RankDelay(int index)
@@ -154,6 +98,6 @@ public class Phase2UI : MonoBehaviour
         m_phase2 = true;
     }
 
-  
+ 
 }
 
