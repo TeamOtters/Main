@@ -56,19 +56,21 @@ public class Phase2UI : MonoBehaviour
     {
         for (int i = 0; i < m_scoreManager.m_ranks.Count; i++)
         {
+            /*
             Debug.Log(i);
             targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
             Text scaleText = m_scoreManager.scoreText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
             Transform scaleV = scaleText.transform.parent;
             scaleV.localScale = new Vector3(scaleV.localScale.x * targetScale.x, scaleV.localScale.y * targetScale.y, 1);
-
+            /*
             if (i==0)
             {
                 HSprite.transform.parent = scaleV;
                 HSprite.transform.position = scaleV.transform.position;
                 HSprite.transform.localScale = scaleV.transform.localScale; 
             }
-
+            */
+            
 
         }
 
