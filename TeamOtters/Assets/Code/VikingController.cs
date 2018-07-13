@@ -140,10 +140,9 @@ public class VikingController : MonoBehaviour
         if (Input.GetButtonDown("Fire1_P" + m_playerIndexString) && !m_isStunned)
         {
             if (!m_isThrowing)
-            {               
+            {
+                m_isThrowing = false;
                 m_isRetracting = true;
-
-                Invoke("SetThrowAnimFalse", 0.5f);
             }
         }
 
@@ -283,14 +282,7 @@ public class VikingController : MonoBehaviour
     {
         if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.vikingContiniousScore, m_thisPlayerIndex);
-    }
-
-  
-    //Invoked
-    /*private void SetThrowAnimFalse()
-    {
-        m_isThrowing = false;
-    }*/
+    } 
  
 
     void FixedUpdate()
@@ -812,6 +804,8 @@ public class VikingController : MonoBehaviour
    
     IEnumerator FireCoolDown()
     {
+        m_isThrowing = true;
+
         yield return new WaitForSeconds(m_rapidFireSpeed);
         m_fireCooldownOn = false;
 
