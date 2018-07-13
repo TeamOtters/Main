@@ -24,12 +24,14 @@ public class ProjectileBehaviour : MonoBehaviour {
     private BoundaryHolder m_boundaryHolder;
     private Vector3 m_projectileSize;
 
+    public MeshCollider m_meshCollider; 
+
 
     // Use this for initialization
     void Start ()
     {
         m_rigidBody = GetComponent<Rigidbody>();
-        m_collider = GetComponent<Collider>();
+        m_collider = m_meshCollider.GetComponent<Collider>();
         EnableRagdoll();
         m_playerID = m_playerData.m_PlayerIndex;
         m_gameController = GameController.Instance;
