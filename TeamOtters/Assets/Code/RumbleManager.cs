@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EZCameraShake;
 using XInputDotNetPure;
+using UnityEngine.Events;
 
 public class RumbleManager : MonoBehaviour
 {
@@ -91,6 +92,8 @@ public class RumbleManager : MonoBehaviour
     internal CameraShakeInstance valhalla;
     internal XInputDotNetPure.PlayerIndex[] m_controllerIndex = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
 
+    public UnityEvent PhaseOneTreeShakes;
+
     private void Update()
     {
         // DEBUG, Q to test ball hit shake
@@ -110,7 +113,7 @@ public class RumbleManager : MonoBehaviour
         // DEBUG, E to test rumble
         if(Input.GetKeyDown(KeyCode.E))
         {            
-            GrabbyHandsVibrate(1, 0);
+            PlayerStunnedVibrate(0);
         }
 
         // DEBUG, R to test rumble
@@ -257,6 +260,8 @@ public class RumbleManager : MonoBehaviour
         AllControllersVibrate(phaseOneTransform_vibStrength);
 
         StartCoroutine(WaitForRumble(instance, phaseOneTransform_fadeInTime, phaseOneTransform_fadeOutTime));
+
+        PhaseOneTreeShakes.Invoke();
     }
 
     public void PhaseTwoShake()
