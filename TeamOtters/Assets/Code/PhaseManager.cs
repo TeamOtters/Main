@@ -8,29 +8,31 @@ using UnityEngine.SceneManagement;
 
 public class PhaseManager : MonoBehaviour {
 
-    internal bool m_isInPhaseOne = true;
+    [Header ("Settings")]
     public bool m_startInPhaseOne = true;
-    public PlayerData[] m_players;
-
     public float m_beforePhase2Delay = 2f;
     public float m_phase2StartDelay = 3f;
     public float m_phase2Duration = 10f;
+    
+    [Header ("Objects")]
     public BouncingBall m_bouncingBall;
+    public GameObject m_dragon;
+    public GameObject m_Level;
 
+    [Header("UI")]
+    public Phase2UI m_phase2UI;
+    public Canvas m_Phase1UI;
+
+    [HideInInspector]
+    public PlayerData[] m_players;
+    internal bool m_isInPhaseOne = true;
     private List<int> m_playerScores = new List<int>();
     private bool m_phaseSet = false;
     private bool m_hasActivatedPhase2 = false;
     private bool m_shouldActivatePhase2 = false;
-
-    public Phase2UI m_phase2UI;
-    public Canvas m_Phase1UI;
-
-    public GameObject m_dragon;
-
     private RumbleManager m_rumbleManager;
-
-    public GameObject m_Level;  
-
+    private GameController m_gameController;
+    private ScoreManager m_scoreManager;
 
     void Start ()
     {
@@ -41,7 +43,9 @@ public class PhaseManager : MonoBehaviour {
         m_playerScores.Add(0);
         m_playerScores.Add(0);
 
-        m_rumbleManager = GameController.Instance.rumbleManager;
+        m_gameController = GameController.Instance;
+        m_rumbleManager = m_gameController.rumbleManager;
+        m_scoreManager = m_gameController.m_scoreManager;
         
 
         //allows the devs to set the starting phase
@@ -54,44 +58,29 @@ public class PhaseManager : MonoBehaviour {
             PhaseTwoSetup();
         }
         m_dragon.SetActive(false);
-       
         
 	}	
 
 	void Update ()
     {
-        // this should be the condition for phase 2 switch - e.g. the ball health
-		if(!m_bouncingBall.m_isAlive && !m_phaseSet)
-        {
-            Debug.Log("ShouldSetUpPhase2");
-            StartCoroutine(BeforePhase2Duration(m_beforePhase2Delay));
-        }
+        CheckPhaseSwitch();
+    }
 
-        // DEBUG, Click to phase 2
-        if (Input.GetKeyDown(KeyCode.P))
+    // the condition for phase 2 switch - ball health and debug command
+    private void CheckPhaseSwitch()
+    {
+        
+        if ((!m_bouncingBall.m_isAlive && !m_phaseSet)|| Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("ShouldSetUpPhase2");
-            PhaseTwoSetup();
+            StartCoroutine(TransformationDuration(m_beforePhase2Delay));
         }
-
-        //wait for camera shake to end before phase 2 begins
-        if (m_shouldActivatePhase2)
-        {
-            Debug.Log("Starting phase 2");
-            if (!m_hasActivatedPhase2 && m_rumbleManager.phaseOneTransformRumbling == false)
-            {
-                // Begin Phase 2
-                Debug.Log("Should start phase 2");
-                m_phase2UI.ActivateScoreboard(0);
-                Invoke("BeginPhaseTwo", m_phase2StartDelay);
-                m_shouldActivatePhase2 = false;
-            }
-        }
-    }   
-
-    // Phase one logic should be contained here
+        
+    }
+    
+    //phase 1 setup - called on start
     void PhaseOneSetup()
     {
+        m_dragon.SetActive(false);
         m_isInPhaseOne = true;
         foreach(PlayerData player in m_players)
         {
@@ -108,95 +97,49 @@ public class PhaseManager : MonoBehaviour {
             m_bouncingBall.Respawn();
             Debug.Log("Bouncing ball respawn triggered");
         }
-        m_dragon.SetActive(false);
     }
     
-
-    IEnumerator BeforePhase2Duration(float duration)
+    //dramatic moment before phase 2 start
+    IEnumerator TransformationDuration(float duration)
     {
         m_dragon.SetActive(true);
+        m_rumbleManager.PhaseOneShake();
         yield return new WaitForSeconds(duration);
         PhaseTwoSetup();
         m_dragon.SetActive(false);
     }
 
+    IEnumerator CharacterTransformation()
+    {
+        yield return null;
+    }
+
     //Set the two characters with highest score to Valkyries
     void PhaseTwoSetup()
     {
-        m_phaseSet = true;
-        SceneManager.LoadScene("MainGame_Level", LoadSceneMode.Additive);
-        m_Level.gameObject.SetActive(false);
+        m_phaseSet = true;//prevents phase switch from happening every frame
         m_phase2UI.ShowPrompt();
-        m_isInPhaseOne = false;
+        m_isInPhaseOne = false; //for other scripts to listen to
         GameController.Instance.m_currentPhaseState = 2;
-        //Adds the current score of the players to the score list
-        for (int i = 0; i < m_players.Length; i++)
-        {
-            if (m_playerScores != null && i <= m_playerScores.Count)
-            {
-                m_playerScores[i] = m_players[i].m_CurrentScore;
-            }
-            else
-            {
-                Debug.Log("Cannot find player score list!");
-            }
 
-        }
-        //local variables to keep track of the highest scores and corresponding indexes
-        int highest = 0;
-        int highestIndex = -1;
-
-        for (int i = 0; i < m_playerScores.Count; i++)
-        {
-            //assigns the highest and second highest variables
-            if (m_playerScores[i] >= highest)
-            {
-                /*
-                OLD CODE FOR 2 VIKINGS
-                second = highest;
-                secondIndex = highestIndex;
-                */
-                highest = m_playerScores[i];
-                highestIndex = i + 1;
-            }
-        }
-
-        //Viking to valkyrie change 
         foreach (PlayerData player in m_players)
         {
             //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
-            if (player.m_PlayerIndex != highestIndex) // if the players are not the highest, they should change into valkyries
+            if (player.m_PlayerIndex != m_scoreManager.m_ranks[0].playerIndex) // if the players are not the highest, they should change into valkyries
             {
                 var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
                 if (mySwitchScript != null)
                 {
                     // valkyrie transform camera shake + rumble
-                    m_rumbleManager.PhaseOneShake();
                     m_shouldActivatePhase2 = true;
-
                     mySwitchScript.SwitchToValkyrie();
+                    m_phase2UI.HidePrompt();
+                    m_phase2UI.ActivateScoreboard(0);
+                    GameController.Instance.cameraManager.SetRaceState(true);
                 }
             }
         }
-    }
 
-    void BeginPhaseTwo()
-    {
-        Debug.Log("Phase2 beginnign");
-        m_phase2UI.HidePrompt();
-        StartCoroutine(PhaseTwoDuration(m_phase2Duration));
-    }
-
-    //Sets the game state back to phase one after a limited time
-    IEnumerator PhaseTwoDuration(float phaseDuration)
-    {
-        Debug.Log("phase2");
-        GameController.Instance.cameraManager.SetRaceState(true);
-
-        yield return new WaitForSeconds(phaseDuration);
-        PhaseOneSetup();
-        m_phaseSet = false;
-        m_shouldActivatePhase2 = false;
     }
    
 }

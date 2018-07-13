@@ -34,7 +34,7 @@ public class GoalReached : MonoBehaviour {
 
         if(m_hasReachedValhalla)
         {
-            GameController.Instance.cameraManager.m_shouldShake = false;
+            GameController.Instance.cameraManager.m_shouldSidewaysPan = false;
         }
         if (!m_hasReachedValhalla)
         {

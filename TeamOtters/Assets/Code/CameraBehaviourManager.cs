@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using EZCameraShake;
 
 
 public class CameraBehaviourManager : MonoBehaviour {
@@ -33,7 +32,7 @@ public class CameraBehaviourManager : MonoBehaviour {
     private float startPosY;
     private float percentage;
 
-    internal bool m_shouldShake = false;
+    internal bool m_shouldSidewaysPan = false;
     private Vector3 pos;
     private Vector3 rot;
     private Vector3 target;
@@ -66,13 +65,13 @@ public class CameraBehaviourManager : MonoBehaviour {
     public void SetRaceState (bool enable)
     {
         m_valkyrieRaceState = enable;
-        m_shouldShake = true;
+        m_shouldSidewaysPan = true;
     }
 	
 	// Update is called once per frame
 	void LateUpdate () {
 
-        if (m_shouldShake)
+        if (m_shouldSidewaysPan)
         {
             Vector3 pos = Camera.main.transform.position;
             float shakeXModifier = m_speedCurveXWhileStatic.Evaluate(pos.x);
