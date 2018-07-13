@@ -13,6 +13,9 @@ public class GoalReached : MonoBehaviour {
     private int m_carryingScoreBonus;
     private int m_normalScoreBonus;
     private bool m_hasReachedValhalla=false;
+    public Button m_restart;
+
+
 
 	// Use this for initialization
 	void Start ()
@@ -64,6 +67,8 @@ public class GoalReached : MonoBehaviour {
         yield return new WaitForSeconds(0.7f);
         m_Results.gameObject.SetActive(true);
         m_Results.GetComponentInChildren<Results>().ShowResults();
+        m_restart.Select();
+        
 
     }
     // Update is called once per frame
