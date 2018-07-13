@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -78,7 +78,8 @@ public class GameController : MonoBehaviour
         }
 
         CreatePlayers();
-        
+
+        SceneManager.LoadScene("MainGame_Level", LoadSceneMode.Additive); 
 
     }
 
