@@ -78,9 +78,10 @@ public class PhaseManager : MonoBehaviour {
             if (!m_hasActivatedPhase2 && m_rumbleManager.phaseOneTransformRumbling == false)
             {
                 // Begin Phase 2
-                m_hasActivatedPhase2 = true;
+                Debug.Log("Should start phase 2");
                 m_phase2UI.ActivateScoreboard(0);
                 Invoke("BeginPhaseTwo", m_phase2StartDelay);
+                m_shouldActivatePhase2 = false;
             }
         }
     }   
@@ -120,7 +121,6 @@ public class PhaseManager : MonoBehaviour {
     void PhaseTwoSetup()
     {
         m_phaseSet = true;
-        Debug.Log("I am in phase 2!)");
         m_phase2UI.ShowPrompt();
         m_isInPhaseOne = false;
         GameController.Instance.m_currentPhaseState = 2;
@@ -167,16 +167,17 @@ public class PhaseManager : MonoBehaviour {
                 {
                     // valkyrie transform camera shake + rumble
                     m_rumbleManager.PhaseOneShake();
+                    m_shouldActivatePhase2 = true;
 
                     mySwitchScript.SwitchToValkyrie();
                 }
             }
         }
-        m_shouldActivatePhase2 = true;
     }
 
     void BeginPhaseTwo()
     {
+        Debug.Log("Phase2 beginnign");
         m_phase2UI.HidePrompt();
         StartCoroutine(PhaseTwoDuration(m_phase2Duration));
     }
