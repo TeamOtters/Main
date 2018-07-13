@@ -42,6 +42,8 @@ public class ScoreManager : MonoBehaviour {
 
     public PlayerScoreUI m_playerScoreUI;
 
+    public bool scored = false; 
+
     //public static ScorePointInfo scorePointInfo { get; }
 
     private void Start()
@@ -74,12 +76,17 @@ public class ScoreManager : MonoBehaviour {
     public void AddToScore(int points, int playerIndex)
     {
         m_players[playerIndex-1].m_CurrentScore += points;
+        scored=true;
+        
        //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
         //Sending playerIndex of player that just scored
         //SetHighestPlayerScore(playerIndex-1);
     }
 
-   
+  /* IEnumerator frameCheck(int index)
+    {
+        
+    }*/
 
     //Additions by Vivienne
 

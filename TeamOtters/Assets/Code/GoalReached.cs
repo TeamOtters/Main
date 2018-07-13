@@ -64,7 +64,7 @@ public class GoalReached : MonoBehaviour {
     }
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(1.0f);
         m_Results.gameObject.SetActive(true);
         m_Results.GetComponentInChildren<Results>().ShowResults();
         m_restart.Select();
