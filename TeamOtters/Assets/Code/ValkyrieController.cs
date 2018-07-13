@@ -23,7 +23,6 @@ public class ValkyrieController : MonoBehaviour
     public float m_attackDuration = 1f;
     public float m_attackSpeed = .01f;
 
-
     public SpriteRenderer m_bodySprite;
     public BoxCollider m_attackCollision;
 
@@ -338,8 +337,8 @@ public class ValkyrieController : MonoBehaviour
         // Actually moving
         if (travelxLeft != m_previousHorizontalPos && travelxRight != m_previousHorizontalPos)
         {
-            isGliding = true;
-            isIdle = false;
+            //isGliding = true;
+            isIdle = true;
         }
 
         if (m_currentHorizontalPos == m_previousHorizontalPos)
