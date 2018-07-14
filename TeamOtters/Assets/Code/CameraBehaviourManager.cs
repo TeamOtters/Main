@@ -76,11 +76,13 @@ public class CameraBehaviourManager : MonoBehaviour {
                 float intensityModifierX = m_intensityCurveXWhileMoving.Evaluate(percentage);
                 float speedModifierY = m_speedCurveY.Evaluate(percentage);
                 move = new Vector3(targetXMoving * dynamicSpeedX * intensityModifierX, target.y * m_panSpeedY * speedModifierY * Time.deltaTime, 0);
-                
+                /*
                 if(m_speedCurveY.Evaluate(percentage) == 0.9f)
                 {
                     GameController.Instance.rumbleManager.ValhallaShake();
                 } // This doesnt add too much right now
+                */
+
 
                 //Set the new target x value for moving from left to right
                 if (Mathf.Clamp(pos.x, targetXMoving - 0.05f, targetXMoving + 0.055f) == pos.x)
