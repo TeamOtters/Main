@@ -58,21 +58,7 @@ public class Phase2UI : MonoBehaviour
             
             for (int i = 0; i < m_scoreManager.m_ranks.Count; i++)
             {
-                Debug.Log("Text is getting scaled!");
-                targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
-                Text scaleText = m_scoreManager.m_scoreBoardText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
-                Transform scaleV = scaleText.transform.parent;
-                scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
-                
-                if (i==0)
-                {
-                   
-                    HSprite.transform.SetParent(scaleV);
-                    HSprite.transform.position = scaleV.transform.position;
-                    HSprite.transform.localScale = scaleV.transform.localScale;
-                    HSprite.gameObject.SetActive(true); 
-                }
-                
+                //ScaleByRank(i);
 
             }
         }
@@ -80,14 +66,30 @@ public class Phase2UI : MonoBehaviour
 
     }
 
-
-    private IEnumerator RankDelay(int index)
+    private void ScaleByRank(int i)
     {
-        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Text is getting scaled!");
+        targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
+        Text scaleText = m_scoreManager.m_scoreBoardText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
+        Transform scaleV = scaleText.transform.parent;
+        scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
+
+        if (i == 0)
+        {
+            HSprite.gameObject.SetActive(true);
+            HSprite.transform.SetParent(scaleV);
+            HSprite.transform.position = scaleV.transform.position;
+            HSprite.transform.localScale = scaleV.transform.localScale;
+        }
+    }
+
+    /*
+    private IEnumerator RankDelay(int index, float duration)
+    {
+        yield return new WaitForSeconds(duration);
         if (index < (m_scoreManager.m_scoreBoardText.Length) - 1)
         {
             index++;
-            ActivateScoreboard(index);
             if(index == (m_scoreManager.m_scoreBoardText.Length) -1)
             {
                 m_phase2 = true;
@@ -95,13 +97,24 @@ public class Phase2UI : MonoBehaviour
         }
 
     }
+    */
 
     public void ActivateScoreboard(int index)
     {
-        int myRankIndex = (m_scoreManager.m_ranks[index].playerIndex) - 1;
+        int myRankIndex = (m_scoreManager.m_ranks[index].playerIndex) -1;
         m_scoreManager.m_scoreBoardText[myRankIndex].transform.parent.gameObject.SetActive(true);
         m_scoreManager.m_scoreBoardText[myRankIndex].transform.parent.localScale = new Vector3(m_rankScale[myRankIndex], m_rankScale[myRankIndex], 1);
-        StartCoroutine(RankDelay(index));
+        ScaleByRank(myRankIndex);
+        /*
+        if (index < (m_scoreManager.m_scoreBoardText.Length))
+        {
+            index++;
+            if (index == (m_scoreManager.m_scoreBoardText.Length))
+            {
+                m_phase2 = true;
+            }
+        }
+        */
     }
 
 }

@@ -13,7 +13,6 @@ public class InGameMenu : MonoBehaviour
 
     public void Start()
     {
-        Debug.Log("Restarted");
         Time.timeScale = 1.0f;
         m_InGameMenu.gameObject.SetActive(false);
     }

@@ -52,7 +52,6 @@ public class BouncingBall : MonoBehaviour
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_ballSize = transform.Find("BallHP_Full").GetComponent<SpriteRenderer>().bounds.extents;
         //;GetComponent<BouncingBall>().GetComponent<SpriteRenderer>().bounds.extents;
-        Debug.Log(m_ballSize);
         m_axeDamage = 10;
         //(GetComponent<ProjectileBehaviour>().m_projectileDamage);
 
@@ -145,7 +144,6 @@ public class BouncingBall : MonoBehaviour
 
     void OnCollisionEnter(Collision collisionInfo)
      {
-        Debug.Log("This is collider: " + collisionInfo.gameObject.name);
 
         //Stun players touching bouncingBall.
         if (collisionInfo.gameObject.CompareTag("Player") || collisionInfo.gameObject.CompareTag("Viking"))
@@ -155,7 +153,6 @@ public class BouncingBall : MonoBehaviour
 
         else
         {
-            Debug.Log("Hit " + collisionInfo.gameObject.tag + " Collision");
         }
        }
 

@@ -10,6 +10,7 @@ public class PhaseManager : MonoBehaviour {
 
     [Header ("Settings")]
     public bool m_startInPhaseOne = true;
+    public float m_playerTransformationDuration = 0.2f;
     public float m_phaseTransformationDuration = 2f;
     public float m_phase2Duration = 10f;
     
@@ -104,24 +105,60 @@ public class PhaseManager : MonoBehaviour {
         m_dragon.SetActive(true);
         m_rumbleManager.PhaseOneShake();
         yield return new WaitForSeconds(duration);
-        PhaseTwoSetup();
         m_dragon.SetActive(false);
         m_phaseTransformationActive = false;
+        StartCoroutine(CharacterTransformation(0));
     }
 
-    IEnumerator CharacterTransformation()
+    IEnumerator CharacterTransformation(int i)
     {
+        Debug.Log("BAM");
+        int playerIndex = m_scoreManager.m_ranks[i].playerIndex;
+        var mySwitchScript = m_players[playerIndex - 1].gameObject.GetComponent<VikingValkyrieSwitch>();
+        if (m_players[playerIndex-1].m_PlayerIndex != m_scoreManager.m_ranks[0].playerIndex) // if the players are not the highest, they should change into valkyries
+        {
+            if (mySwitchScript != null)
+            {
+                // valkyrie transform camera shake + rumble
+                Debug.Log("ValkyrieTransformation");
+                mySwitchScript.SwitchToValkyrie();
+
+            }
+        }
+        else
+        {
+            mySwitchScript.SwitchToViking();
+            Debug.Log("VikingTransformation");
+        }
+        m_phase2UI.ActivateScoreboard(i);
+        StartCoroutine(CharacterTransformationDelay(i));
         yield return null;
+    }
+
+    IEnumerator CharacterTransformationDelay(int i)
+    {
+        Debug.Log("Delay");
+        yield return new WaitForSeconds(m_playerTransformationDuration);
+        if (i < m_players.Length -1)
+        {
+            i++;
+            StartCoroutine(CharacterTransformation(i));
+        }
+        else
+        {
+            PhaseTwoSetup();
+        }
     }
 
     //Set the two characters with highest score to Valkyries
     void PhaseTwoSetup()
     {
+        Debug.Log("set up phase 2!");
         m_phaseSet = true;//prevents phase switch from happening every frame
         m_phase2UI.ShowPrompt();
         m_isInPhaseOne = false; //for other scripts to listen to
         GameController.Instance.m_currentPhaseState = 2;
-
+        /*
         foreach (PlayerData player in m_players)
         {
             //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
@@ -132,12 +169,13 @@ public class PhaseManager : MonoBehaviour {
                 {
                     // valkyrie transform camera shake + rumble
                     mySwitchScript.SwitchToValkyrie();
-                    m_phase2UI.HidePrompt();
-                    m_phase2UI.ActivateScoreboard(0);
-                    GameController.Instance.cameraManager.SetRaceState(true);
+                   
                 }
             }
         }
+        */
+        m_phase2UI.HidePrompt();
+        GameController.Instance.cameraManager.SetRaceState(true);
 
     }
    
