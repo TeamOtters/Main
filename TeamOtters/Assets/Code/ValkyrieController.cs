@@ -202,7 +202,10 @@ public class ValkyrieController : MonoBehaviour
 
         // Dropping a viking
         if (isDropping)
+        { 
             SetValkyrieAnimationBool("isDropping", true);
+            Invoke("StopDrop", 3);
+        }
         else
             SetValkyrieAnimationBool("isDropping", false);
 
@@ -214,6 +217,12 @@ public class ValkyrieController : MonoBehaviour
 
         if (!isCloseToViking && !isStunned && !isCarrying && !isFlapping && !isGliding && !isDiving && !isGrounded && !isDropping)
             isIdle = true;
+            isAttacking = false;
+
+        if (isCarrying && !isStunned && !isGrounded&& !isDropping)
+        {
+            isAttacking = false;
+        }
         
 
     }
@@ -581,6 +590,11 @@ public class ValkyrieController : MonoBehaviour
     public void GetStunned()
     {
         Debug.Log("Valkyrie Stunned!");
+    }
+
+    private void StopDrop()
+    {
+        isDropping = false;
     }
 }
 
