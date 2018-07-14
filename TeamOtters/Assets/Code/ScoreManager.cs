@@ -107,6 +107,8 @@ public class ScoreManager : MonoBehaviour {
         {
         }
 
+        
+
     }
 
  
@@ -118,9 +120,29 @@ public class ScoreManager : MonoBehaviour {
             ScoreRanking current = m_ranks[i];
             current.playerIndex = m_players[i].m_PlayerIndex;
             current.score = m_players[i].m_CurrentScore;
+
+            if (current.playerIndex == 1)
+            {
+                this.GetComponentInParent<Image>().color = new Color32(47, 94, 0, 180);
+            }
+            else if (current.playerIndex == 2)
+            {
+                this.GetComponentInParent<Image>().color = new Color32(255, 112, 222, 180);
+            }
+            else if (current.playerIndex == 3)
+            {
+                this.GetComponentInParent<Image>().color = new Color32(47, 56, 255, 180);
+            }
+            else if (current.playerIndex == 4)
+            {
+                this.GetComponentInParent<Image>().color = new Color32(207, 122, 1, 180);
+            }
         }
 
         m_ranks.Sort((b, a) => a.score.CompareTo(b.score));
+
+        //Raven's colors here
+        
     }
 
 }
