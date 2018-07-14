@@ -273,7 +273,10 @@ public class VikingController : MonoBehaviour
         while (true)
         {
             yield return null;
-            GiveContionousScore();
+            if (!m_isStunned)
+            {
+                GiveContionousScore();
+            }
             yield return new WaitForSeconds(1f);
          }
     }
