@@ -36,6 +36,8 @@ public class ValkyrieController : MonoBehaviour
     internal bool isCloseToViking;
     internal bool isDiving;
     internal bool isShielding;
+    internal bool isGrounded;
+
     internal Rigidbody heldRigidbody;
     internal int heldPlayerIndex;
     internal int m_playerIndex;
@@ -85,7 +87,6 @@ public class ValkyrieController : MonoBehaviour
 
         // Set Idle animation state
         isIdle = true;
-        SetValkyrieAnimationState(0); // Idle
         m_thisScale = transform.localScale.x;
 
         StartCoroutine("ContiniouslyEvaluateScore");
@@ -140,6 +141,12 @@ public class ValkyrieController : MonoBehaviour
 
         //Anim States
 
+        // IsGrounded
+        if (isGrounded)
+            SetValkyrieAnimationBool("isOnGround", true);
+        else
+            SetValkyrieAnimationBool("isOnGround", false);
+
         // Idle
         if (isIdle)
             SetValkyrieAnimationState(0);
@@ -191,22 +198,11 @@ public class ValkyrieController : MonoBehaviour
         m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
         m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
         m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
-   
+
         // Clamp movement and wrap screen logic
         if (transform.position.x < m_leftBounds)
             WrapScreenLeftToRight();
 
-
-        if (transform.position.x > m_rightBounds)
-            WrapScreenRightToLeft();
-
-        if (transform.position.y < m_bottomBounds)
-            transform.position = new Vector3(transform.position.x, m_bottomBounds, m_gameController.snapGridZ);
-      
-        if (transform.position.y > m_topBounds)
-            transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
-
-
         if (transform.position.x > m_rightBounds)
             WrapScreenRightToLeft();
 
@@ -215,34 +211,47 @@ public class ValkyrieController : MonoBehaviour
 
         if (transform.position.y > m_topBounds)
             transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
+
+        // This was duplicated?
+        /*if (transform.position.x > m_rightBounds)
+            WrapScreenRightToLeft();
+
+        if (transform.position.y < m_bottomBounds)
+            transform.position = new Vector3(transform.position.x, m_bottomBounds, m_gameController.snapGridZ);
+
+        if (transform.position.y > m_topBounds)
+            transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);*/
 
     }
 
-    private void ValkyrieMovement ()
+    private void ValkyrieMovement()
     {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString()), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString())) * Mathf.Rad2Deg;
 
         //Movement by speed (not physics) 
-            m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString()),0.0f);
-            m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
-            m_vikingMoveDirection *= m_valkyrieMovementSpeed;
+        m_vikingMoveDirection = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString()), 0.0f);
+        m_vikingMoveDirection = transform.TransformDirection(m_vikingMoveDirection);
+        m_vikingMoveDirection *= m_valkyrieMovementSpeed;
 
-     
         //Normal flap
         if (Input.GetButtonDown("Jump_P" + m_playerIndex.ToString()))
-         {
+        {
             m_player.velocity = Vector3.zero;
-            m_player.angularVelocity = Vector3.zero;       
+            m_player.angularVelocity = Vector3.zero;
             m_player.AddForce(Vector3.up * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+            isFlapping = true;
         }
 
-        //up
+        // attack up
         else if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()) && Mathf.Clamp(angle, -10, 10) == angle && angle != -1)
         {
             m_player.velocity = Vector3.zero;
             m_player.angularVelocity = Vector3.zero;
-            m_player.AddForce(Vector3.up * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed  + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange); 
+            m_player.AddForce(Vector3.up * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+            isDiving = true;
+            isAttacking = true;
+            isGliding = false;
         }
 
         //Right
@@ -250,7 +259,11 @@ public class ValkyrieController : MonoBehaviour
         {
             m_player.velocity = Vector3.zero;
             m_player.angularVelocity = Vector3.zero;
-            m_player.AddForce(Vector3.right * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange);   
+            m_player.AddForce(Vector3.right * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+
+            isAttacking = true;
+            isGliding = true;
+            isDiving = false;
         }
 
         //Left
@@ -259,7 +272,10 @@ public class ValkyrieController : MonoBehaviour
             m_player.velocity = Vector3.zero;
             m_player.angularVelocity = Vector3.zero;
             m_player.AddForce(Vector3.left * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed + m_extraPowerJump * -2f * Physics.gravity.y), ForceMode.VelocityChange);
-           
+
+            isAttacking = true;
+            isGliding = true;
+            isDiving = false;
         }
         //Dive
         if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()) && angle == 180)
@@ -267,7 +283,17 @@ public class ValkyrieController : MonoBehaviour
             m_player.velocity = Vector3.zero;
             m_player.angularVelocity = Vector3.zero;
             m_player.AddForce(Vector3.down * Mathf.Sqrt(m_valkyrieDiveForce * -2f * Physics.gravity.y), ForceMode.VelocityChange);
+
+            isAttacking = true;
+            isDiving = true;
+            isGliding = false;
         }
+        /*else if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()))
+        {
+            isAttacking = true;
+            isDiving = false;
+            isGliding = false;
+        }*/
 
         //Movement by speed (not physics)
         m_vikingMoveDirection.y -= m_valkyrieAddedGravityForce * Time.deltaTime;
@@ -337,7 +363,6 @@ public class ValkyrieController : MonoBehaviour
         // Actually moving
         if (travelxLeft != m_previousHorizontalPos && travelxRight != m_previousHorizontalPos)
         {
-            //isGliding = true;
             isIdle = true;
         }
 
