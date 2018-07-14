@@ -13,6 +13,8 @@ public class VikingRespawn : MonoBehaviour
     private Vector3 m_startPosition;
     private Transform m_targetTransform;
     private float m_xPos;
+    private CameraBehaviourManager m_cameraMan;
+    private float m_cameraOriginalSpeed;
 
     private List<Transform> m_respawnPoints = new List<Transform>();
 
@@ -21,6 +23,9 @@ public class VikingRespawn : MonoBehaviour
     {
         m_gameController = GameController.Instance;
         m_vikingController = GetComponent<VikingController>();
+        m_cameraMan = GameController.Instance.cameraManager;
+        m_cameraOriginalSpeed = m_cameraMan.m_panSpeedY;
+
         RespawnPoint[] respawnPointsInScene = FindObjectsOfType<RespawnPoint>();
         foreach(RespawnPoint respawnPointInScene in respawnPointsInScene)
         {
@@ -58,33 +63,30 @@ public class VikingRespawn : MonoBehaviour
 
     public void Respawn()
 
-    {
+    {   
+        //initialize variables for respawn
         m_vikingController.SetStunned(m_respawnDuration);
         m_hasRespawned = true;
         m_vikingController.GetComponent<Rigidbody>().velocity = Vector3.zero;
         m_vikingController.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        Debug.Log("I am respawning!");
+
+        //find new position
         transform.position = new Vector3(transform.position.x, m_vikingController.m_topBounds + 1.5f, m_gameController.snapGridZ);
         transform.rotation = Quaternion.identity;
         m_targetTransform = FindClosestRespawnPointToTransform(transform);
-        Debug.Log("Found " + m_targetTransform.gameObject.name + "at position " + m_targetTransform.position);
         transform.position = new Vector3(m_targetTransform.position.x, m_vikingController.m_topBounds + 2f, m_gameController.snapGridZ);
+
+        //assign new x position
         m_xPos = transform.position.x;
-        //we also want to make sure that the player is not immune to being picked up when respawning
+
+        //make sure you can get picked up
         m_vikingController.SetCarried(false);
         gameObject.GetComponent<DetectPickup>().m_immuneToPickUp = false;
-        //and make sure that they cannot collide with the goal 
 
-        /*
-        //and then we want to assign the rigidbody stuff to exactly what we need for them to be pickupable when they respawn
-        gameObject.GetComponent<Rigidbody>().isKinematic = false;
-        gameObject.GetComponent<Rigidbody>().useGravity = false;
-        gameObject.GetComponent<Rigidbody>().detectCollisions = true;
-        gameObject.GetComponent<CharacterController>().enabled = false;
-        
-        */
+        //tell cameraMan to stop and look at you
+        m_cameraMan.m_panSpeedY = 0f;
 
-       
+        //move on
         StartCoroutine(RespawnDuration(m_respawnDuration));
     }
 
@@ -92,6 +94,7 @@ public class VikingRespawn : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         m_hasRespawned = false;
+        m_cameraMan.m_panSpeedY = m_cameraOriginalSpeed;
     }
     /*
     private void OnCollisionEnter(Collision collision)
