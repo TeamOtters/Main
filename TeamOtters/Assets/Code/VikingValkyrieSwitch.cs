@@ -118,6 +118,15 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         }
     }
 
+    private void OnEnable()
+    {
+        if (m_vikingCharacter != null)
+
+        {
+            m_vikingCharacter.GetComponent<DetectPickup>().Dropped();
+        }
+    }
+
     // Switch to Valkyrie
     public void SwitchToValkyrie()
     {
@@ -130,6 +139,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             //childing all relevant objects to their positions
             m_valkyrieCharacter.transform.parent = m_parentTransform;
             m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
+            m_vikingCharacter.GetComponent<DetectPickup>().m_immuneToPickUp = false;
             m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
             //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
             m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
