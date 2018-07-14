@@ -111,14 +111,8 @@ public class RumbleManager : MonoBehaviour
         {
             Debug.Log("Should start rumbling");
             BallHitShake();
-        }        
-        
-        // DEBUG, W to test shake
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            Debug.Log("Should start rumbling");
-            PhaseTwoShake();
-        }
+        }       
+
 
         // DEBUG, E to test rumble
         if(Input.GetKeyDown(KeyCode.E))
