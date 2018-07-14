@@ -206,7 +206,12 @@ public class ValkyrieController : MonoBehaviour
         if(m_isFacingRight)
             SetValkyrieAnimationBool("facingRight", true); // Facing right
         else
-            SetValkyrieAnimationBool("facingRight", false); // Facing left        
+            SetValkyrieAnimationBool("facingRight", false); // Facing left
+
+        if (!isCloseToViking && !isStunned && !isCarrying && !isFlapping && !isGliding && !isDiving && !isGrounded && !isDropping)
+            isIdle = true;
+        
+
     }
 
     private void SetBoundaries()

@@ -371,6 +371,11 @@ public class RumbleManager : MonoBehaviour
     {
         if (!m_gameEnded)
         {
+            if (vibrateAmount == 0f && GameController.Instance.phaseManager.m_players[playerIndex - 1].gameObject.GetComponent<VikingValkyrieSwitch>().m_isValkyrie)
+            {
+                GameController.Instance.phaseManager.m_players[playerIndex - 1].gameObject.GetComponentInChildren<ValkyrieController>().isCloseToViking = false;
+            }
+
             SingleControllerVibrate(vibrateAmount, playerIndex);
 
             if (vibrateAmount > 0f)

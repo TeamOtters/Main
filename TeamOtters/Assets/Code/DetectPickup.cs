@@ -37,7 +37,9 @@ public class DetectPickup : MonoBehaviour {
         if (!m_isPickedUp)
             GrabbyHandCheck();
         else
+        {
             m_rumbleManager.GrabbyHandsVibrate(0, transform.parent.GetComponent<PlayerData>().m_PlayerIndex);
+        }
 
     }
 
@@ -57,15 +59,24 @@ public class DetectPickup : MonoBehaviour {
 
                     // linear falloff of effect
                     float proximity = (transform.position - valkyrie.transform.position).magnitude;
-                    float rumblePercent = ExtensionMethods.Remap(proximity, maxDistanceForGrabbyHands, 1.5f, 0, 0.8f);                    
+                    float rumblePercent = ExtensionMethods.Remap(proximity, maxDistanceForGrabbyHands, 1.5f, 0, 0.8f);
+                    
+                    if (proximity >= maxDistanceForGrabbyHands)
+                    {
+                        m_rumbleManager.GrabbyHandsVibrate(0, valkyrieIndex);
+                        m_rumbleManager.GrabbyHandsVibrate(0, vikingIndex);
 
-                    if (valkyrie.isCarrying || m_isPickedUp)
+                        valkyrie.isCloseToViking = false;
+                        valkyrie.isIdle = true;
+                    }
+                    else if (valkyrie.isCarrying || m_isPickedUp)
                     {
                         valkyrie.isCloseToViking = false;
+                        valkyrie.isCarrying = true;
 
                         m_rumbleManager.GrabbyHandsVibrate(0, valkyrieIndex);
                         m_rumbleManager.GrabbyHandsVibrate(0, vikingIndex);
-                    }        
+                    }
                     else if (!valkyrie.isCarrying && !m_isPickedUp)
                     {
                         m_rumbleManager.GrabbyHandsVibrate(rumblePercent, valkyrieIndex);
@@ -73,11 +84,16 @@ public class DetectPickup : MonoBehaviour {
 
                         valkyrie.isCloseToViking = true;
                     }
+
+
+
+
                 }
+
             }
         }
-    }
 
+    }
     void OnTriggerStay(Collider other)
     {
         Debug.Log("Viking is colliding with" + other.gameObject.tag);
@@ -117,6 +133,7 @@ public class DetectPickup : MonoBehaviour {
 
         // Set the valkyrie to the isCarrying state and assign the carryable rigidbody to the carrying valkyrie
         m_valkyrie.isCarrying = true;
+        m_valkyrie.isCloseToViking = false;
         m_valkyrie.heldRigidbody = GetComponent<Rigidbody>();
 
         //find the object within the colliding valkyrie with the "CarryLocation" tag and assign it as the carry location.
