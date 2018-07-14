@@ -275,7 +275,7 @@ public class RumbleManager : MonoBehaviour
         }
     }
 
-    public void PhaseTwoShake(int vikingPlayerIndex, int valkyriePlayerIndex)
+    public void PhaseTwoShake(int playerIndex)
     {
         if (!m_gameEnded)
         {
@@ -283,8 +283,7 @@ public class RumbleManager : MonoBehaviour
 
             instance = ShakeSetup(phaseTwoTransform, phaseTwoTransform_magnitude, phaseTwoTransform_roughness, phaseTwoTransform_fadeInTime);
 
-            SingleControllerVibrate(phaseTwoTransform_vibStrength, vikingPlayerIndex);
-            SingleControllerVibrate(phaseTwoTransform_vibStrength, valkyriePlayerIndex);
+            SingleControllerVibrate(phaseTwoTransform_vibStrength, playerIndex);
 
             StartCoroutine(WaitForRumble(instance, phaseTwoTransform_fadeInTime, phaseTwoTransform_fadeOutTime));
         }

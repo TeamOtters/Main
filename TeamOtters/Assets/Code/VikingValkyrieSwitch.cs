@@ -91,8 +91,10 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             //transformation effect
             TransformationEffect();
             //rumble effect
-            GameController.Instance.rumbleManager.PhaseTwoShake(m_vikingCharacter.transform.parent.gameObject.GetComponent<PlayerData>().m_PlayerIndex,
-                                                                m_valkyrieCharacter.transform.parent.gameObject.GetComponent<PlayerData>().m_PlayerIndex);
+            if (!GameController.Instance.phaseManager.m_isInPhaseOne)
+            {
+                GameController.Instance.rumbleManager.PhaseTwoShake(GetComponent<PlayerData>().m_PlayerIndex);
+            }
             //deactivate valkyrie
             m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
             m_valkyrieCharacter.SetActive(false);
@@ -145,9 +147,16 @@ public class VikingValkyrieSwitch : MonoBehaviour {
 
             //transformation effect
             TransformationEffect();
+
+            if (!GameController.Instance.phaseManager.m_isInPhaseOne)
+            {
+                GameController.Instance.rumbleManager.PhaseTwoShake(GetComponent<PlayerData>().m_PlayerIndex);
+            }
+
             //deactivate viking
             m_vikingCharacter.SetActive(false);
         }
+
         
     }
 
