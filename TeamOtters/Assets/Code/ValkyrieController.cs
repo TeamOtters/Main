@@ -35,7 +35,6 @@ public class ValkyrieController : MonoBehaviour
     internal bool isFlapping;
     internal bool isCloseToViking;
     internal bool isDiving;
-    internal bool isShielding;
     internal bool isGrounded;
 
     internal Rigidbody heldRigidbody;
@@ -45,6 +44,7 @@ public class ValkyrieController : MonoBehaviour
     private Rigidbody m_player;
     private Rigidbody m_otherPlayer;
     private Vector3 m_playerSize;
+    private Vector3 m_valkyrieCollisionSize;
     private Vector3 m_heldCharacterSize;
     private BoundaryHolder m_boundaryHolder;
 
@@ -62,8 +62,11 @@ public class ValkyrieController : MonoBehaviour
     private float m_previousHorizontalPos;
     private bool m_layerIsSet;
     private bool m_isPressingJump;
-    private bool m_isFacingRight;
-    private float m_thisScale;    
+    private float m_thisScale;
+
+    // For animation and needed for tracking during transformation
+    public bool m_isFacingRight;
+    public bool m_firstTimeFlipping; // hacky solution to inverted controls, when viking faces right during transform it flips the sprite the incorrect way
 
     public GameObject m_highestScoreEffect;
     private CharacterController m_valkyrieCharacterController;
@@ -71,11 +74,14 @@ public class ValkyrieController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        m_firstTimeFlipping = true;
+
         m_valkyrieCharacterController = GetComponent<CharacterController>();
         m_gameController = GameController.Instance;
         m_playerIndex = transform.parent.GetComponent<PlayerData>().m_PlayerIndex;
         m_player = GetComponent<Rigidbody>();
         m_boundaryHolder = GameController.Instance.boundaryHolder;
+        m_bodySprite = transform.Find("body_sprite").GetComponent<SpriteRenderer>();
         m_playerSize = m_bodySprite.bounds.size;
 
         //wing animator
@@ -91,12 +97,19 @@ public class ValkyrieController : MonoBehaviour
 
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
+
+        m_valkyrieCollisionSize = GetComponent<BoxCollider>().bounds.extents;
     }
 
     private void OnEnable()
     {
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
+    }
+
+    public void SetFacingDirection(bool rightFacing)
+    {
+        m_isFacingRight = rightFacing;
     }
 
     IEnumerator ContiniouslyEvaluateScore()
@@ -189,16 +202,27 @@ public class ValkyrieController : MonoBehaviour
         else
             SetValkyrieAnimationBool("isDropping", false);
 
+        // Facing left/right
+        if(m_isFacingRight)
+            SetValkyrieAnimationBool("facingRight", true); // Facing right
+        else
+            SetValkyrieAnimationBool("facingRight", false); // Facing left        
     }
 
     private void SetBoundaries()
     {
         //set the bounds value every frame to go with updated camera movement
         m_bottomBounds = m_boundaryHolder.playerBoundary.Down + m_playerSize.y;// + m_heldCharacterSize.y;
-        m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y;
-        m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.x;
         m_rightBounds = m_boundaryHolder.playerBoundary.Right - m_playerSize.x;// + m_heldCharacterSize.x;
 
+        // Old bounds
+        //m_topBounds = m_boundaryHolder.playerBoundary.Up - m_playerSize.y; // hard coded because I couldnt get the closeness to the edge that was desired
+        //m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_playerSize.y; // hard coded because I couldnt get the closeness to the edge that was desired
+
+        // These are ike this to fix collision boundary with valkyrie sprite bounds (sprite height and width is really big for the valkyrie) Worried it might introduce transform bugs when you switch to viking
+        m_topBounds = m_boundaryHolder.playerBoundary.Up - m_valkyrieCollisionSize.y +0.3f; // hard coded because I couldnt get the closeness to the edge that was desired
+        m_leftBounds = m_boundaryHolder.playerBoundary.Left + m_valkyrieCollisionSize.y +0.5f; // hard coded because I couldnt get the closeness to the edge that was desired
+        
         // Clamp movement and wrap screen logic
         if (transform.position.x < m_leftBounds)
             WrapScreenLeftToRight();
@@ -213,14 +237,14 @@ public class ValkyrieController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
 
         // This was duplicated?
-        /*if (transform.position.x > m_rightBounds)
+        if (transform.position.x > m_rightBounds)
             WrapScreenRightToLeft();
 
         if (transform.position.y < m_bottomBounds)
             transform.position = new Vector3(transform.position.x, m_bottomBounds, m_gameController.snapGridZ);
 
         if (transform.position.y > m_topBounds)
-            transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);*/
+            transform.position = new Vector3(transform.position.x, m_topBounds, m_gameController.snapGridZ);
 
     }
 
@@ -385,27 +409,13 @@ public class ValkyrieController : MonoBehaviour
 
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndex.ToString()), Input.GetAxis("Vertical_P" + m_playerIndex.ToString())) * Mathf.Rad2Deg;
 
-        //Right - Sprite Flip
+        
         if (Mathf.Clamp(angle, 10, 170) == angle)
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = -m_thisScale;
-            transform.localScale = scale;
-          
-            SetValkyrieAnimationBool("facingRight", true); // Facing right
-           
-        }
-
-        //Left - Sprite Flip
+            m_isFacingRight = true;
+        
         else if (Mathf.Clamp(angle, -170, -10) == angle)
-        {
-            Vector3 scale = transform.localScale;
-            scale.x = +m_thisScale;
-            transform.localScale = scale;
-
-            SetValkyrieAnimationBool("facingRight",false); // Facing left
-            
-        }
+            m_isFacingRight = false;   
+        
     }
 
     private void SetValkyrieAnimationBool(string boolString, bool enable)
@@ -420,7 +430,35 @@ public class ValkyrieController : MonoBehaviour
         m_bodyAnimator.SetInteger("State", state);
     }
 
-    private void CheckIfGoingDown ()
+    public void ForceFacingDirectionToBeRight() //hacky af
+    {
+        //oh god...
+        m_isFacingRight = true;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+
+    public void ForceCheckFacingDirection()
+    {
+        if (m_isFacingRight)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -m_thisScale;
+            transform.localScale = scale;
+        }
+
+        //Left - Sprite Flip
+        if (!m_isFacingRight)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = +m_thisScale;
+            transform.localScale = scale;
+        }    
+    }
+
+        private void CheckIfGoingDown ()
     {
         m_currentVerticalPos = transform.position.y;
         float travel = m_currentVerticalPos - m_previousVerticalPos;
@@ -442,6 +480,8 @@ public class ValkyrieController : MonoBehaviour
     private void LateUpdate()
     {
         m_previousVerticalPos = m_currentVerticalPos;
+
+        ForceCheckFacingDirection();
     }
 
 

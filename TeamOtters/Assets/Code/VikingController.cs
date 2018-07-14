@@ -33,12 +33,14 @@ public class VikingController : MonoBehaviour
     private int m_currentAmmo = 1;
     
     private bool m_collided;
-    private bool m_turnedLeft;
     private bool m_isGrounded;
     private bool m_askForGoundedOffset;
     private bool m_goThroughPlatformDown;
     private bool m_isWallJumping;
     private bool m_layerIsSet;
+
+    // Used to check facing direction when transforming into valkyrie
+    public bool m_turnedLeft;
 
     // Bools used by anims
     internal bool m_isIdle;
@@ -125,6 +127,11 @@ public class VikingController : MonoBehaviour
     void SetVikingAnimationBool(string boolString, bool value)
     {
         m_animator.SetBool(boolString, value);
+    }
+
+    public void SetFacingDirection(bool leftFacing)
+    {
+        m_turnedLeft = leftFacing;
     }
 
     private void OnEnable()
@@ -251,6 +258,22 @@ public class VikingController : MonoBehaviour
             SetVikingAnimationBool("facingRight", false);
         else
             SetVikingAnimationBool("facingRight", true);
+
+        //Right - Sprite Flip
+        if (!m_turnedLeft)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -m_thisScale;
+            transform.localScale = scale;
+        }
+
+        //Left - Sprite Flip
+        if (m_turnedLeft)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = +m_thisScale;
+            transform.localScale = scale;
+        }
 
     }
 
@@ -763,9 +786,9 @@ public class VikingController : MonoBehaviour
         //Right - Sprite Flip
         if (Mathf.Clamp(angle, 10, 170) == angle)
         {
-            Vector3 scale = transform.localScale;
+           /* Vector3 scale = transform.localScale;
             scale.x = -m_thisScale;
-            transform.localScale = scale;
+            transform.localScale = scale;*/
 
             m_turnedLeft = false;
         }
@@ -773,9 +796,9 @@ public class VikingController : MonoBehaviour
         //Left - Sprite Flip
         else if (Mathf.Clamp(angle, -170, -10) == angle)
         {
-            Vector3 scale = transform.localScale;
+            /*Vector3 scale = transform.localScale;
             scale.x = +m_thisScale;
-            transform.localScale = scale;
+            transform.localScale = scale;*/
 
             m_turnedLeft = true;
         }

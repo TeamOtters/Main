@@ -108,6 +108,12 @@ public class DetectPickup : MonoBehaviour {
             GetComponent<VikingRespawn>().StopRespawn();
         }
         m_isPickedUp = true;
+
+        // Awful awful code the valkyrie and viking have opposite facing directions xD
+        bool myFacingDirection;
+        myFacingDirection = transform.gameObject.GetComponent<VikingController>().m_turnedLeft;
+        m_valkyrie.gameObject.GetComponent<ValkyrieController>().SetFacingDirection(!myFacingDirection);
+
         // Set the valkyrie to the isCarrying state and assign the carryable rigidbody to the carrying valkyrie
         m_valkyrie.isCarrying = true;
         m_valkyrie.heldRigidbody = GetComponent<Rigidbody>();

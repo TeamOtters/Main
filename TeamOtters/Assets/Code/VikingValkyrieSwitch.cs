@@ -18,9 +18,13 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     private GameObject m_particleSpawnPointViking;
     private GameObject m_particleSpawnPointValkyrie;
 
+    private bool m_FirstTimeTransforming;
+
 	// Use this for initialization
 	void Start ()
     {
+        m_FirstTimeTransforming = true;
+
         //initialize all components
         if (transform.childCount != 0)
         {
@@ -71,6 +75,11 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         m_isValkyrie = false;
         if (m_vikingCharacter != null && m_valkyrieCharacter!=null)
         {
+            // Awful awful code the valkyrie and viking have opposite facing directions xD
+            bool myFacingDirection;
+            myFacingDirection = m_valkyrieCharacter.GetComponent<ValkyrieController>().m_isFacingRight;
+            m_vikingCharacter.GetComponent<VikingController>().SetFacingDirection(!myFacingDirection);
+
             m_vikingCharacter.SetActive(true);
             m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
             m_vikingCharacter.GetComponent<VikingController>().StunnedCooldown();
@@ -112,7 +121,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
         if (m_vikingCharacter != null && m_valkyrieCharacter != null)
-        {
+        {          
             m_valkyrieCharacter.SetActive(true);
             //childing all relevant objects to their positions
             m_valkyrieCharacter.transform.parent = m_parentTransform;
@@ -121,6 +130,19 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
             m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
             m_transformParticles.transform.position = m_particleSpawnPointValkyrie.transform.position;
+
+            // Awful awful code the valkyrie and viking have opposite facing directions xD
+            bool myFacingDirection;
+            myFacingDirection = m_vikingCharacter.GetComponent<VikingController>().m_turnedLeft;
+
+            if (m_FirstTimeTransforming && myFacingDirection == false)
+            {
+                m_valkyrieCharacter.GetComponent<ValkyrieController>().ForceFacingDirectionToBeRight();
+                m_FirstTimeTransforming = false;
+            }
+            else
+                m_valkyrieCharacter.GetComponent<ValkyrieController>().SetFacingDirection(!myFacingDirection); //this is the worst thing Ive ever done in my life Im so sorry
+
             //transformation effect
             TransformationEffect();
             //deactivate viking
