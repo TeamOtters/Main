@@ -42,20 +42,17 @@ public class ScoreManager : MonoBehaviour {
     private int highestScore = 0;
     private GlowEffect m_glowEffectScript;
     private GameController m_gameController;
-    public GameObject m_glowEffect;
     public Text[] m_scoreBoardText;
     public Text[] m_playerScoreGainText;
-    
-    private PlayerIndicatorUI m_playerUI;
-    
 
-    public PlayerScoreUI m_playerScoreUI;
+    private PlayerUI m_playerUI;
 
     //public static ScorePointInfo scorePointInfo { get; }
 
     private void Start()
     {
         m_gameController = GameController.Instance;
+        m_playerUI = GameController.Instance.playerUI;
         for(int i=0; i< m_players.Length; i++)
         {
             m_ranks.Add(new ScoreRanking(0, 0));
@@ -87,10 +84,11 @@ public class ScoreManager : MonoBehaviour {
 
         //RPG Hit!
 
-        m_playerScoreGainText[playerIndex - 1].gameObject.SetActive(true);
-        m_playerScoreGainText[playerIndex - 1].text = ("+" + points.ToString());
-        m_playerScoreGainText[playerIndex - 1].GetComponent<Animation>().Play();
-        
+        m_playerUI.MoveRPGScoreToPlayer(playerIndex -1);
+        m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(true);
+        m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
+        m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
+
 
     }
 

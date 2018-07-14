@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PlayerIndicatorUI : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
     public RectTransform canvasRect;
     public GameObject[] m_playerTexts;
-    public GameObject[] m_gainScore; 
-    public float m_yOffset;
-    public float m_yRPGOffset;
-    public float m_xOffset;
+    public GameObject[] m_gainScoreTexts; 
+    public float m_playerIDOffsetY;
+    public float m_playerScoreTextOffsetY;
+    public float m_playerScoreTextOffsetX;
     private GameController m_gameController;
     private ScoreManager m_scoreManager; 
 
@@ -52,7 +52,8 @@ public class PlayerIndicatorUI : MonoBehaviour
             MoveIDUIToPlayer(i);
             SetActiveState(i);
         }
-	}
+        
+    }
 
     
     private void SetActiveState(int playerIndex)
@@ -65,16 +66,29 @@ public class PlayerIndicatorUI : MonoBehaviour
     {
         RectTransform rectTransform = m_playerTexts[index].GetComponent<RectTransform>();
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
-        m_playerTexts[index].transform.position = new Vector2(screenPoint.x, screenPoint.y + m_yOffset);
+        m_playerTexts[index].transform.position = new Vector2(screenPoint.x, screenPoint.y + m_playerIDOffsetY);
 
     }
 
     public void MoveRPGScoreToPlayer(int index)
     {
-        RectTransform rectTransform = m_gainScore[index].GetComponent<RectTransform>();
+        RectTransform rectTransform = m_gainScoreTexts[index].GetComponent<RectTransform>();
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
-        m_gainScore[index].transform.position = new Vector2(screenPoint.x + m_xOffset, screenPoint.y + m_yRPGOffset);
+        m_gainScoreTexts[index].transform.position = new Vector2(screenPoint.x + m_playerScoreTextOffsetX, screenPoint.y + m_playerScoreTextOffsetY);
+        StartCoroutine(UpdateScorePosition(m_gainScoreTexts[index], index));
 
+    }
+
+    IEnumerator UpdateScorePosition(GameObject scoreText, int index)
+    {
+        while (scoreText.activeSelf == true)
+        {
+            RectTransform rectTransform = scoreText.GetComponent<RectTransform>();
+            Vector2 screenPoint = Camera.main.WorldToScreenPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
+            scoreText.transform.position = new Vector2(screenPoint.x + m_playerScoreTextOffsetX, screenPoint.y + m_playerScoreTextOffsetY);
+
+            yield return null;
+        }
     }
 }
 

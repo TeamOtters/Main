@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public PhaseManager phaseManager;
     public CameraBehaviourManager cameraManager;
     public SnapPositionController snapPositionController;
+    public PlayerUI playerUI;
 
     public PlayerComponents playerComponents;
     

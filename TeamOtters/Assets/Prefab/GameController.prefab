@@ -79,6 +79,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1060589626222328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4471398933911102}
+  - component: {fileID: 114599340204666550}
+  m_Layer: 0
+  m_Name: PlayerUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1079985458198934
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,7 +140,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player Spawn Point
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -238,7 +254,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player Spawn Point
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -254,7 +270,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player Spawn Point
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -270,7 +286,7 @@ GameObject:
   m_Layer: 0
   m_Name: Player Spawn Point
   m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -381,6 +397,7 @@ Transform:
   - {fileID: 4286720414939204}
   - {fileID: 4631893018456488}
   - {fileID: 4015904018062070}
+  - {fileID: 4471398933911102}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -422,6 +439,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4299416604753702}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4471398933911102
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1060589626222328}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 6.775116, y: 34.598846, z: 0}
+  m_LocalScale: {x: 1.284153, y: 1.284153, z: 1.284153}
+  m_Children: []
+  m_Father: {fileID: 4299416604753702}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4506870883743248
 Transform:
@@ -549,18 +579,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1ef3f0961586442966090156a2647c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_glowEffect: {fileID: 0}
   m_scoreBoardText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_playerScoreGainText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  m_playerScoreUI: {fileID: 0}
+  m_playerScoreGainText: []
 --- !u!114 &114319279279604970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -598,6 +622,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_scoreBall: {fileID: 0}
   m_positionsZ: []
+--- !u!114 &114599340204666550
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1060589626222328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abff13bd4a34fe24e95996354b0a6ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasRect: {fileID: 0}
+  m_playerTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_gainScoreTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_playerIDOffsetY: 55
+  m_playerScoreTextOffsetY: 0
+  m_playerScoreTextOffsetX: 70
 --- !u!114 &114685679974192610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -762,6 +811,7 @@ MonoBehaviour:
   phaseManager: {fileID: 114319279279604970}
   cameraManager: {fileID: 0}
   snapPositionController: {fileID: 114358465408991534}
+  playerUI: {fileID: 114599340204666550}
   playerComponents: {fileID: 114198510458735384, guid: e45ba722d31b20b47b81e0f7f5baf752,
     type: 2}
   playerData: {fileID: 0}
