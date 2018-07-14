@@ -52,22 +52,22 @@ public class Results : MonoBehaviour {
             m_rankButtons.OrderByDescending(m_rankButtons => m_rankButtons);
 
             
-        if (scores[i].playerIndex == 1)
-        {
-            m_rankButtons[i].GetComponent<Image>().color = new Color32(47, 94, 0, 100);
-        }
-        else if (scores[i].playerIndex == 2)
-        {
-            m_rankButtons[i].GetComponent<Image>().color = new Color32(255, 112, 222, 100);
-        }
-        else if (scores[i].playerIndex == 3)
-        {
-            m_rankButtons[i].GetComponent<Image>().color = new Color32(47, 56, 255, 100);
-        }
-        else if (scores[i].playerIndex == 4)
-        {
-            m_rankButtons[i].GetComponent<Image>().color = new Color32(207, 122, 1, 100);
-        }
+            if (scores[i].playerIndex == 1)
+            {
+                m_rankButtons[i].GetComponent<Image>().color = new Color32(47, 94, 0, 100);
+            }
+            else if (scores[i].playerIndex == 2)
+            {
+                m_rankButtons[i].GetComponent<Image>().color = new Color32(255, 112, 222, 100);
+            }
+            else if (scores[i].playerIndex == 3)
+            {
+                m_rankButtons[i].GetComponent<Image>().color = new Color32(47, 56, 255, 100);
+            }
+            else if (scores[i].playerIndex == 4)
+            {
+                m_rankButtons[i].GetComponent<Image>().color = new Color32(207, 122, 1, 100);
+            }
         
         }
     }

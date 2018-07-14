@@ -14,6 +14,7 @@ public class GoalReached : MonoBehaviour {
     private int m_normalScoreBonus;
     private bool m_hasReachedValhalla=false;
     public Button m_restart;
+    private Phase2UI m_phase2canvas; 
 
     // Use this for initialization
     void Start ()
@@ -74,10 +75,12 @@ public class GoalReached : MonoBehaviour {
     }
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(2.0f);
         m_Results.gameObject.SetActive(true);
         m_Results.GetComponentInChildren<Results>().ShowResults();
         m_restart.Select();
+        m_phase2canvas.gameObject.SetActive(false); 
+        
         
 
     }
