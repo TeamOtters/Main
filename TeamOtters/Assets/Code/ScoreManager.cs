@@ -90,9 +90,7 @@ public class ScoreManager : MonoBehaviour {
         m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
         m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
 
-
-
-       
+        
     }
     
 

@@ -28,6 +28,7 @@ public class PlayerUI : MonoBehaviour
         for (int i = 0; i < m_playerTexts.Length; i++)
         {
             Text myText = m_playerTexts[i].GetComponent<Text>();
+            Text myRPG = m_gainScoreTexts[i].GetComponent<Text>(); 
             int playerIndex = m_gameController.phaseManager.m_players[i].m_PlayerIndex;
             myText.text = ("P" + playerIndex.ToString());
 
@@ -36,18 +37,22 @@ public class PlayerUI : MonoBehaviour
             if (playerIndex == 1)
             {
                 myText.color = new Color32(47, 94, 0, 255);
+                myRPG.color = new Color32(47, 94, 0, 255);
             }
             else if (playerIndex == 2)
             {
                 myText.color = new Color32(255, 112, 222, 255);
+                myRPG.color = new Color32(255, 112, 222, 255);
             }
             else if (playerIndex == 3)
             {
                 myText.color = new Color32(47, 56, 255, 255);
+                myRPG.color = new Color32(47, 56, 255, 255);
             }
             else if (playerIndex == 4)
             {
                 myText.color = new Color32(207, 122, 1, 255);
+                myRPG.color = new Color32(207, 122, 1, 255);
             }
             MoveIDUIToPlayer(i);
             SetActiveState(i);
