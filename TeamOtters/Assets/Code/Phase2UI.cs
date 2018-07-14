@@ -59,7 +59,14 @@ public class Phase2UI : MonoBehaviour
                 ScaleByRank(i);
 
             }
+
+            // Stop scoring at end of game
+            if (GameController.Instance.goalLine.GetGameOverState() == true)
+            {
+                m_Phase2.gameObject.SetActive(false);
+            }
         }
+
 
 
     }
