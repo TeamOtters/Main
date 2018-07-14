@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Results: {fileID: 0}
+  m_restart: {fileID: 0}
 --- !u!212 &212813695486660500
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -102,7 +103,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a7ff29d641b0bad4aa9d0e188db3753b, type: 3}
-  m_Color: {r: 0.19842473, g: 0.44439915, b: 0.8584906, a: 1}
+  m_Color: {r: 0.19842473, g: 0.44439915, b: 0.8584906, a: 0.46666667}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
