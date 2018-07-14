@@ -248,7 +248,7 @@ public class RumbleManager : MonoBehaviour
     // Screen shakes (affect all player controllers and shared screen)
     //------------------------------------------------------------------
 
-    void BallHitShake()
+    public void BallHitShake()
     {
         if (!m_gameEnded)
         {
@@ -281,7 +281,7 @@ public class RumbleManager : MonoBehaviour
         }
     }
 
-    public void PhaseTwoShake()
+    public void PhaseTwoShake(int vikingPlayerIndex, int valkyriePlayerIndex)
     {
         if (!m_gameEnded)
         {
@@ -289,7 +289,8 @@ public class RumbleManager : MonoBehaviour
 
             instance = ShakeSetup(phaseTwoTransform, phaseTwoTransform_magnitude, phaseTwoTransform_roughness, phaseTwoTransform_fadeInTime);
 
-            AllControllersVibrate(phaseTwoTransform_vibStrength);
+            SingleControllerVibrate(phaseTwoTransform_vibStrength, vikingPlayerIndex);
+            SingleControllerVibrate(phaseTwoTransform_vibStrength, valkyriePlayerIndex);
 
             StartCoroutine(WaitForRumble(instance, phaseTwoTransform_fadeInTime, phaseTwoTransform_fadeOutTime));
         }
@@ -311,16 +312,13 @@ public class RumbleManager : MonoBehaviour
 
     public void ValhallaShake()
     {
-        if (!m_gameEnded)
-        {
-            CameraShakeInstance instance;
+        CameraShakeInstance instance;
 
-            instance = ShakeSetup(valhalla, valhalla_magnitude, valhalla_roughness, valhalla_fadeInTime);
+        instance = ShakeSetup(valhalla, valhalla_magnitude, valhalla_roughness, valhalla_fadeInTime);
 
-            AllControllersVibrate(valhalla_vibStrength);
+        AllControllersVibrate(valhalla_vibStrength);
 
-            StartCoroutine(WaitForRumble(instance, valhalla_fadeInTime, valhalla_fadeOutTime));
-        }
+        StartCoroutine(WaitForRumble(instance, valhalla_fadeInTime, valhalla_fadeOutTime));        
     }
 
     //----------------------------------------------

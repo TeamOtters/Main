@@ -95,6 +95,9 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             m_transformParticles.transform.position= m_particleSpawnPointViking.transform.position;
             //transformation effect
             TransformationEffect();
+            //rumble effect
+            GameController.Instance.rumbleManager.PhaseTwoShake(m_vikingCharacter.transform.parent.gameObject.GetComponent<PlayerData>().m_PlayerIndex,
+                                                                m_valkyrieCharacter.transform.parent.gameObject.GetComponent<PlayerData>().m_PlayerIndex);
             //deactivate valkyrie
             m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
             m_valkyrieCharacter.SetActive(false);

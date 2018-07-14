@@ -702,6 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Results: {fileID: 0}
+  m_hasReachedValhalla: 0
   m_restart: {fileID: 0}
   m_phase2canvas: {fileID: 0}
 --- !u!114 &114179536568703722
@@ -731,6 +732,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  m_goalReached: {fileID: 114064531322512124}
 --- !u!114 &114319279279604970
 MonoBehaviour:
   m_ObjectHideFlags: 1

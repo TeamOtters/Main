@@ -176,6 +176,8 @@ public class BouncingBall : MonoBehaviour
 
         m_healthBar.fillAmount = m_currentHealth / m_startHealth;
 
+        GameController.Instance.rumbleManager.BallHitShake();
+
         if (m_currentHealth <= 0)
         {
             IsDead();

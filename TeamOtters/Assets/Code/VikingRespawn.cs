@@ -63,7 +63,9 @@ public class VikingRespawn : MonoBehaviour
 
     public void Respawn()
 
-    {   
+    {
+        GameController.Instance.rumbleManager.VikingRespawnShake();
+
         //initialize variables for respawn
         m_vikingController.SetStunned(m_respawnDuration);
         m_hasRespawned = true;
