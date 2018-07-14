@@ -43,7 +43,6 @@ public class ScoreManager : MonoBehaviour {
     private GlowEffect m_glowEffectScript;
     private GameController m_gameController;
     public Text[] m_scoreBoardText;
-    public Text[] m_playerScoreGainText;
 
     private PlayerUI m_playerUI;
 
