@@ -11,7 +11,7 @@ public class PhaseManager : MonoBehaviour {
     [Header ("Settings")]
     public bool m_startInPhaseOne = true;
     public float m_playerTransformationDuration = 0.2f;
-    public float m_phaseTransformationDuration = 2f;
+    public float m_phaseChangeDuration = 2f;
     public float m_phase2Duration = 10f;
     public float m_characterUpwardsMoveSpeed = 1.2f;
 
@@ -83,7 +83,7 @@ public class PhaseManager : MonoBehaviour {
         if ((!m_bouncingBall.m_isAlive && !m_phaseSet)|| Input.GetKeyDown(KeyCode.P))
         {
             m_phaseSet = true;
-            StartCoroutine(PhaseChangeStart(m_phaseTransformationDuration));
+            StartCoroutine(PhaseChangeStart(m_phaseChangeDuration));
         }
         
     }
@@ -132,17 +132,8 @@ public class PhaseManager : MonoBehaviour {
         m_phaseTransformationActive = false;
         StartCoroutine(CharacterTransformation(0));
     }
-    /*
-    IEnumerator MoveViking(GameObject viking)
-    {
-        while (viking.transform.position.y < viking.transform.position.y + m_characterTransformYOffset)
-        {
-            viking.transform.Translate(viking.transform.position.x * 1f* Time.deltaTime, (viking.transform.position.y + m_characterTransformYOffset)* 1f* Time.deltaTime, 0f);
-        }
-        yield return null;
-    }
-    */
 
+    //Character Transformation and Character Transformation Delay loops around so that each character gets spawned together with their UI element in a delay.
     IEnumerator CharacterTransformation(int i)
     {
         Debug.Log("BAM");
