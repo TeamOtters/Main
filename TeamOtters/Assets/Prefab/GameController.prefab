@@ -550,12 +550,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_glowEffect: {fileID: 0}
-  scoreText:
+  m_scoreBoardText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  gainScore:
+  m_playerScoreGainText:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

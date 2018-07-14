@@ -10,6 +10,8 @@ public class PlayerIndicatorUI : MonoBehaviour
     public GameObject[] m_playerTexts;
     public GameObject[] m_gainScore; 
     public float m_yOffset;
+    public float m_yRPGOffset;
+    public float m_xOffset;
     private GameController m_gameController;
     private ScoreManager m_scoreManager; 
 
@@ -47,7 +49,7 @@ public class PlayerIndicatorUI : MonoBehaviour
             {
                 myText.color = new Color32(207, 122, 1, 255);
             }
-            MoveUIToPlayer(i);
+            MoveIDUIToPlayer(i);
             SetActiveState(i);
         }
 	}
@@ -59,27 +61,21 @@ public class PlayerIndicatorUI : MonoBehaviour
 
     }
 
-    public void MoveUIToPlayer(int index)
+    public void MoveIDUIToPlayer(int index)
     {
         RectTransform rectTransform = m_playerTexts[index].GetComponent<RectTransform>();
         Vector2 screenPoint = Camera.main.WorldToScreenPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
         m_playerTexts[index].transform.position = new Vector2(screenPoint.x, screenPoint.y + m_yOffset);
-        //rectTransform.anchoredPosition = (screenPoint - canvasRect.sizeDelta / 2);
-        /*
-        var wantedPos = Camera.main.WorldToViewportPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
-        m_playerTexts[index].transform.position = new Vector3(wantedPos.x, wantedPos.y, 0f);
-        */
 
-        /*
-        Debug.Log("Setting position");
-        //m_playerTexts[index].transform.position = m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position;
-        RectTransform rectTransform = m_playerTexts[index].GetComponent<RectTransform>();
-        Vector2 playerViewportPos = Camera.main.WorldToViewportPoint(m_gameController.phaseManager.m_players[index].gameObject.GetComponentInChildren(typeof (VikingController),true).gameObject.transform.position);
-        Vector2 playerScreenPos = new Vector2(((playerViewportPos.x * rectTransform.sizeDelta.x) - (rectTransform.sizeDelta.x * 0.5f)),((playerViewportPos.y * rectTransform.sizeDelta.y) - (rectTransform.sizeDelta.y * 0.5f)));
+    }
 
-        rectTransform.anchoredPosition = new Vector2(playerScreenPos.x, playerScreenPos.y + m_yOffset);
-        */
+    public void MoveRPGScoreToPlayer(int index)
+    {
+        RectTransform rectTransform = m_gainScore[index].GetComponent<RectTransform>();
+        Vector2 screenPoint = Camera.main.WorldToScreenPoint(m_gameController.phaseManager.m_players[index].GetComponentInChildren(typeof(VikingController), true).transform.position);
+        m_gainScore[index].transform.position = new Vector2(screenPoint.x + m_xOffset, screenPoint.y + m_yRPGOffset);
 
-        //m_playerTexts[index].transform.position = new Vector3(playerScreenPos.x, playerScreenPos.y + m_yOffset, 0f);
     }
 }
+
+

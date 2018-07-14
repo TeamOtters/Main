@@ -466,8 +466,14 @@ MonoBehaviour:
   - {fileID: 1300562650860394}
   - {fileID: 1106632852610458}
   - {fileID: 1360864166935244}
-  m_gainScore: []
+  m_gainScore:
+  - {fileID: 1340712015850794}
+  - {fileID: 1403839661541478}
+  - {fileID: 1788661842148814}
+  - {fileID: 1198916131904500}
   m_yOffset: 40
+  m_yRPGOffset: -10
+  m_xOffset: -25
 --- !u!114 &114285978365554770
 MonoBehaviour:
   m_ObjectHideFlags: 1

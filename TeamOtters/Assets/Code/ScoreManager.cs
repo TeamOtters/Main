@@ -43,9 +43,9 @@ public class ScoreManager : MonoBehaviour {
     private GlowEffect m_glowEffectScript;
     private GameController m_gameController;
     public GameObject m_glowEffect;
-    public Text[] scoreText;
-    public Text[] gainScore;
-
+    public Text[] m_scoreBoardText;
+    public Text[] m_playerScoreGainText;
+    
     private PlayerIndicatorUI m_playerUI;
     
 
@@ -83,13 +83,13 @@ public class ScoreManager : MonoBehaviour {
     public void AddToScore(int points, int playerIndex)
     {
         m_players[playerIndex-1].m_CurrentScore += points;
-        scoreText[playerIndex - 1].GetComponent<Animation>().Play();
+        m_scoreBoardText[playerIndex - 1].GetComponent<Animation>().Play();
 
         //RPG Hit!
 
-        gainScore[playerIndex - 1].gameObject.SetActive(true);
-        gainScore[playerIndex - 1].text = ("+" + points.ToString());
-        gainScore[playerIndex - 1].GetComponent<Animation>().Play();
+        m_playerScoreGainText[playerIndex - 1].gameObject.SetActive(true);
+        m_playerScoreGainText[playerIndex - 1].text = ("+" + points.ToString());
+        m_playerScoreGainText[playerIndex - 1].GetComponent<Animation>().Play();
         
 
     }
@@ -112,7 +112,7 @@ public class ScoreManager : MonoBehaviour {
     {
         for (int i = 0; i < m_players.Length; i++)
         {
-            scoreText[i].text = m_players[i].m_CurrentScore.ToString();
+            m_scoreBoardText[i].text = m_players[i].m_CurrentScore.ToString();
 
         }
         

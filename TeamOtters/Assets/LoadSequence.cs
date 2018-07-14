@@ -42,7 +42,7 @@ public class LoadSequence : MonoBehaviour {
     private IEnumerator RankDelay(int index)
     {
         yield return new WaitForSeconds(0.2f);
-        if (index<m_scoreManager.scoreText.Length)
+        if (index<m_scoreManager.m_scoreBoardText.Length)
         {
             index++;
             ActivateScoreboard(index);
@@ -53,7 +53,7 @@ public class LoadSequence : MonoBehaviour {
     private void ActivateScoreboard(int index)
     {
 
-        m_scoreManager.scoreText[index].transform.parent.gameObject.SetActive(true);
+        m_scoreManager.m_scoreBoardText[index].transform.parent.gameObject.SetActive(true);
         StartCoroutine(RankDelay(index));
         Debug.Log("Player" + index + "is loaded");
     }
