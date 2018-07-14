@@ -82,6 +82,7 @@ public class PhaseManager : MonoBehaviour {
         
         if ((!m_bouncingBall.m_isAlive && !m_phaseSet)|| Input.GetKeyDown(KeyCode.P))
         {
+            m_phaseSet = true;
             StartCoroutine(PhaseChangeStart(m_phaseTransformationDuration));
         }
         
@@ -119,8 +120,9 @@ public class PhaseManager : MonoBehaviour {
         GameObject viking;
         foreach (PlayerData player in m_players)
         {
-            viking = player.GetComponentInChildren<VikingController>().gameObject;
+            viking = player.GetComponentInChildren(typeof(VikingController),true).gameObject;
             viking.GetComponent<VikingController>().enabled = false;
+
             //StartCoroutine(MoveViking(viking));
         }
         

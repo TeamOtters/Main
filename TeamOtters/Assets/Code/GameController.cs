@@ -22,7 +22,6 @@ public class GameController : MonoBehaviour
 
     public PlayerComponents playerComponents;
     
-    public PlayerData playerData;
     public AudioManager audioManager;
     /*
     public GameObject vikingPrefab;

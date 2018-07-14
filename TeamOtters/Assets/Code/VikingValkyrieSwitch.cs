@@ -63,18 +63,21 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     {
         //Activating viking
         m_isValkyrie = false;
-        m_vikingCharacter.SetActive(true);
-        //childing all relevant objects to their positions
-        m_vikingCharacter.transform.parent = m_parentTransform;
-        m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
-        //m_scoreText.transform.parent = m_vikingCharacter.transform;
-        m_transformParticles.transform.parent = m_particleSpawnPointViking.transform;
-        m_transformParticles.transform.position= m_particleSpawnPointViking.transform.position;
-        //transformation effect
-        TransformationEffect();
-        //deactivate valkyrie
-        m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
-        m_valkyrieCharacter.SetActive(false);
+        if (m_vikingCharacter != null && m_valkyrieCharacter!=null)
+        {
+            m_vikingCharacter.SetActive(true);
+            //childing all relevant objects to their positions
+            m_vikingCharacter.transform.parent = m_parentTransform;
+            m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
+            //m_scoreText.transform.parent = m_vikingCharacter.transform;
+            m_transformParticles.transform.parent = m_particleSpawnPointViking.transform;
+            m_transformParticles.transform.position= m_particleSpawnPointViking.transform.position;
+            //transformation effect
+            TransformationEffect();
+            //deactivate valkyrie
+            m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
+            m_valkyrieCharacter.SetActive(false);
+        }
 
 
     }
@@ -99,17 +102,21 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     {
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
-        m_valkyrieCharacter.SetActive(true);
-        //childing all relevant objects to their positions
-        m_valkyrieCharacter.transform.parent = m_parentTransform;
-        m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
-        //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
-        m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
-        m_transformParticles.transform.position = m_particleSpawnPointValkyrie.transform.position;
-        //transformation effect
-        TransformationEffect();
-        //deactivate viking
-        m_vikingCharacter.SetActive(false);
+        if (m_vikingCharacter != null && m_valkyrieCharacter != null)
+        {
+            m_valkyrieCharacter.SetActive(true);
+            //childing all relevant objects to their positions
+            m_valkyrieCharacter.transform.parent = m_parentTransform;
+            m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
+            //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
+            m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
+            m_transformParticles.transform.position = m_particleSpawnPointValkyrie.transform.position;
+            //transformation effect
+            TransformationEffect();
+            //deactivate viking
+            m_vikingCharacter.SetActive(false);
+        }
+        
     }
 
     void TransformationEffect()
