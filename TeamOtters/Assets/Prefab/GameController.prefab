@@ -745,7 +745,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_startInPhaseOne: 1
-  m_playerTransformationDuration: 0.5
+  m_playerTransformationDuration: 0.2
   m_phaseChangeDuration: 2
   m_phase2Duration: 5000
   m_characterUpwardsMoveSpeed: 1.2
@@ -961,7 +961,7 @@ MonoBehaviour:
   phaseManager: {fileID: 114319279279604970}
   cameraManager: {fileID: 0}
   snapPositionController: {fileID: 114358465408991534}
-  playerUI: {fileID: 114599340204666550}
+  playerUI: {fileID: 0}
   goalLine: {fileID: 114064531322512124}
   playerComponents: {fileID: 114198510458735384, guid: e45ba722d31b20b47b81e0f7f5baf752,
     type: 2}

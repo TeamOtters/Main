@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 225018127806769852}
   - component: {fileID: 223315219974869692}
   - component: {fileID: 114068770461159428}
-  m_Layer: 5
+  m_Layer: 30
   m_Name: Index Text
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 225797417459054718}
   - component: {fileID: 223926646336744018}
   - component: {fileID: 114873710860399998}
-  m_Layer: 5
+  m_Layer: 30
   m_Name: Index Text
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 223136533885995310}
   - component: {fileID: 114107110610887132}
   - component: {fileID: 114903322192667942}
-  m_Layer: 5
+  m_Layer: 30
   m_Name: Player Index Indicator Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,8 @@ GameObject:
   - component: {fileID: 223412529395270696}
   - component: {fileID: 111871343850493788}
   - component: {fileID: 114291687757853726}
-  m_Layer: 5
+  - component: {fileID: 114517143965740780}
+  m_Layer: 30
   m_Name: GainScore
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -103,7 +104,7 @@ GameObject:
   - component: {fileID: 225142625527982224}
   - component: {fileID: 223524401957384210}
   - component: {fileID: 114269525445334166}
-  m_Layer: 5
+  m_Layer: 30
   m_Name: Index Text
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -124,7 +125,8 @@ GameObject:
   - component: {fileID: 223025409884154646}
   - component: {fileID: 111083614481851748}
   - component: {fileID: 114731113573121250}
-  m_Layer: 5
+  - component: {fileID: 114826708333499488}
+  m_Layer: 30
   m_Name: GainScore
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -144,7 +146,7 @@ GameObject:
   - component: {fileID: 225958690396688760}
   - component: {fileID: 223791529128181054}
   - component: {fileID: 114144661689778244}
-  m_Layer: 5
+  m_Layer: 30
   m_Name: Index Text
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -165,7 +167,8 @@ GameObject:
   - component: {fileID: 223827629379468858}
   - component: {fileID: 111910464207124448}
   - component: {fileID: 114101396949419532}
-  m_Layer: 5
+  - component: {fileID: 114676704053120506}
+  m_Layer: 30
   m_Name: GainScore
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -186,7 +189,8 @@ GameObject:
   - component: {fileID: 223933979851355826}
   - component: {fileID: 111636047542481152}
   - component: {fileID: 114915495348697428}
-  m_Layer: 5
+  - component: {fileID: 114649159142805272}
+  m_Layer: 30
   m_Name: GainScore
   m_TagString: pInd
   m_Icon: {fileID: 0}
@@ -315,8 +319,8 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.8584906, g: 0.5270227, b: 0.052643314, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &114107110610887132
 MonoBehaviour:
@@ -510,8 +514,8 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.8584906, g: 0.5270227, b: 0.052643314, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &114413310869247928
 MonoBehaviour:
@@ -546,6 +550,48 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: P4
+--- !u!114 &114517143965740780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1198916131904500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.9528302, g: 0.8955605, b: 0, a: 0.5019608}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
+--- !u!114 &114649159142805272
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1788661842148814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.9528302, g: 0.8955605, b: 0, a: 0.5019608}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
+--- !u!114 &114676704053120506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1403839661541478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.9528302, g: 0.8955605, b: 0, a: 0.5019608}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114731113573121250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -557,8 +603,8 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.8584906, g: 0.5270227, b: 0.052643314, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!114 &114736440381128634
 MonoBehaviour:
@@ -626,6 +672,20 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: P4
+--- !u!114 &114826708333499488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1340712015850794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.9528302, g: 0.8955605, b: 0, a: 0.5019608}
+  m_EffectDistance: {x: 3, y: -3}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114873710860399998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -667,8 +727,8 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0.8584906, g: 0.5270227, b: 0.052643314, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
 --- !u!222 &222116639378583464
 CanvasRenderer:
