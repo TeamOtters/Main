@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class VikingValkyrieSwitch : MonoBehaviour {
 
     public bool m_startViking = true;
+    public float m_particleDuration = 2f;
 
     private GameObject m_vikingCharacter;
     private GameObject m_valkyrieCharacter;
@@ -125,7 +126,16 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         foreach(ParticleSystem particle in particles)
         {
             particle.Play();
+
+            StartCoroutine(StopParticles(particle, m_particleDuration));
         }
     }
+
+    IEnumerator StopParticles(ParticleSystem particle, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        particle.Stop();
+    }
+
 
 }

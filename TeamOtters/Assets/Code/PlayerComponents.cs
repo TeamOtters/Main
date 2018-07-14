@@ -10,6 +10,7 @@ public class PlayerComponents : MonoBehaviour
     public GameObject valkyriePrefab;
     public GameObject scorePrefab;
     public GameObject transformParticles;
+    public float transformParticleDuration;
 
 
 }

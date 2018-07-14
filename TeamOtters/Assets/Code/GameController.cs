@@ -142,6 +142,7 @@ public class GameController : MonoBehaviour
             //GameObject myNewPlayerScoreUI = Instantiate(playerComponents.scorePrefab, myNewPlayer.transform);
             GameObject myTransformParticles = Instantiate(playerComponents.transformParticles, myNewPlayer.transform);
             myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_transformParticles = myTransformParticles;
+            myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_particleDuration = playerComponents.transformParticleDuration;
             phaseManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();
 			m_scoreManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();      
 

@@ -584,7 +584,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_playerScoreGainText: []
 --- !u!114 &114319279279604970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -597,8 +596,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_startInPhaseOne: 1
-  m_phaseTransformationDuration: 2
+  m_playerTransformationDuration: 0.5
+  m_phaseChangeDuration: 2
   m_phase2Duration: 5000
+  m_characterUpwardsMoveSpeed: 1.2
   m_bouncingBall: {fileID: 0}
   m_dragon: {fileID: 1583277916825176}
   m_Level: {fileID: 0}
@@ -814,7 +815,6 @@ MonoBehaviour:
   playerUI: {fileID: 114599340204666550}
   playerComponents: {fileID: 114198510458735384, guid: e45ba722d31b20b47b81e0f7f5baf752,
     type: 2}
-  playerData: {fileID: 0}
   audioManager: {fileID: 0}
   logicLayer: {fileID: 0}
   rumbleManager: {fileID: 114810446788750820}
