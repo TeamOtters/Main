@@ -92,10 +92,20 @@ public class RumbleManager : MonoBehaviour
     internal CameraShakeInstance valhalla;
     internal XInputDotNetPure.PlayerIndex[] m_controllerIndex = { PlayerIndex.One, PlayerIndex.Two, PlayerIndex.Three, PlayerIndex.Four };
 
+    private bool m_gameEnded;
+
     public UnityEvent PhaseOneTreeShakes;
 
     private void Update()
     {
+        m_gameEnded = GameController.Instance.goalLine.GetGameOverState();
+
+        if(m_gameEnded)
+        {
+            AllControllersVibrate(0f);
+            SetBoolTypes(false);
+        }
+
         // DEBUG, Q to test ball hit shake
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -133,6 +143,7 @@ public class RumbleManager : MonoBehaviour
         instance.StartFadeOut(timeOut);
 
         yield return new WaitForSecondsRealtime(timeOut);
+        instance.DeleteOnInactive = true;
 
         if (instance.CurrentState == CameraShakeState.Inactive)
         {
@@ -239,62 +250,77 @@ public class RumbleManager : MonoBehaviour
 
     void BallHitShake()
     {
-        CameraShakeInstance instance;
+        if (!m_gameEnded)
+        {
+            CameraShakeInstance instance;
 
-        instance = ShakeSetup(ballHit, ballHit_magnitude, ballHit_roughness, ballHit_fadeInTime);
+            instance = ShakeSetup(ballHit, ballHit_magnitude, ballHit_roughness, ballHit_fadeInTime);
 
-        AllControllersVibrate(phaseTwoTransform_vibStrength);
+            AllControllersVibrate(phaseTwoTransform_vibStrength);
 
-        m_shakeType = ShakeType.BallHit;
+            m_shakeType = ShakeType.BallHit;
 
-        StartCoroutine(WaitForRumble(instance, ballHit_fadeInTime, ballHit_fadeOutTime));
+            StartCoroutine(WaitForRumble(instance, ballHit_fadeInTime, ballHit_fadeOutTime));
+        }
 
     }
 
     public void PhaseOneShake()
     {
-        CameraShakeInstance instance;
+        if (!m_gameEnded)
+        {
+            CameraShakeInstance instance;
 
-        instance = ShakeSetup(phaseOneTransform, phaseOneTransform_magnitude, phaseOneTransform_roughness, phaseOneTransform_fadeInTime);
+            instance = ShakeSetup(phaseOneTransform, phaseOneTransform_magnitude, phaseOneTransform_roughness, phaseOneTransform_fadeInTime);
 
-        AllControllersVibrate(phaseOneTransform_vibStrength);
+            AllControllersVibrate(phaseOneTransform_vibStrength);
 
-        StartCoroutine(WaitForRumble(instance, phaseOneTransform_fadeInTime, phaseOneTransform_fadeOutTime));
+            StartCoroutine(WaitForRumble(instance, phaseOneTransform_fadeInTime, phaseOneTransform_fadeOutTime));
 
-        PhaseOneTreeShakes.Invoke();
+            PhaseOneTreeShakes.Invoke();
+        }
     }
 
     public void PhaseTwoShake()
     {
-        CameraShakeInstance instance;
+        if (!m_gameEnded)
+        {
+            CameraShakeInstance instance;
 
-        instance = ShakeSetup(phaseTwoTransform, phaseTwoTransform_magnitude, phaseTwoTransform_roughness, phaseTwoTransform_fadeInTime);
+            instance = ShakeSetup(phaseTwoTransform, phaseTwoTransform_magnitude, phaseTwoTransform_roughness, phaseTwoTransform_fadeInTime);
 
-        AllControllersVibrate(phaseTwoTransform_vibStrength);
+            AllControllersVibrate(phaseTwoTransform_vibStrength);
 
-        StartCoroutine(WaitForRumble(instance, phaseTwoTransform_fadeInTime, phaseTwoTransform_fadeOutTime));
+            StartCoroutine(WaitForRumble(instance, phaseTwoTransform_fadeInTime, phaseTwoTransform_fadeOutTime));
+        }
     }
 
     public void VikingRespawnShake()
     {
-        CameraShakeInstance instance;
+        if (!m_gameEnded)
+        {
+            CameraShakeInstance instance;
 
-        instance = ShakeSetup(respawn, respawn_magnitude, respawn_roughness, respawn_fadeInTime);
+            instance = ShakeSetup(respawn, respawn_magnitude, respawn_roughness, respawn_fadeInTime);
 
-        AllControllersVibrate(respawn_vibStrength);
+            AllControllersVibrate(respawn_vibStrength);
 
-        StartCoroutine(WaitForRumble(instance, respawn_fadeInTime, respawn_fadeOutTime));
+            StartCoroutine(WaitForRumble(instance, respawn_fadeInTime, respawn_fadeOutTime));
+        }
     }
 
     public void ValhallaShake()
     {
-        CameraShakeInstance instance;
+        if (!m_gameEnded)
+        {
+            CameraShakeInstance instance;
 
-        instance = ShakeSetup(valhalla, valhalla_magnitude, valhalla_roughness, valhalla_fadeInTime);
+            instance = ShakeSetup(valhalla, valhalla_magnitude, valhalla_roughness, valhalla_fadeInTime);
 
-        AllControllersVibrate(valhalla_vibStrength);
+            AllControllersVibrate(valhalla_vibStrength);
 
-        StartCoroutine(WaitForRumble(instance, valhalla_fadeInTime, valhalla_fadeOutTime));
+            StartCoroutine(WaitForRumble(instance, valhalla_fadeInTime, valhalla_fadeOutTime));
+        }
     }
 
     //----------------------------------------------
@@ -303,40 +329,55 @@ public class RumbleManager : MonoBehaviour
 
     public void PlayerIntroVibrate(int playerIndex)
     {
-        SingleControllerVibrate(intro_vibStrength, playerIndex);
+        if (!m_gameEnded)
+        {
+            SingleControllerVibrate(intro_vibStrength, playerIndex);
 
-        StartCoroutine(WaitForVibrate(intro_vibTime, playerIndex));      
+            StartCoroutine(WaitForVibrate(intro_vibTime, playerIndex));
+        }
     }
 
     public void PlayerStunnedVibrate(int playerIndex)
     {
-        SingleControllerVibrate(stunned_vibStrength, playerIndex);
+        if (!m_gameEnded)
+        {
+            SingleControllerVibrate(stunned_vibStrength, playerIndex);
 
-        StartCoroutine(WaitForVibrate(stunned_vibTime, playerIndex));      
+            StartCoroutine(WaitForVibrate(stunned_vibTime, playerIndex));
+        }
     }
 
     public void PickupVibrate(int playerIndex)
     {
-        SingleControllerVibrate(pickup_vibStrength, playerIndex);
+        if (!m_gameEnded)
+        {
+            SingleControllerVibrate(pickup_vibStrength, playerIndex);
 
-        StartCoroutine(WaitForVibrate(pickup_vibTime, playerIndex));       
+            StartCoroutine(WaitForVibrate(pickup_vibTime, playerIndex));
+        }
     }
 
     public void PlatformHitVibrate(int playerIndex)
     {
-        SingleControllerVibrate(platformHit_vibStrength, playerIndex);
+        if (!m_gameEnded)
+        {
+            SingleControllerVibrate(platformHit_vibStrength, playerIndex);
 
-        StartCoroutine(WaitForVibrate(platformHit_vibTime, playerIndex));      
+            StartCoroutine(WaitForVibrate(platformHit_vibTime, playerIndex));
+        }
     }
 
     public void GrabbyHandsVibrate(float vibrateAmount, int playerIndex)
     {
-        SingleControllerVibrate(vibrateAmount, playerIndex);
+        if (!m_gameEnded)
+        {
+            SingleControllerVibrate(vibrateAmount, playerIndex);
 
-        if (vibrateAmount > 0f)
-            grabbyHandsRumbling = true;
-        else
-            grabbyHandsRumbling = false;
+            if (vibrateAmount > 0f)
+                grabbyHandsRumbling = true;
+            else
+                grabbyHandsRumbling = false;
+        }
     }
 
     private void OnApplicationQuit()
