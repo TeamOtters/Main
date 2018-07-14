@@ -703,6 +703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Results: {fileID: 0}
   m_restart: {fileID: 0}
+  m_phase2canvas: {fileID: 0}
 --- !u!114 &114179536568703722
 MonoBehaviour:
   m_ObjectHideFlags: 1
