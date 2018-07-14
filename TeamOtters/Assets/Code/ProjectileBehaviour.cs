@@ -28,12 +28,11 @@ public class ProjectileBehaviour : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start ()
+    void Awake ()
     {
         m_rigidBody = GetComponent<Rigidbody>();
         m_collider = GetComponent<Collider>();
         EnableRagdoll();
-        m_playerID = m_playerData.m_PlayerIndex;
         m_gameController = GameController.Instance;
 
         m_platformLayer = LayerMask.GetMask("Platform");
@@ -41,10 +40,16 @@ public class ProjectileBehaviour : MonoBehaviour {
 
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_projectileSize = GetComponent<SpriteRenderer>().bounds.extents;
-
+        StartCoroutine(LateAwake());
         StartCoroutine("ContinouslySetBoundaries");
 
      
+    }
+
+    IEnumerator LateAwake()
+    {
+        yield return new WaitForEndOfFrame();
+        m_playerID = m_playerData.m_PlayerIndex;
     }
 
     IEnumerator ContinouslySetBoundaries()
@@ -145,8 +150,21 @@ public class ProjectileBehaviour : MonoBehaviour {
         {
             if (collision.collider.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex != m_playerID)
             {
-                m_scoreManager.AddToScore(ScorePointInfo.hitOpponent, m_playerID);
-                Debug.Log("Viking hit valkyrie");
+                GameObject vikingController = m_playerData.GetComponentInChildren(typeof(VikingController), true).gameObject;
+                if (!vikingController.GetComponent<VikingController>().m_isCarried)
+                {
+                    m_scoreManager.AddToScore(ScorePointInfo.hitOpponent, m_playerID); // this bugs out when carried
+                    Debug.Log("Viking hit valkyrie");
+                }
+                else if(collision.collider.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex != vikingController.GetComponent<DetectPickup>().m_valkyrie.GetComponentInParent<PlayerData>().m_PlayerIndex)
+                {
+                    m_scoreManager.AddToScore(ScorePointInfo.hitOpponent, m_playerID); // this bugs out when carried
+                    Debug.Log("Viking hit valkyrie");
+                }
+                else
+                {
+                    Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+                }
             }
         }
     }

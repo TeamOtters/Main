@@ -10,7 +10,7 @@ public class DetectPickup : MonoBehaviour {
 
     private Transform m_carryLocation; // this is an empty gameobject childed under the Valkyrie, the character will be carried on this position
     private string m_collisionTag;
-    private ValkyrieController m_valkyrie;
+    internal ValkyrieController m_valkyrie;
     internal bool m_immuneToPickUp = false;
     private GameObject m_ourParent; // Should be PLAYER DATA 
     private GameObject m_ourGrandparentLogic; // SHOULD BE LOGIC LAYER
