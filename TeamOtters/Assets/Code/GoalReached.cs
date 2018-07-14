@@ -47,13 +47,20 @@ public class GoalReached : MonoBehaviour {
                 StartCoroutine("Wait");
                 myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
             }
-            else if (player.gameObject.CompareTag("Viking") || player.gameObject.CompareTag("Valkyrie"))
+            else if (player.gameObject.CompareTag("Viking"))
             {
-                m_hasReachedValhalla = true;
-                int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-                m_scoreManager.AddToScore(ScorePointInfo.firstReachGoal, ID);
-                myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
-                StartCoroutine("Wait");
+                if(player.GetComponent<VikingRespawn>().m_hasRespawned)
+                {
+
+                }
+                else
+                {
+                    m_hasReachedValhalla = true;
+                    int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
+                    m_scoreManager.AddToScore(ScorePointInfo.firstReachGoal, ID);
+                    myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
+                    StartCoroutine("Wait");
+                }
 
 
             }
