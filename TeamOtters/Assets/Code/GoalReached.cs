@@ -12,7 +12,7 @@ public class GoalReached : MonoBehaviour {
     private ScoreManager m_scoreManager;
     private int m_carryingScoreBonus;
     private int m_normalScoreBonus;
-    private bool m_hasReachedValhalla=false;
+    public bool m_hasReachedValhalla=false;
     public Button m_restart;
     public Canvas m_phase2canvas; 
 

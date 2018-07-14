@@ -43,6 +43,7 @@ public class ScoreManager : MonoBehaviour {
     private GlowEffect m_glowEffectScript;
     private GameController m_gameController;
     public Text[] m_scoreBoardText;
+    public GoalReached m_goalReached; 
 
     private PlayerUI m_playerUI;
 
@@ -78,19 +79,22 @@ public class ScoreManager : MonoBehaviour {
 
     public void AddToScore(int points, int playerIndex)
     {
-        m_players[playerIndex-1].m_CurrentScore += points;
+
+        m_players[playerIndex - 1].m_CurrentScore += points;
         m_scoreBoardText[playerIndex - 1].GetComponent<Animation>().Play();
 
         //RPG Hit!
 
-        m_playerUI.MoveRPGScoreToPlayer(playerIndex -1);
+        m_playerUI.MoveRPGScoreToPlayer(playerIndex - 1);
         m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(true);
         m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
         m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
 
 
-    }
 
+       
+    }
+    
 
     public void Update()
     {
@@ -108,6 +112,8 @@ public class ScoreManager : MonoBehaviour {
         }
 
         
+       
+
 
     }
 
@@ -125,7 +131,6 @@ public class ScoreManager : MonoBehaviour {
 
         m_ranks.Sort((b, a) => a.score.CompareTo(b.score));
 
-        //Raven's colors here
         
     }
 
