@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -157,6 +157,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114064531322512124, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Results
+      value: 
+      objectReference: {fileID: 1618360006}
+    - target: {fileID: 114064531322512124, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_restart
+      value: 
+      objectReference: {fileID: 815141858}
     - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: cameraManager
@@ -202,51 +212,6 @@ Prefab:
       propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 1694802282}
-    - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBall
-      value: 
-      objectReference: {fileID: 344618011}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_bouncingBall
-      value: 
-      objectReference: {fileID: 382614073}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Level
-      value: 
-      objectReference: {fileID: 1666476305}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_phase2UI
-      value: 
-      objectReference: {fileID: 1337124447}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Phase1UI
-      value: 
-      objectReference: {fileID: 1784358455}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[0]
-      value: 
-      objectReference: {fileID: 859347628}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[1]
-      value: 
-      objectReference: {fileID: 865004026}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[2]
-      value: 
-      objectReference: {fileID: 1492536817}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[3]
-      value: 
-      objectReference: {fileID: 1991005356}
     - target: {fileID: 114599340204666550, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: canvasRect
@@ -292,16 +257,51 @@ Prefab:
       propertyPath: m_gainScoreTexts.Array.data[3]
       value: 
       objectReference: {fileID: 364696545}
+    - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBall
+      value: 
+      objectReference: {fileID: 344618011}
     - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_phaseTransformationDuration
-      value: 5
-      objectReference: {fileID: 0}
+      propertyPath: m_bouncingBall
+      value: 
+      objectReference: {fileID: 382614073}
     - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_playerTransformationDuration
-      value: 0.5
-      objectReference: {fileID: 0}
+      propertyPath: m_Level
+      value: 
+      objectReference: {fileID: 1666476305}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_phase2UI
+      value: 
+      objectReference: {fileID: 1337124447}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Phase1UI
+      value: 
+      objectReference: {fileID: 1784358455}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[0]
+      value: 
+      objectReference: {fileID: 859347628}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[1]
+      value: 
+      objectReference: {fileID: 865004026}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[2]
+      value: 
+      objectReference: {fileID: 1492536817}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[3]
+      value: 
+      objectReference: {fileID: 1991005356}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
@@ -1666,9 +1666,9 @@ Prefab:
   m_IsPrefabParent: 0
 --- !u!1 &1003632335 stripped
 GameObject:
-  m_PrefabParentObject: {fileID: 1294887355528622, guid: ed2ad69139cf5564c81db27bc0145b83,
+  m_PrefabParentObject: {fileID: 1817284317680136, guid: e20e45fb9d1d2614880dedcc69da8323,
     type: 2}
-  m_PrefabInternal: {fileID: 1492865997}
+  m_PrefabInternal: {fileID: 57447546}
 --- !u!1 &1019308199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,7 +1769,6 @@ Transform:
   - {fileID: 1338648861}
   - {fileID: 778581701}
   - {fileID: 22277635}
-  - {fileID: 1432096997}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2827,11 +2826,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1427479524}
---- !u!4 &1432096997 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83,
-    type: 2}
-  m_PrefabInternal: {fileID: 1492865997}
 --- !u!1 &1459275909
 GameObject:
   m_ObjectHideFlags: 0
@@ -2981,58 +2975,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1289631206}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1001 &1492865997
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1072945319}
-    m_Modifications:
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4569471724547096, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114172770980876758, guid: ed2ad69139cf5564c81db27bc0145b83,
-        type: 2}
-      propertyPath: m_Results
-      value: 
-      objectReference: {fileID: 1618360006}
-    - target: {fileID: 114172770980876758, guid: ed2ad69139cf5564c81db27bc0145b83,
-        type: 2}
-      propertyPath: m_restart
-      value: 
-      objectReference: {fileID: 815141858}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: ed2ad69139cf5564c81db27bc0145b83, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &1522820888
 Prefab:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     public CameraBehaviourManager cameraManager;
     public SnapPositionController snapPositionController;
     public PlayerUI playerUI;
+    public GoalReached goalLine;
 
     public PlayerComponents playerComponents;
     
