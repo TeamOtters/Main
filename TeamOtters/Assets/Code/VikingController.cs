@@ -821,7 +821,7 @@ public class VikingController : MonoBehaviour
         Invoke("StunnedCooldown", duration);
     }
 
-    private void StunnedCooldown()
+    public void StunnedCooldown()
     {
         m_isStunned = false;
     }

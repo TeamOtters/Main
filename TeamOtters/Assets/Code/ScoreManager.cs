@@ -91,19 +91,6 @@ public class ScoreManager : MonoBehaviour {
 
     }
 
- 
-
-        //Debug.Log("Player " + (playerIndex) + " - Current MANAGER Score : " + m_players[playerIndex - 1].m_CurrentScore);
-        //Sending playerIndex of player that just scored
-        //SetHighestPlayerScore(playerIndex-1);
-    
-  
-    
-
-
-
-
-    //Additions by Vivienne
 
     public void Update()
     {
@@ -135,68 +122,5 @@ public class ScoreManager : MonoBehaviour {
 
         m_ranks.Sort((b, a) => a.score.CompareTo(b.score));
     }
-
-    /*
-    private void SetHighestPlayerScore(int scoringPlayer)
-    {
-        for (int i = 0; i < m_players.Length; i++)
-        {
-            if (m_playerScores[i] != 0 && i <= m_playerScores.Length)
-            {
-                m_playerScores[i] = m_players[i].m_CurrentScore;
-                Debug.Log(i + " is indexnumber for Player" + scoringPlayer + m_players[i]);
-            }
-            else
-            {
-                Debug.Log("Cannot find player score list!");
-            }
-
-        }
-        //local variables to keep track of the highest scores and corresponding indexes
-
-        for (int i = 0; i < m_playerScores.Length; i++)
-
-        {
-         
-
-            //check who has the highest score and give them gloweffect
-            if (i == scoringPlayer && m_playerScores[i] >= highest && m_glowEffectScript == null)
-            {
-                highest = m_playerScores[i];
-
-                Instantiate(m_glowEffect, m_players[i].GetComponentInChildren<VikingController>().gameObject.transform);
-                Debug.Log(m_players[i] + " says I EARNED IT!");
-               m_glowEffectScript = m_players[i].GetComponentInChildren<GlowEffect>();
-            }
-            if (i == scoringPlayer && m_playerScores[i] >= highest && m_glowEffectScript != null || i != scoringPlayer && m_playerScores[i] >= highest && m_glowEffectScript != null)
-            {
-                highest = m_playerScores[i];
-                Debug.Log(m_players[i] + " says I ALREADY HAVE THE GLOW");
-            }
-
-            if (m_playerScores[i] == highest)
-                {
-                     Debug.Log(m_players[i] + "Am I a Zero??");
-                }
-            else
-            {
-
-                if (m_playerScores[i] < highest && m_glowEffectScript != null)
-                {
-                    Destroy(m_glowEffectScript.gameObject);
-                    Debug.Log(m_players[i] + "NOT IN THE LEAD ANYMORE :( ");
-                }
-
-                else
-                {
-                    Debug.Log(m_players[i] + " I NEED MORE SCORE!");
-                }
-               
-            }
-        }
-    }*/
-
-
-
 
 }

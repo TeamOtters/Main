@@ -103,6 +103,10 @@ public class DetectPickup : MonoBehaviour {
     {
         Debug.Log("Carrying viking!");
 
+        if(GetComponent<VikingRespawn>().m_hasRespawned)
+        {
+            GetComponent<VikingRespawn>().StopRespawn();
+        }
         m_isPickedUp = true;
         // Set the valkyrie to the isCarrying state and assign the carryable rigidbody to the carrying valkyrie
         m_valkyrie.isCarrying = true;

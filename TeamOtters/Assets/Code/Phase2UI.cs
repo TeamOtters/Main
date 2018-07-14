@@ -66,7 +66,6 @@ public class Phase2UI : MonoBehaviour
 
     private void ScaleByRank(int i)
     {
-        Debug.Log("Text is getting scaled!");
         targetScale = new Vector3(m_rankScale[i], m_rankScale[i], 1);
         Text scaleText = m_scoreManager.m_scoreBoardText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
         Transform scaleV = scaleText.transform.parent;

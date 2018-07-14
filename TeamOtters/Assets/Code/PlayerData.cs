@@ -15,6 +15,7 @@ public class PlayerData : MonoBehaviour
     private ScoreManager m_scoreManager;
     private GameObject m_viking;
     private GameObject m_valkyrie;
+    private bool m_shouldSwitch = false; //to make sure the switching doesn't happen every frame
     public bool m_isGlowing = false;
 
   
@@ -43,7 +44,6 @@ public class PlayerData : MonoBehaviour
     {
         //I'm sending my (this players) score to the scoreManager, there it checks if my score is the highest score and if so, it sets my score as the highest score.
         m_gameController.m_scoreManager.SetHighestScore(m_CurrentScore);
-        var mySwitchScript = gameObject.GetComponent<VikingValkyrieSwitch>();
 
         //am I the highest score? Then, make me glow and be glorious! ( as long as my score isn't the starting score of 0 )
         if (m_CurrentScore >= m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
@@ -63,19 +63,19 @@ public class PlayerData : MonoBehaviour
                     m_isGlowing = true;
                 }
             }
-            if (m_phaseManager.m_isInPhaseOne == false)
-            {
-                
-                /*if (m_playerScoreArray[m_PlayerIndex] == m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
-                {
-                        compare your id to the other player with the same scores id and pick one at random. 
-                        
-                        this player becomes viking, the other becomes valkyrie
-                }*/
-                mySwitchScript.SwitchToViking();
-            }
-
         }
+        if (m_CurrentScore == m_gameController.m_scoreManager.m_ranks[0].score && m_CurrentScore != 0 && GetComponent<VikingValkyrieSwitch>().m_isValkyrie)
+        {
+            TransformOnScoreChange(m_gameController.m_scoreManager.m_ranks[1].playerIndex);
+        }
+
+        if (m_shouldSwitch)
+        {
+            m_shouldSwitch = false;
+            int oldVikingIndex = m_gameController.m_scoreManager.m_ranks[0].playerIndex;
+            TransformOnScoreChange(oldVikingIndex);
+        }
+
 
         //am I not anymore the one who has the highest score? Make me normal and dull! ( as long as my score isn't the starting score of 0 )
         if (m_CurrentScore < m_gameController.m_scoreManager.GetHighestScore() && m_CurrentScore != 0)
@@ -96,38 +96,21 @@ public class PlayerData : MonoBehaviour
                     m_isGlowing = false;
                 }
             }
-            if (m_phaseManager.m_isInPhaseOne == false)
-            {
-                mySwitchScript.SwitchToValkyrie();
-            }
+
         }
-       /*
-       if (pInd != null)
+
+    }
+
+    private void TransformOnScoreChange(int valkyrieIndex)
+    {
+        if (m_phaseManager.m_isInPhaseOne == false)
         {
-           
-            pInd.text = "P" + m_PlayerIndex;
+            Debug.Log("Score change transformed!");
+            var mySwitchScript = gameObject.GetComponent<VikingValkyrieSwitch>();
+            mySwitchScript.SwitchToViking();
+            m_scoreManager.m_players[valkyrieIndex - 1].GetComponent<VikingValkyrieSwitch>().SwitchToValkyrie();
 
-            if (m_PlayerIndex == 1)
-            {
-                pInd.color = new Color32(170, 253, 255, 255);
-            }
-            else if (m_PlayerIndex == 2)
-            {
-                pInd.color = new Color32(153, 232, 157, 255);
-            }
-            else if (m_PlayerIndex == 3)
-            {
-                pInd.color = new Color32(212, 142, 108, 255);
-            }
-            else if (m_PlayerIndex == 4)
-            {
-                pInd.color = new Color32(253, 146, 214, 255);
-            }
         }
-        */
-
-
-
-
+        
     }
 }

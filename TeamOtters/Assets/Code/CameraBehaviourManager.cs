@@ -50,16 +50,6 @@ public class CameraBehaviourManager : MonoBehaviour {
         targetXMoving = m_panXAmountWhileMoving;
         targetXStatic = m_panXAmountWhileStatic;
         startPosY = Camera.main.transform.position.y;
-
-        /*
-        m_speedCurve.AddKey(-m_panXAmount, m_panSpeedXMin);
-        m_speedCurve.AddKey(0, m_panSpeedXMax);
-        m_speedCurve.AddKey(m_panXAmount, m_panSpeedXMin);
-        for (int i = 0; i < m_speedCurve.keys.Length; ++i)
-        {
-            m_speedCurve.SmoothTangents(i, 0); //zero weight means average
-        }
-        */
     }
 
     public void SetRaceState (bool enable)

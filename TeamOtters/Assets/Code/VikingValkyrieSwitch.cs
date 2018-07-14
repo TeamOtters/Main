@@ -11,7 +11,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     private GameObject m_vikingCharacter;
     private GameObject m_valkyrieCharacter;
     private PlayerData m_playerData;
-    private bool m_isValkyrie;
+    internal bool m_isValkyrie;
     private Transform m_parentTransform;
     private GameObject m_scoreText;
     internal GameObject m_transformParticles;
@@ -47,6 +47,11 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         }
 
         //sets starting state according to startViking variable
+        
+
+    }
+    void LateStart()
+    {
         if (m_startViking)
         {
             SwitchToViking();
@@ -56,17 +61,19 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         {
             SwitchToValkyrie();
         }
-
     }
 
     // Switch to Viking
     public void SwitchToViking()
     {
+        //Debug.Log("Switching");
         //Activating viking
         m_isValkyrie = false;
         if (m_vikingCharacter != null && m_valkyrieCharacter!=null)
         {
             m_vikingCharacter.SetActive(true);
+            m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
+            m_vikingCharacter.GetComponent<VikingController>().StunnedCooldown();
             //childing all relevant objects to their positions
             m_vikingCharacter.transform.parent = m_parentTransform;
             m_valkyrieCharacter.transform.parent = m_vikingCharacter.transform;
@@ -101,6 +108,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
     // Switch to Valkyrie
     public void SwitchToValkyrie()
     {
+        //Debug.Log("Switching");
         //Activating valkyrie, childing viking to valkyrie and deactivating viking
         m_isValkyrie = true;
         if (m_vikingCharacter != null && m_valkyrieCharacter != null)
@@ -108,6 +116,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             m_valkyrieCharacter.SetActive(true);
             //childing all relevant objects to their positions
             m_valkyrieCharacter.transform.parent = m_parentTransform;
+            m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
             m_vikingCharacter.transform.parent = m_valkyrieCharacter.transform;
             //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
             m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
@@ -126,7 +135,6 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         foreach(ParticleSystem particle in particles)
         {
             particle.Play();
-
             StartCoroutine(StopParticles(particle, m_particleDuration));
         }
     }

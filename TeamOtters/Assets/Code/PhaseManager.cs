@@ -136,7 +136,6 @@ public class PhaseManager : MonoBehaviour {
     //Character Transformation and Character Transformation Delay loops around so that each character gets spawned together with their UI element in a delay.
     IEnumerator CharacterTransformation(int i)
     {
-        Debug.Log("BAM");
         int playerIndex = m_scoreManager.m_ranks[i].playerIndex;
         var mySwitchScript = m_players[playerIndex - 1].gameObject.GetComponent<VikingValkyrieSwitch>();
         if (m_players[playerIndex-1].m_PlayerIndex != m_scoreManager.m_ranks[0].playerIndex) // if the players are not the highest, they should change into valkyries
@@ -144,7 +143,6 @@ public class PhaseManager : MonoBehaviour {
             if (mySwitchScript != null)
             {
                 // valkyrie transform camera shake + rumble
-                Debug.Log("ValkyrieTransformation");
                 mySwitchScript.SwitchToValkyrie();
 
             }
@@ -152,7 +150,6 @@ public class PhaseManager : MonoBehaviour {
         else
         {
             mySwitchScript.SwitchToViking();
-            Debug.Log("VikingTransformation");
         }
         GameObject viking = m_players[playerIndex - 1].GetComponentInChildren(typeof(VikingController), true).gameObject;
         viking.GetComponent<VikingController>().enabled = true;
@@ -185,22 +182,7 @@ public class PhaseManager : MonoBehaviour {
         m_phase2UI.ShowPrompt();
         m_isInPhaseOne = false; //for other scripts to listen to
         GameController.Instance.m_currentPhaseState = 2;
-        /*
-        foreach (PlayerData player in m_players)
-        {
-            //Accesses the Valkyrie/Viking switch in all players and does the switch to viking
-            if (player.m_PlayerIndex != m_scoreManager.m_ranks[0].playerIndex) // if the players are not the highest, they should change into valkyries
-            {
-                var mySwitchScript = player.gameObject.GetComponent<VikingValkyrieSwitch>();
-                if (mySwitchScript != null)
-                {
-                    // valkyrie transform camera shake + rumble
-                    mySwitchScript.SwitchToValkyrie();
-                   
-                }
-            }
-        }
-        */
+
         m_phase2UI.HidePrompt();
         GameController.Instance.cameraManager.SetRaceState(true);
 

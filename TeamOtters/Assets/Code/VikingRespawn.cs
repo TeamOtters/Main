@@ -23,7 +23,7 @@ public class VikingRespawn : MonoBehaviour
     {
         m_gameController = GameController.Instance;
         m_vikingController = GetComponent<VikingController>();
-        m_cameraMan = GameController.Instance.cameraManager;
+        m_cameraMan = m_gameController.cameraManager;
         m_cameraOriginalSpeed = m_cameraMan.m_panSpeedY;
 
         RespawnPoint[] respawnPointsInScene = FindObjectsOfType<RespawnPoint>();
@@ -93,18 +93,23 @@ public class VikingRespawn : MonoBehaviour
     IEnumerator RespawnDuration(float duration)
     {
         yield return new WaitForSeconds(duration);
+        StopRespawn();
+    }
+
+    public void StopRespawn()
+    {
         m_hasRespawned = false;
         m_cameraMan.m_panSpeedY = m_cameraOriginalSpeed;
     }
     /*
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(m_hasRespawned && collision.gameObject.tag == "Goal")
-        {
-            Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-            Debug.Log("Ignored collision");
-        }
-    }
-    */
+private void OnCollisionEnter(Collision collision)
+{
+   if(m_hasRespawned && collision.gameObject.tag == "Goal")
+   {
+       Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+       Debug.Log("Ignored collision");
+   }
+}
+*/
 
 }
