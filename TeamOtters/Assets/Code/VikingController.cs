@@ -261,19 +261,25 @@ public class VikingController : MonoBehaviour
 
         //Right - Sprite Flip
         if (!m_turnedLeft)
-        {
+        {/*
             Vector3 scale = transform.localScale;
             scale.x = -m_thisScale;
             transform.localScale = scale;
+            */
+            GetComponent<SpriteRenderer>().flipX = true;
         }
 
         //Left - Sprite Flip
         if (m_turnedLeft)
         {
+            /*
             Vector3 scale = transform.localScale;
             scale.x = +m_thisScale;
             transform.localScale = scale;
+            */
+            GetComponent<SpriteRenderer>().flipX = false;
         }
+
 
     }
 

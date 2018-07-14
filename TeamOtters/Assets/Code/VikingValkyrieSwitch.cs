@@ -78,12 +78,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         //Activating viking
         m_isValkyrie = false;
         if (m_vikingCharacter != null && m_valkyrieCharacter!=null)
-        {
-            // Awful awful code the valkyrie and viking have opposite facing directions xD
-            bool myFacingDirection;
-            myFacingDirection = m_valkyrieCharacter.GetComponent<ValkyrieController>().m_isFacingRight;
-            m_vikingCharacter.GetComponent<VikingController>().SetFacingDirection(!myFacingDirection);
-
+        { 
             m_vikingCharacter.SetActive(true);
             //m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
             m_vikingCharacter.GetComponent<VikingController>().StunnedCooldown();
@@ -147,18 +142,6 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             //m_scoreText.transform.parent = m_valkyrieCharacter.transform;
             m_transformParticles.transform.parent = m_particleSpawnPointValkyrie.transform;
             m_transformParticles.transform.position = m_particleSpawnPointValkyrie.transform.position;
-
-            // Awful awful code the valkyrie and viking have opposite facing directions xD
-            bool myFacingDirection;
-            myFacingDirection = m_vikingCharacter.GetComponent<VikingController>().m_turnedLeft;
-
-            if (m_FirstTimeTransforming && myFacingDirection == false)
-            {
-                m_valkyrieCharacter.GetComponent<ValkyrieController>().ForceFacingDirectionToBeRight();
-                m_FirstTimeTransforming = false;
-            }
-            else
-                m_valkyrieCharacter.GetComponent<ValkyrieController>().SetFacingDirection(!myFacingDirection); //this is the worst thing Ive ever done in my life Im so sorry
 
             //transformation effect
             TransformationEffect();

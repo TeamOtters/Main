@@ -6,7 +6,8 @@ public class ValkyrieController : MonoBehaviour
 {
 
     private Animator m_bodyAnimator;
-    private Animator m_wingAnimator;        
+    private Animator m_wingAnimatorNonFlipped;
+    private Animator m_wingAnimatorFlipped;        
     private GameController m_gameController;
 
     public float m_valkyrieMovementSpeed;
@@ -17,6 +18,8 @@ public class ValkyrieController : MonoBehaviour
     private Vector3 m_vikingMoveDirection = Vector3.zero;
     public float m_physicsSpeed;
 
+    public GameObject m_wingsNonFlipped;
+    public GameObject m_wingsFlipped;
     //public float m_flightForce;
 
     public float m_wrapScreenDelay = 0.5f;
@@ -85,7 +88,8 @@ public class ValkyrieController : MonoBehaviour
         m_playerSize = m_bodySprite.bounds.size;
 
         //wing animator
-        m_wingAnimator = GetComponent<Animator>();
+        m_wingAnimatorNonFlipped = m_wingsNonFlipped.GetComponent<Animator>();
+        m_wingAnimatorFlipped = m_wingsFlipped.GetComponent<Animator>();
 
         //assign the valkyries body animator controller based on player index
         m_bodyAnimator = transform.Find("body_sprite").GetComponent<Animator>();
@@ -425,13 +429,15 @@ public class ValkyrieController : MonoBehaviour
 
     private void SetValkyrieAnimationBool(string boolString, bool enable)
     {
-        m_wingAnimator.SetBool(boolString, enable); 
+        m_wingAnimatorNonFlipped.SetBool(boolString, enable);
+        m_wingAnimatorFlipped.SetBool(boolString, enable);
         m_bodyAnimator.SetBool(boolString, enable); 
     }
 
     private void SetValkyrieAnimationState(int state)
     {
-        m_wingAnimator.SetInteger("State", state);
+        m_wingAnimatorNonFlipped.SetInteger("State", state);
+        m_wingAnimatorFlipped.SetInteger("State", state);
         m_bodyAnimator.SetInteger("State", state);
     }
 
@@ -449,17 +455,35 @@ public class ValkyrieController : MonoBehaviour
     {
         if (m_isFacingRight)
         {
+            /*
             Vector3 scale = transform.localScale;
             scale.x = -m_thisScale;
             transform.localScale = scale;
+            */
+            SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer renderer in renderers)
+            {
+                renderer.flipX = true;
+                m_wingsFlipped.SetActive(true);
+                m_wingsNonFlipped.SetActive(false);
+            }
         }
 
         //Left - Sprite Flip
         if (!m_isFacingRight)
         {
+            /*
             Vector3 scale = transform.localScale;
             scale.x = +m_thisScale;
             transform.localScale = scale;
+            */
+            SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer renderer in renderers)
+            {
+                renderer.flipX = false;
+                m_wingsFlipped.SetActive(false);
+                m_wingsNonFlipped.SetActive(true);
+            }
         }    
     }
 

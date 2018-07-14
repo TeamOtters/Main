@@ -21,7 +21,7 @@ public class DetectPickup : MonoBehaviour {
     public float maxDistanceForGrabbyHands = 6f;
     private float distanceFromValkyrie;
     private RumbleManager m_rumbleManager;
-    
+
 
     private void Start()
     {
@@ -117,7 +117,6 @@ public class DetectPickup : MonoBehaviour {
     //triggered on collision
     private void GetPickedUp(Collider other)
     {
-        Debug.Log("Carrying viking!");
 
         if(GetComponent<VikingRespawn>().m_hasRespawned)
         {
@@ -125,12 +124,13 @@ public class DetectPickup : MonoBehaviour {
         }
         m_isPickedUp = true;
 
+        /*
         // Awful awful code the valkyrie and viking have opposite facing directions xD
         bool myFacingDirection;
         myFacingDirection = transform.gameObject.GetComponent<VikingController>().m_turnedLeft;
         m_valkyrie.gameObject.GetComponent<ValkyrieController>().SetFacingDirection(!myFacingDirection);
+        */
         
-
         // Set the valkyrie to the isCarrying state and assign the carryable rigidbody to the carrying valkyrie
         m_valkyrie.isCarrying = true;
         m_valkyrie.isCloseToViking = false;
@@ -147,8 +147,7 @@ public class DetectPickup : MonoBehaviour {
         // make it as a child of player, so it moves along with player
         m_ourParent.transform.SetParent(m_carryLocation, true);
 
-        //double-ensures that the carry location is assigned to the right valkyrie
-      //  m_carryLocation.SetParent(m_valkyrie.gameObject.transform, true);    
+
         
         if(GetComponentInParent<PlayerData>() != null)
         {
@@ -176,6 +175,15 @@ public class DetectPickup : MonoBehaviour {
         gameObject.GetComponent<VikingController>().SetCarried(false);
         transform.position = new Vector3(transform.position.x, transform.position.y - gameObject.GetComponent<SpriteRenderer>().bounds.extents.y, m_gameController.snapGridZ);
         transform.rotation = Quaternion.identity;
+        /*
+        GetComponent<VikingController>().m_turnedLeft = m_facingDirectionViking;
+        m_valkyrie.m_isFacingRight = m_facingDirectionValkyrie;
+        */
+        /*
+        m_facingDirectionViking = GetComponent<VikingController>().m_turnedLeft;
+        m_facingDirectionValkyrie = m_valkyrie.m_isFacingRight;
+        */
+        
 
         StartCoroutine(ImmuneAfterDrop(m_immuneAfterDropDuration));
     }
