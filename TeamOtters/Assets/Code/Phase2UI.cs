@@ -29,9 +29,15 @@ public class Phase2UI : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
+
+        StartCoroutine(LateStart());
+    }
+
+    IEnumerator LateStart()
+    {
+        yield return new WaitForEndOfFrame();
         m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
-
     }
 
 
@@ -107,7 +113,8 @@ public class Phase2UI : MonoBehaviour
     {
         int myRankIndex = (m_scoreManager.m_ranks[index].playerIndex) -1;
         m_scoreManager.m_scoreBoardText[myRankIndex].transform.parent.gameObject.SetActive(true);
-        //m_scoreManager.m_scoreBoardText[myRankIndex].transform.parent.localScale = new Vector3(m_rankScale[myRankIndex], m_rankScale[myRankIndex], 1);
+        
+        m_scoreManager.m_scoreBoardText[myRankIndex].transform.parent.localScale = new Vector3(m_rankScale[myRankIndex], m_rankScale[myRankIndex], 1);
 
         targetScale = new Vector3(m_rankScale[index], m_rankScale[index], 1);
         Text scaleText = m_scoreManager.m_scoreBoardText[(m_scoreManager.m_ranks[index].playerIndex) - 1];
@@ -130,8 +137,6 @@ public class Phase2UI : MonoBehaviour
                 m_phase2 = true;
             }
         }
-        
-
     }
 
 }
