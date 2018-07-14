@@ -43,13 +43,13 @@ public class VikingController : MonoBehaviour
     // Bools used by anims
     internal bool m_isIdle;
     internal bool m_isWalking;
-    internal bool m_isJumping;
+    internal bool m_isJumping;// used by controlst
     internal bool m_isFalling;
-    internal bool m_isCarried;
-    internal bool m_isWallClinging;
-    internal bool m_isStunned;
-    internal bool m_isThrowing;
-    internal bool m_isRetracting;    
+    internal bool m_isCarried;// used by controlst
+    internal bool m_isWallClinging;// used by controlst
+    internal bool m_isStunned;// used by controlst
+    internal bool m_isThrowing;// used by controlst
+    internal bool m_isRetracting;    // used by controlst
 
     public float m_stunnedCoolDown = 1f;
     private float m_wallStickCoolDown = 0.3f;
@@ -181,7 +181,7 @@ public class VikingController : MonoBehaviour
             }
              else
              {
-                m_isJumping = true;
+               // m_isJumping = true;
                 m_isFalling = false;
              }
 
@@ -469,7 +469,7 @@ public class VikingController : MonoBehaviour
     {
         Vector3 vNewInput = new Vector3(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString), 0.0f);
         var angle = Mathf.Atan2(Input.GetAxis("Horizontal_P" + m_playerIndexString), Input.GetAxis("Vertical_P" + m_playerIndexString)) * Mathf.Rad2Deg;
-        Debug.Log("Fire");       
+      //  Debug.Log("Fire");       
 
         if (m_fireCooldownOn)
             return;
@@ -705,7 +705,7 @@ public class VikingController : MonoBehaviour
             {               
                 if (!m_layerIsSet)
                 {
-                    Debug.Log("go");
+                  //  Debug.Log("go");
                     gameObject.layer = m_goThroughPlatformLayer;
                     m_layerIsSet = true;
                     m_goThroughPlatformDown = true;
