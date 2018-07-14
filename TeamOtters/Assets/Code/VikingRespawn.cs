@@ -60,7 +60,7 @@ public class VikingRespawn : MonoBehaviour
         m_hasRespawned = true;
         Debug.Log("I am respawning!");
         m_vikingController.SetStunned(m_respawnDuration);
-        transform.position = new Vector3(transform.position.x, m_vikingController.m_topBounds + 2f, m_gameController.snapGridZ);
+        transform.position = new Vector3(transform.position.x, m_vikingController.m_topBounds + 1.5f, m_gameController.snapGridZ);
         transform.rotation = Quaternion.identity;
         m_targetTransform = FindClosestRespawnPointToTransform(transform);
         Debug.Log("Found " + m_targetTransform.gameObject.name + "at position " + m_targetTransform.position);
