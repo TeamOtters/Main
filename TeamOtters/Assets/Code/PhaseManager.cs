@@ -13,6 +13,8 @@ public class PhaseManager : MonoBehaviour {
     public float m_playerTransformationDuration = 0.2f;
     public float m_phaseTransformationDuration = 2f;
     public float m_phase2Duration = 10f;
+    public float m_characterUpwardsMoveSpeed = 1.2f;
+
     
     [Header ("Objects")]
     public BouncingBall m_bouncingBall;
@@ -32,6 +34,7 @@ public class PhaseManager : MonoBehaviour {
     private GameController m_gameController;
     private ScoreManager m_scoreManager;
     internal bool m_phaseTransformationActive = false;
+    private bool m_isWaiting = false;
 
     void Start ()
     {
@@ -63,6 +66,14 @@ public class PhaseManager : MonoBehaviour {
 	void Update ()
     {
         CheckPhaseSwitch();
+        if(m_isWaiting)
+        {
+            foreach (PlayerData player in m_players)
+            {
+                GameObject viking = player.GetComponentInChildren(typeof(VikingController), true).gameObject;
+                viking.transform.Translate(Vector3.up * m_characterUpwardsMoveSpeed * Time.deltaTime);
+            }
+        }
     }
 
     // the condition for phase 2 switch - ball health and debug command
@@ -71,7 +82,7 @@ public class PhaseManager : MonoBehaviour {
         
         if ((!m_bouncingBall.m_isAlive && !m_phaseSet)|| Input.GetKeyDown(KeyCode.P))
         {
-            StartCoroutine(TransformationDuration(m_phaseTransformationDuration));
+            StartCoroutine(PhaseChangeStart(m_phaseTransformationDuration));
         }
         
     }
@@ -99,16 +110,36 @@ public class PhaseManager : MonoBehaviour {
     }
     
     //dramatic moment before phase 2 start
-    IEnumerator TransformationDuration(float duration)
+    IEnumerator PhaseChangeStart(float duration)
     {
+        m_isWaiting = true;
         m_phaseTransformationActive = true;
         m_dragon.SetActive(true);
         m_rumbleManager.PhaseOneShake();
+        GameObject viking;
+        foreach (PlayerData player in m_players)
+        {
+            viking = player.GetComponentInChildren<VikingController>().gameObject;
+            viking.GetComponent<VikingController>().enabled = false;
+            //StartCoroutine(MoveViking(viking));
+        }
+        
         yield return new WaitForSeconds(duration);
+        m_isWaiting = false;
         m_dragon.SetActive(false);
         m_phaseTransformationActive = false;
         StartCoroutine(CharacterTransformation(0));
     }
+    /*
+    IEnumerator MoveViking(GameObject viking)
+    {
+        while (viking.transform.position.y < viking.transform.position.y + m_characterTransformYOffset)
+        {
+            viking.transform.Translate(viking.transform.position.x * 1f* Time.deltaTime, (viking.transform.position.y + m_characterTransformYOffset)* 1f* Time.deltaTime, 0f);
+        }
+        yield return null;
+    }
+    */
 
     IEnumerator CharacterTransformation(int i)
     {
@@ -130,6 +161,9 @@ public class PhaseManager : MonoBehaviour {
             mySwitchScript.SwitchToViking();
             Debug.Log("VikingTransformation");
         }
+        GameObject viking = m_players[playerIndex - 1].GetComponentInChildren(typeof(VikingController), true).gameObject;
+        viking.GetComponent<VikingController>().enabled = true;
+
         m_phase2UI.ActivateScoreboard(i);
         StartCoroutine(CharacterTransformationDelay(i));
         yield return null;
