@@ -128,7 +128,7 @@ public class PhaseManager : MonoBehaviour {
         
         yield return new WaitForSeconds(duration);
         m_isWaiting = false;
-        m_dragon.SetActive(false);
+        //m_dragon.SetActive(false);
         m_phaseTransformationActive = false;
         StartCoroutine(CharacterTransformation(0));
     }
