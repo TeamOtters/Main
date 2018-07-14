@@ -120,7 +120,7 @@ public class ScoreManager : MonoBehaviour {
             ScoreRanking current = m_ranks[i];
             current.playerIndex = m_players[i].m_PlayerIndex;
             current.score = m_players[i].m_CurrentScore;
-
+            /*
             if (current.playerIndex == 1)
             {
                 this.GetComponentInParent<Image>().color = new Color32(47, 94, 0, 180);
@@ -137,6 +137,7 @@ public class ScoreManager : MonoBehaviour {
             {
                 this.GetComponentInParent<Image>().color = new Color32(207, 122, 1, 180);
             }
+            */
         }
 
         m_ranks.Sort((b, a) => a.score.CompareTo(b.score));

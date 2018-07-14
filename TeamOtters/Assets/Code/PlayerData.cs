@@ -57,7 +57,7 @@ public class PlayerData : MonoBehaviour
                     if (m_viking.activeSelf)
                         m_viking.GetComponent<VikingController>().m_highestScoreEffect.SetActive(true);
                     if (m_valkyrie.activeSelf)
-                        m_viking.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
+                        m_valkyrie.GetComponent<ValkyrieController>().m_highestScoreEffect.SetActive(true);
 
                     //we are in fact glowing! 
                     m_isGlowing = true;

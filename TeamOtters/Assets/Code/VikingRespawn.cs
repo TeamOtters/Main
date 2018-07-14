@@ -23,6 +23,7 @@ public class VikingRespawn : MonoBehaviour
     {
         m_gameController = GameController.Instance;
         m_vikingController = GetComponent<VikingController>();
+
         m_cameraMan = m_gameController.cameraManager;
         m_cameraOriginalSpeed = m_cameraMan.m_panSpeedY;
 
@@ -31,7 +32,6 @@ public class VikingRespawn : MonoBehaviour
         {
             m_respawnPoints.Add(respawnPointInScene.gameObject.transform);
         }
-
 	}
 
     private void Update()

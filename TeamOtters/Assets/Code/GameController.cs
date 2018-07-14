@@ -157,11 +157,14 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(LateStart());
+        
     }
 
     IEnumerator LateStart()
     {
         yield return new WaitForEndOfFrame();
+
+        
         SetPlayerInactiveOnStart();
 
     }

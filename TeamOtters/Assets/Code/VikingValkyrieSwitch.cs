@@ -50,12 +50,16 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             Debug.Log("Player gameobject does not have its children! Something is very wrong");
         }
 
+        SwitchToViking();
+
         //sets starting state according to startViking variable
-        
+        StartCoroutine(LateStart());
 
     }
-    void LateStart()
+
+    IEnumerator LateStart()
     {
+        yield return new WaitForEndOfFrame();
         if (m_startViking)
         {
             SwitchToViking();
@@ -65,8 +69,8 @@ public class VikingValkyrieSwitch : MonoBehaviour {
         {
             SwitchToValkyrie();
         }
-    }
 
+    }
     // Switch to Viking
     public void SwitchToViking()
     {
@@ -81,7 +85,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             m_vikingCharacter.GetComponent<VikingController>().SetFacingDirection(!myFacingDirection);
 
             m_vikingCharacter.SetActive(true);
-            m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
+            //m_vikingCharacter.GetComponent<VikingRespawn>().StopRespawn();
             m_vikingCharacter.GetComponent<VikingController>().StunnedCooldown();
             //childing all relevant objects to their positions
             m_vikingCharacter.transform.parent = m_parentTransform;
