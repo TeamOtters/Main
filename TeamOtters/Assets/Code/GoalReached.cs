@@ -76,7 +76,6 @@ public class GoalReached : MonoBehaviour {
     private IEnumerator Wait()
     {
         yield return new WaitForSeconds(2.0f);
-        m_phase2canvas.gameObject.SetActive(false);
         m_Results.gameObject.SetActive(true);
         m_Results.GetComponentInChildren<Results>().ShowResults();
         m_restart.Select();
