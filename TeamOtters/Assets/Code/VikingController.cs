@@ -847,6 +847,7 @@ public class VikingController : MonoBehaviour
     public void SetStunned(float duration)
     {
         m_isStunned = true;
+        GameController.Instance.rumbleManager.PlayerStunnedVibrate(m_thisPlayerIndex);
         Invoke("StunnedCooldown", duration);
     }
 

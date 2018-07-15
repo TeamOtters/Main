@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
 
     public BoundaryHolder boundaryHolder;
     public GameObject player;
+
+    public GameObject leavesFalling;
     public PhaseManager phaseManager;
     public CameraBehaviourManager cameraManager;
     public SnapPositionController snapPositionController;

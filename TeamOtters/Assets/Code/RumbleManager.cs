@@ -96,6 +96,11 @@ public class RumbleManager : MonoBehaviour
 
     public UnityEvent PhaseOneTreeShakes;
 
+    private void Start()
+    {
+        GameController.Instance.leavesFalling.SetActive(false);
+    }
+
     private void Update()
     {
         m_gameEnded = GameController.Instance.goalLine.GetGameOverState();
@@ -106,7 +111,7 @@ public class RumbleManager : MonoBehaviour
             SetBoolTypes(false);
         }
 
-        // DEBUG, Q to test ball hit shake
+        /*// DEBUG, Q to test ball hit shake
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("Should start rumbling");
@@ -125,7 +130,7 @@ public class RumbleManager : MonoBehaviour
         {
             Debug.Log("Should be vibrating");
             PickupVibrate(0);           
-        }
+        }*/
     }
 
     IEnumerator WaitForRumble(CameraShakeInstance instance, float timeIn, float timeOut)
@@ -272,6 +277,7 @@ public class RumbleManager : MonoBehaviour
             StartCoroutine(WaitForRumble(instance, phaseOneTransform_fadeInTime, phaseOneTransform_fadeOutTime));
 
             PhaseOneTreeShakes.Invoke();
+            GameController.Instance.leavesFalling.SetActive(true);
         }
     }
 
