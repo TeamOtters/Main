@@ -157,16 +157,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 114064531322512124, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Results
-      value: 
-      objectReference: {fileID: 1618360006}
-    - target: {fileID: 114064531322512124, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_restart
-      value: 
-      objectReference: {fileID: 815141858}
     - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: cameraManager
@@ -212,51 +202,6 @@ Prefab:
       propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
       objectReference: {fileID: 1694802282}
-    - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBall
-      value: 
-      objectReference: {fileID: 344618011}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_bouncingBall
-      value: 
-      objectReference: {fileID: 382614073}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Level
-      value: 
-      objectReference: {fileID: 1666476305}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_phase2UI
-      value: 
-      objectReference: {fileID: 1337124447}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_Phase1UI
-      value: 
-      objectReference: {fileID: 1784358455}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[0]
-      value: 
-      objectReference: {fileID: 859347628}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[1]
-      value: 
-      objectReference: {fileID: 865004026}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[2]
-      value: 
-      objectReference: {fileID: 1492536817}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[3]
-      value: 
-      objectReference: {fileID: 1991005356}
     - target: {fileID: 114599340204666550, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: canvasRect
@@ -302,6 +247,61 @@ Prefab:
       propertyPath: m_gainScoreTexts.Array.data[3]
       value: 
       objectReference: {fileID: 364696545}
+    - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBall
+      value: 
+      objectReference: {fileID: 344618011}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_bouncingBall
+      value: 
+      objectReference: {fileID: 382614073}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Level
+      value: 
+      objectReference: {fileID: 1666476305}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_phase2UI
+      value: 
+      objectReference: {fileID: 1337124447}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Phase1UI
+      value: 
+      objectReference: {fileID: 1784358455}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[0]
+      value: 
+      objectReference: {fileID: 859347628}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[1]
+      value: 
+      objectReference: {fileID: 865004026}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[2]
+      value: 
+      objectReference: {fileID: 1492536817}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBoardText.Array.data[3]
+      value: 
+      objectReference: {fileID: 1991005356}
+    - target: {fileID: 114064531322512124, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_Results
+      value: 
+      objectReference: {fileID: 1618360006}
+    - target: {fileID: 114064531322512124, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_restart
+      value: 
+      objectReference: {fileID: 815141858}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
