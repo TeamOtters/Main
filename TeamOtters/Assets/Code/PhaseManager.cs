@@ -15,7 +15,6 @@ public class PhaseManager : MonoBehaviour {
     public float m_phase2Duration = 10f;
     public float m_characterUpwardsMoveSpeed = 1.2f;
 
-    
     [Header ("Objects")]
     public BouncingBall m_bouncingBall;
     public GameObject m_dragon;
@@ -36,6 +35,20 @@ public class PhaseManager : MonoBehaviour {
     internal bool m_phaseTransformationActive = false;
     private bool m_isWaiting = false;
 
+    // for celebration
+    internal bool m_isCelebratingActive = false;
+    internal bool m_isCelebratingWaiting = false;
+    // Transforms to act as start and end markers for the journey.
+    public Transform m_destinationScreenPos;
+    // Movement speed in units/sec.
+    public float ascensionSpeed = 5.0F;
+    // Time when the movement started.
+    private float startTime;
+    // Total distance between the markers.
+    private float journeyLength;
+    private GameObject winnerCharacter;
+    public bool m_hasReachedValhalla;
+
     void Start ()
     {
         m_Phase1UI.gameObject.SetActive(true);
@@ -48,7 +61,11 @@ public class PhaseManager : MonoBehaviour {
         m_gameController = GameController.Instance;
         m_rumbleManager = m_gameController.rumbleManager;
         m_scoreManager = m_gameController.m_scoreManager;
-        
+
+        float x = (m_gameController.boundaryHolder.playerBoundary.Left + m_gameController.boundaryHolder.playerBoundary.Right) / 2;
+        float y = m_gameController.boundaryHolder.playerBoundary.Up - 1f;
+
+        //m_destinationScreenPos.position = new Vector3(x, y, 0);     
 
         //allows the devs to set the starting phase
         if (m_startInPhaseOne == true)
@@ -59,14 +76,13 @@ public class PhaseManager : MonoBehaviour {
         {
             PhaseTwoSetup();
         }
-        m_dragon.SetActive(false);
-        
-	}	
+        m_dragon.SetActive(false);        
+    }
 
-	void Update ()
+    void Update()
     {
         CheckPhaseSwitch();
-        if(m_isWaiting)
+        if (m_isWaiting)
         {
             foreach (PlayerData player in m_players)
             {
@@ -74,12 +90,57 @@ public class PhaseManager : MonoBehaviour {
                 viking.transform.Translate(Vector3.up * m_characterUpwardsMoveSpeed * Time.deltaTime);
             }
         }
+
+
+        // TODO - Steph started the celebration. Viking winner lift up
+        /*CheckCelebrationSwitch();
+        if (m_isCelebratingWaiting)
+        {
+            int playerIndex = m_scoreManager.m_ranks[0].playerIndex;
+            foreach (PlayerData player in m_players)
+            {
+                if (m_players[playerIndex - 1].m_PlayerIndex == m_scoreManager.m_ranks[0].playerIndex)
+                {
+                    // For now we assume the winner is a viking is on its own    
+                    if (player.GetComponentInChildren<Rigidbody>().tag == "Viking")
+                    {
+                        GameObject winnerCharacter = player.GetComponentInChildren(typeof(VikingController), true).gameObject;
+
+                        winnerCharacter.transform.Translate(Vector3.MoveTowards(winnerCharacter.transform.position, m_destinationScreenPos.transform.position, 4f)* m_characterUpwardsMoveSpeed * Time.deltaTime);
+                    }
+                }
+                else
+                {
+                    // if the players are not the highest, they should play sad anims                    
+                }
+            }
+
+           
+
+        }
+
+        // TODO Once viking has reached destination, trigger the scoreboard
+        if (winnerCharacter != null )//&& !m_hasReachedValhalla)
+            VikingLerp(winnerCharacter);*/
     }
+
+    private void VikingLerp(GameObject winner)
+    {
+        winner.transform.Translate(Vector3.up * m_characterUpwardsMoveSpeed * Time.deltaTime);
+
+        if (winner.transform.position == m_destinationScreenPos.position)
+        {
+            m_hasReachedValhalla = true;
+        }
+        else
+            m_hasReachedValhalla = false;
+
+    }
+
 
     // the condition for phase 2 switch - ball health and debug command
     private void CheckPhaseSwitch()
-    {
-        
+    {        
         if ((!m_bouncingBall.m_isAlive && !m_phaseSet)|| Input.GetKeyDown(KeyCode.P))
         {
             m_phaseSet = true;
@@ -87,7 +148,19 @@ public class PhaseManager : MonoBehaviour {
         }
         
     }
-    
+
+    // the condition for phase 2 switch - ball health and debug command
+    private void CheckCelebrationSwitch()
+    {
+        // TODO If camera has panned into position, trigger the valhalla gates effects and then start the celebration.
+
+        if ((Input.GetKeyDown(KeyCode.Q)))
+        {
+            m_phaseSet = true;
+            StartCoroutine(CelebrationPhaseStart(5));
+        }
+    }
+
     //phase 1 setup - called on start
     void PhaseOneSetup()
     {
@@ -109,7 +182,57 @@ public class PhaseManager : MonoBehaviour {
             Debug.Log("Bouncing ball respawn triggered");
         }
     }
-    
+
+    IEnumerator CelebrationPhaseStart(float duration)
+    {
+        m_isCelebratingWaiting = true;
+        m_isCelebratingActive = true;
+
+        GameObject viking;
+        //GameObject valkyrie;
+
+        foreach (PlayerData player in m_players)
+        {
+            if (player.GetComponentInChildren<Rigidbody>().tag == "Viking")
+            {
+                viking = player.GetComponentInChildren(typeof(VikingController), true).gameObject;
+                viking.GetComponent<VikingController>().enabled = false;
+            }
+            /*else
+            {
+                valkyrie = player.GetComponentInChildren(typeof(ValkyrieController), true).gameObject;
+                valkyrie.GetComponent<ValkyrieController>().enabled = false;
+            }*/
+        }
+
+        yield return new WaitForSeconds(duration);
+        m_isCelebratingWaiting = false;
+        m_isCelebratingActive = false;
+        StartCoroutine(CharacterAscending(0));
+    }
+
+    //Character Transformation and Character Transformation Delay loops around so that each character gets spawned together with their UI element in a delay.
+    IEnumerator CharacterAscending(int i)
+    {
+        int playerIndex = m_scoreManager.m_ranks[i].playerIndex;
+        GameObject viking;
+
+        foreach (PlayerData player in m_players)
+        {
+            if (player.GetComponentInChildren<Rigidbody>().tag == "Viking")
+            {
+                viking = m_players[playerIndex - 1].GetComponentInChildren(typeof(VikingController), true).gameObject;
+                viking.GetComponent<VikingController>().enabled = true;
+            }
+        }
+
+        //m_phase2UI.ActivateScoreboard(i);
+
+        // Show the results screen
+        //StartCoroutine(CharacterTransformationDelay(i));
+        yield return null;
+    }
+
     //dramatic moment before phase 2 start
     IEnumerator PhaseChangeStart(float duration)
     {
@@ -187,5 +310,18 @@ public class PhaseManager : MonoBehaviour {
         GameController.Instance.cameraManager.SetRaceState(true);
 
     }
-   
+
+    //Set the two characters with highest score to Valkyries
+    void CelebrationSetup()
+    {
+        Debug.Log("set up celebration!");
+        m_phaseSet = true;//prevents phase switch from happening every frame
+
+        //Hide GUI and wait for celebration
+
+        //GameController.Instance.m_currentPhaseState = 2;
+        //GameController.Instance.cameraManager.SetRaceState(true);
+
+    }
+
 }
