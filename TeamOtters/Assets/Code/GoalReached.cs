@@ -6,14 +6,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
 
-public class GoalReached : MonoBehaviour {
-    public Canvas m_Results;
+public class GoalReached : MonoBehaviour {    
     private GameController m_gameController;
     private ScoreManager m_scoreManager;
     private int m_carryingScoreBonus;
     private int m_normalScoreBonus;
-    public bool m_hasReachedValhalla=false;
-    public Button m_restart;
+    public bool m_hasReachedValhalla=false;    
     public Canvas m_phase2canvas; 
 
     // Use this for initialization
@@ -48,7 +46,6 @@ public class GoalReached : MonoBehaviour {
                 int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
                 m_scoreManager.AddToScore(ScorePointInfo.carryingBonus, ID);
 
-                StartCoroutine("Wait");
                 myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
             }
             else if (player.gameObject.CompareTag("Viking"))
@@ -63,25 +60,11 @@ public class GoalReached : MonoBehaviour {
                     int ID = player.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
                     m_scoreManager.AddToScore(ScorePointInfo.firstReachGoal, ID);
                     myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
-                    StartCoroutine("Wait");
                 }
-
-
             }
         }
         Debug.Log("I crossed the finish line, my old score was " + myOldScore + "and my new score was " + myNewScore);
 
-
-    }
-    private IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2.0f);
-        m_Results.gameObject.SetActive(true);
-        m_Results.GetComponentInChildren<Results>().ShowResults();
-        m_restart.Select();
-        
-        
-        
 
     }
     // Update is called once per frame

@@ -5,6 +5,9 @@ using UnityEngine;
 using EZCameraShake;
 using XInputDotNetPure;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class PhaseManager : MonoBehaviour {
 
@@ -18,11 +21,14 @@ public class PhaseManager : MonoBehaviour {
     [Header ("Objects")]
     public BouncingBall m_bouncingBall;
     public GameObject m_dragon;
+    public GameObject m_gatesOpening;
     public GameObject m_Level;
 
     [Header("UI")]
     public Phase2UI m_phase2UI;
     public Canvas m_Phase1UI;
+    public Canvas m_Results;
+    public Button m_restart;
 
     [HideInInspector]
     public PlayerData[] m_players;
@@ -38,14 +44,7 @@ public class PhaseManager : MonoBehaviour {
     // for celebration
     internal bool m_isCelebratingActive = false;
     internal bool m_isCelebratingWaiting = false;
-    // Transforms to act as start and end markers for the journey.
     public Transform m_destinationScreenPos;
-    // Movement speed in units/sec.
-    public float ascensionSpeed = 5.0F;
-    // Time when the movement started.
-    private float startTime;
-    // Total distance between the markers.
-    private float journeyLength;
     private GameObject winnerCharacter;
     public bool m_hasReachedValhalla;
 
@@ -76,7 +75,8 @@ public class PhaseManager : MonoBehaviour {
         {
             PhaseTwoSetup();
         }
-        m_dragon.SetActive(false);        
+        m_dragon.SetActive(false);
+        m_gatesOpening.SetActive(false);
     }
 
     void Update()
@@ -93,7 +93,7 @@ public class PhaseManager : MonoBehaviour {
 
 
         // TODO - Steph started the celebration. Viking winner lift up
-        /*CheckCelebrationSwitch();
+        CheckCelebrationSwitch();
         if (m_isCelebratingWaiting)
         {
             int playerIndex = m_scoreManager.m_ranks[0].playerIndex;
@@ -106,7 +106,12 @@ public class PhaseManager : MonoBehaviour {
                     {
                         GameObject winnerCharacter = player.GetComponentInChildren(typeof(VikingController), true).gameObject;
 
-                        winnerCharacter.transform.Translate(Vector3.MoveTowards(winnerCharacter.transform.position, m_destinationScreenPos.transform.position, 4f)* m_characterUpwardsMoveSpeed * Time.deltaTime);
+                        winnerCharacter.transform.position = Vector3.Lerp(winnerCharacter.transform.position, m_destinationScreenPos.position, m_characterUpwardsMoveSpeed * Time.deltaTime);
+                                                
+                        if (winnerCharacter.transform.position.y == m_destinationScreenPos.position.y)
+                        {
+                            m_hasReachedValhalla = true;
+                        }
                     }
                 }
                 else
@@ -114,27 +119,8 @@ public class PhaseManager : MonoBehaviour {
                     // if the players are not the highest, they should play sad anims                    
                 }
             }
-
-           
-
         }
-
-        // TODO Once viking has reached destination, trigger the scoreboard
-        if (winnerCharacter != null )//&& !m_hasReachedValhalla)
-            VikingLerp(winnerCharacter);*/
-    }
-
-    private void VikingLerp(GameObject winner)
-    {
-        winner.transform.Translate(Vector3.up * m_characterUpwardsMoveSpeed * Time.deltaTime);
-
-        if (winner.transform.position == m_destinationScreenPos.position)
-        {
-            m_hasReachedValhalla = true;
-        }
-        else
-            m_hasReachedValhalla = false;
-
+        
     }
 
 
@@ -154,8 +140,9 @@ public class PhaseManager : MonoBehaviour {
     {
         // TODO If camera has panned into position, trigger the valhalla gates effects and then start the celebration.
 
-        if ((Input.GetKeyDown(KeyCode.Q)))
+        if (m_gameController.goalLine.GetGameOverState() == true || (Input.GetKeyDown(KeyCode.Q)))
         {
+            m_gameController.cameraManager.SetCelebrateState(true);
             m_phaseSet = true;
             StartCoroutine(CelebrationPhaseStart(5));
         }
@@ -165,6 +152,7 @@ public class PhaseManager : MonoBehaviour {
     void PhaseOneSetup()
     {
         m_dragon.SetActive(false);
+        m_gatesOpening.SetActive(false);
         m_isInPhaseOne = true;
         foreach(PlayerData player in m_players)
         {
@@ -198,17 +186,13 @@ public class PhaseManager : MonoBehaviour {
                 viking = player.GetComponentInChildren(typeof(VikingController), true).gameObject;
                 viking.GetComponent<VikingController>().enabled = false;
             }
-            /*else
-            {
-                valkyrie = player.GetComponentInChildren(typeof(ValkyrieController), true).gameObject;
-                valkyrie.GetComponent<ValkyrieController>().enabled = false;
-            }*/
         }
 
         yield return new WaitForSeconds(duration);
+        m_gatesOpening.SetActive(true);
         m_isCelebratingWaiting = false;
         m_isCelebratingActive = false;
-        StartCoroutine(CharacterAscending(0));
+        StartCoroutine(Wait());
     }
 
     //Character Transformation and Character Transformation Delay loops around so that each character gets spawned together with their UI element in a delay.
@@ -226,11 +210,17 @@ public class PhaseManager : MonoBehaviour {
             }
         }
 
-        //m_phase2UI.ActivateScoreboard(i);
-
-        // Show the results screen
-        //StartCoroutine(CharacterTransformationDelay(i));
+        // Once viking has reached destination, trigger the scoreboard
+        StartCoroutine(Wait());
         yield return null;
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2.0f);
+        m_Results.gameObject.SetActive(true);
+        m_Results.GetComponentInChildren<Results>().ShowResults();
+        m_restart.Select();    
     }
 
     //dramatic moment before phase 2 start

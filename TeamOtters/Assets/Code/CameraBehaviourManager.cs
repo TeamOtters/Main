@@ -10,7 +10,8 @@ public class CameraBehaviourManager : MonoBehaviour {
 
     public float m_panSpeedY = 0.1f;
     public GameObject m_endPanTarget;
-    
+    public GameObject m_celebrateTarget;
+
     [SerializeField]
     private AnimationCurve m_speedCurveXWhileMoving;
 
@@ -38,7 +39,9 @@ public class CameraBehaviourManager : MonoBehaviour {
     private Vector3 target;
     private Vector3 move;
 
-    
+    private bool m_celebrateState;
+
+
     /* Rotation stuff, let's deal with this later
     public float targetYRotation = 5f;
     public float rotationSpeed = 1f;
@@ -57,9 +60,16 @@ public class CameraBehaviourManager : MonoBehaviour {
         m_valkyrieRaceState = enable;
         m_shouldSidewaysPan = true;
     }
-	
-	// Update is called once per frame
-	void LateUpdate () {
+
+    public void SetCelebrateState(bool enable)
+    {
+        m_celebrateState = enable;
+        m_shouldSidewaysPan = false;
+        m_valkyrieRaceState = false;
+    }
+
+    // Update is called once per frame
+    void LateUpdate () {
 
         if (m_shouldSidewaysPan)
         {
@@ -100,6 +110,23 @@ public class CameraBehaviourManager : MonoBehaviour {
                 transform.Translate(move2, Space.World);
                 if (Mathf.Clamp(pos.x, targetXStatic - 0.05f, targetXStatic + 0.055f) == pos.x)
                     targetXStatic = -targetXStatic;
+            }
+        }
+
+        if(m_celebrateState)
+        {
+            target = m_celebrateTarget.transform.position;
+            move = new Vector3(target.x, target.y * 0.5f * Time.deltaTime, 0);
+
+            //Vector3 celebratePos = new Vector3(m_celebrateTarget.transform.position.x, m_celebrateTarget.transform.position.y * 1f * Time.deltaTime, 0);
+            
+            transform.Translate(move, Space.World);
+
+            if (transform.position.y >= m_celebrateTarget.transform.position.y)
+            {
+                m_celebrateState = false;                
+                //transform.position.y = m_celebrateTarget.transform.position.y;
+                transform.position = new Vector3(m_celebrateTarget.transform.position.x, m_celebrateTarget.transform.position.y, transform.position.z);
             }
         }
 	}

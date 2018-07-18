@@ -90,7 +90,7 @@ public class ScoreManager : MonoBehaviour {
         m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
         m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
 
-        if (m_goalReached.m_hasReachedValhalla==true)
+        if (m_gameController.phaseManager.m_hasReachedValhalla==true)
         {
             m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(false);
             m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Stop();
@@ -100,18 +100,24 @@ public class ScoreManager : MonoBehaviour {
 
     public void Update()
     {
-        for (int i = 0; i < m_players.Length; i++)
+        if (m_gameController.phaseManager.m_hasReachedValhalla == false)
         {
-            m_scoreBoardText[i].text = m_players[i].m_CurrentScore.ToString();
+            for (int i = 0; i < m_players.Length; i++)
+            {
+                m_scoreBoardText[i].text = m_players[i].m_CurrentScore.ToString();
+
+            }
+
+            //m_ranks will be a reflection of the players rank
+
+            UpdateScoreRanking();
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+            }
 
         }
         
-        //m_ranks will be a reflection of the players rank
-
-        UpdateScoreRanking();
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-        }
+ 
 
         
        
