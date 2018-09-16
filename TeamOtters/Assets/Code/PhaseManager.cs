@@ -31,7 +31,8 @@ public class PhaseManager : MonoBehaviour {
     public Button m_restart;
 
     [HideInInspector]
-    public PlayerData[] m_players;
+    internal List<PlayerData> m_players = new List<PlayerData>();
+    //public PlayerData[] m_players;
     internal bool m_isInPhaseOne = true;
     private List<int> m_playerScores = new List<int>();
     private bool m_phaseSet = false;
@@ -51,16 +52,16 @@ public class PhaseManager : MonoBehaviour {
     void Start ()
     {
         m_Phase1UI.gameObject.SetActive(true);
-        //hard coded to 4 atm, if we have a dynamic number of players this might need to change
-        m_playerScores.Add(0);
-        m_playerScores.Add(0);
-        m_playerScores.Add(0);
-        m_playerScores.Add(0);
 
         m_gameController = GameController.Instance;
         m_rumbleManager = m_gameController.rumbleManager;
         m_scoreManager = m_gameController.m_scoreManager;
 
+        for (int i = 0; i < m_gameController.numberOfPlayers; i++)
+        {
+            m_playerScores.Add(0);
+        }
+        
         float x = (m_gameController.boundaryHolder.playerBoundary.Left + m_gameController.boundaryHolder.playerBoundary.Right) / 2;
         float y = m_gameController.boundaryHolder.playerBoundary.Up - 1f;
 
@@ -276,7 +277,7 @@ public class PhaseManager : MonoBehaviour {
     {
         Debug.Log("Delay");
         yield return new WaitForSeconds(m_playerTransformationDuration);
-        if (i < m_players.Length -1)
+        if (i < m_players.Count -1)
         {
             i++;
             StartCoroutine(CharacterTransformation(i));

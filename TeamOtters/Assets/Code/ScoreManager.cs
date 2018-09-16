@@ -36,7 +36,8 @@ public class ScoreRanking
 
 public class ScoreManager : MonoBehaviour {
 
-    internal PlayerData[] m_players= { null, null, null, null };
+    internal List<PlayerData> m_players = new List<PlayerData>();
+    //internal PlayerData[] m_players= { null, null, null, null };
     internal int [] m_playerScores = { 0, 0, 0, 0 };
     public List<ScoreRanking> m_ranks = new List<ScoreRanking>(); //this is the list where players will be arranged according to rank. m_ranks[0] will be the 1st place player and their score, [1] second place and so on.
     private int highestScore = 0;
@@ -53,7 +54,8 @@ public class ScoreManager : MonoBehaviour {
     {
         m_gameController = GameController.Instance;
         m_playerUI = GameController.Instance.playerUI;
-        for(int i=0; i< m_players.Length; i++)
+
+        for(int i=0; i< m_players.Count; i++)
         {
             m_ranks.Add(new ScoreRanking(0, 0));
         }
@@ -79,16 +81,23 @@ public class ScoreManager : MonoBehaviour {
 
     public void AddToScore(int points, int playerIndex)
     {
+        if (playerIndex != 0)
+        {
+            Debug.Log(playerIndex + "gets points");
+            m_players[playerIndex - 1].m_CurrentScore += points;
+            m_scoreBoardText[playerIndex - 1].GetComponent<Animation>().Play();
 
-        m_players[playerIndex - 1].m_CurrentScore += points;
-        m_scoreBoardText[playerIndex - 1].GetComponent<Animation>().Play();
+            //RPG Hit!
 
-        //RPG Hit!
-
-        m_playerUI.MoveRPGScoreToPlayer(playerIndex - 1);
-        m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(true);
-        m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
-        m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
+            m_playerUI.MoveRPGScoreToPlayer(playerIndex - 1);
+            m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(true);
+            m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
+            m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
+        }
+        else
+        {
+            Debug.Log("Player index is 0!!! WTF?!");
+        }
 
         if (m_gameController.phaseManager.m_hasReachedValhalla==true)
         {
@@ -102,7 +111,7 @@ public class ScoreManager : MonoBehaviour {
     {
         if (m_gameController.phaseManager.m_hasReachedValhalla == false)
         {
-            for (int i = 0; i < m_players.Length; i++)
+            for (int i = 0; i < m_players.Count; i++)
             {
                 m_scoreBoardText[i].text = m_players[i].m_CurrentScore.ToString();
 
@@ -129,7 +138,7 @@ public class ScoreManager : MonoBehaviour {
 
     private void UpdateScoreRanking()
     {
-        for (int i = 0; i < m_players.Length; i++)
+        for (int i = 0; i < m_players.Count; i++)
         {
             ScoreRanking current = m_ranks[i];
             current.playerIndex = m_players[i].m_PlayerIndex;

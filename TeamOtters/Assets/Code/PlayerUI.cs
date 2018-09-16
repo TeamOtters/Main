@@ -22,40 +22,49 @@ public class PlayerUI : MonoBehaviour
 	}
 	
 	// Update is called once per frame
+
 	void Update ()
     {
 
         for (int i = 0; i < m_playerTexts.Length; i++)
         {
-            Text myText = m_playerTexts[i].GetComponent<Text>();
-            Text myRPG = m_gainScoreTexts[i].GetComponent<Text>(); 
-            int playerIndex = m_gameController.phaseManager.m_players[i].m_PlayerIndex;
-            myText.text = ("P" + playerIndex.ToString());
+            if (i < m_gameController.numberOfPlayers)
+            {
+                Text myText = m_playerTexts[i].GetComponent<Text>();
+                Text myRPG = m_gainScoreTexts[i].GetComponent<Text>();
+                int playerIndex = m_gameController.phaseManager.m_players[i].m_PlayerIndex;
+                myText.text = ("P" + playerIndex.ToString());
 
-                       
-            //Raven's colors here
-            if (playerIndex == 1)
-            {
-                myText.color = new Color32(47, 94, 0, 255);
-                myRPG.color = new Color32(47, 94, 0, 255);
+
+                //Raven's colors here
+                if (playerIndex == 1)
+                {
+                    myText.color = new Color32(47, 94, 0, 255);
+                    myRPG.color = new Color32(47, 94, 0, 255);
+                }
+                else if (playerIndex == 2)
+                {
+                    myText.color = new Color32(255, 112, 222, 255);
+                    myRPG.color = new Color32(255, 112, 222, 255);
+                }
+                else if (playerIndex == 3)
+                {
+                    myText.color = new Color32(47, 56, 255, 255);
+                    myRPG.color = new Color32(47, 56, 255, 255);
+                }
+                else if (playerIndex == 4)
+                {
+                    myText.color = new Color32(207, 122, 1, 255);
+                    myRPG.color = new Color32(207, 122, 1, 255);
+                }
+                SetActiveState(i);
+                MoveIDUIToPlayer(i);
             }
-            else if (playerIndex == 2)
+            else
             {
-                myText.color = new Color32(255, 112, 222, 255);
-                myRPG.color = new Color32(255, 112, 222, 255);
+                m_playerTexts[i].gameObject.SetActive(false);
             }
-            else if (playerIndex == 3)
-            {
-                myText.color = new Color32(47, 56, 255, 255);
-                myRPG.color = new Color32(47, 56, 255, 255);
-            }
-            else if (playerIndex == 4)
-            {
-                myText.color = new Color32(207, 122, 1, 255);
-                myRPG.color = new Color32(207, 122, 1, 255);
-            }
-            MoveIDUIToPlayer(i);
-            SetActiveState(i);
+
         }
         
     }
