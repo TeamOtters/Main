@@ -157,56 +157,45 @@ public class RumbleManager : MonoBehaviour
         if (m_shakeType == ShakeType.BallHit)
         {
             ballHitRumbling = enable;
-            Debug.Log("Ballhit rumbling is now: " + ballHitRumbling);
         }
         else if (m_shakeType == ShakeType.PhaseOneTransform)
         {
             phaseOneTransformRumbling = enable;
-            Debug.Log("PhaseOneTransform rumbling is now: " + phaseOneTransformRumbling);
         }
         else if (m_shakeType == ShakeType.PhaseTwoTransform)
         {
             phaseTwoTransformRumbling = enable;
-            Debug.Log("PhaseTwoTransform rumbling is now: " + phaseTwoTransformRumbling);
         }
         else if (m_shakeType == ShakeType.VikingRespawn)
         {
             vikingRespawnRumbling = enable;
-            Debug.Log("VikingRespawn rumbling is now: " + vikingRespawnRumbling);
         }
         else if (m_shakeType == ShakeType.Valhalla)
         {
             valhallaRumbling = enable;
-            Debug.Log("Valhalla rumbling is now: " + valhallaRumbling);
         }
         else if (m_shakeType == ShakeType.PlayerIntro)
         {
             playerIntroRumbling = enable;
-            Debug.Log("PlayerIntro rumbling is now: " + playerIntroRumbling);
         }
         else if (m_shakeType == ShakeType.Stunned)
         {
             stunnedRumbling = enable;
-            Debug.Log("Stunned rumbling is now: " + stunnedRumbling);
         }
         else if (m_shakeType == ShakeType.Pickup)
         {
             pickupRumbling = enable;
-            Debug.Log("Pickup rumbling is now: " + pickupRumbling);
         }
         else if (m_shakeType == ShakeType.PlatformHit)
         {
             platformHitRumbling = enable;
-            Debug.Log("PlatformHit rumbling is now: " + platformHitRumbling);
         }
         else if (m_shakeType == ShakeType.GrabbyHands)
         {
             grabbyHandsRumbling = enable;
-            Debug.Log("GrabbyHands rumbling is now: " + grabbyHandsRumbling);
         }
         else
         {
-            Debug.Log("This shouldn't happen, no rumble shake type defined. What did you do?");
         }
 
     }

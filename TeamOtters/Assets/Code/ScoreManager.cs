@@ -79,16 +79,22 @@ public class ScoreManager : MonoBehaviour {
 
     public void AddToScore(int points, int playerIndex)
     {
+        if (playerIndex != null)
+        {
+            m_players[playerIndex - 1].m_CurrentScore += points;
+            m_scoreBoardText[playerIndex - 1].GetComponent<Animation>().Play();
 
-        m_players[playerIndex - 1].m_CurrentScore += points;
-        m_scoreBoardText[playerIndex - 1].GetComponent<Animation>().Play();
+            //RPG Hit!
 
-        //RPG Hit!
-
-        m_playerUI.MoveRPGScoreToPlayer(playerIndex - 1);
-        m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(true);
-        m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
-        m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
+            m_playerUI.MoveRPGScoreToPlayer(playerIndex - 1);
+            m_playerUI.m_gainScoreTexts[playerIndex - 1].gameObject.SetActive(true);
+            m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Text>().text = ("+" + points.ToString());
+            m_playerUI.m_gainScoreTexts[playerIndex - 1].GetComponent<Animation>().Play();
+        }
+        else
+        {
+            Debug.Log("Player index is null!!! WTF?!");
+        }
 
         if (m_gameController.phaseManager.m_hasReachedValhalla==true)
         {

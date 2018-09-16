@@ -411,7 +411,6 @@ public class VikingController : MonoBehaviour
 
         if (collision.contacts[0].normal.y > 0.1)
         {
-            print("First normal of the point that collide: " + collision.contacts[0].normal);
 
             if (m_isJumping)
             {
