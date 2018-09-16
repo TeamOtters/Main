@@ -106,7 +106,7 @@ public class ValkyrieController : MonoBehaviour
     }
 
     private void OnEnable()
-    {
+    {      
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
     }
@@ -140,7 +140,7 @@ public class ValkyrieController : MonoBehaviour
 
     private void GiveContionousScore()
     {
-        if (heldRigidbody != null && m_gameController.m_currentPhaseState == 2)
+        if (heldRigidbody != null && m_gameController.m_currentPhaseState == 2 && !m_gameController.goalLine.m_hasReachedValhalla)
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.valkyrieContiniousScore, m_playerIndex);
     }
 

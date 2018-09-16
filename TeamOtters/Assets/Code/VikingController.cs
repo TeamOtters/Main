@@ -79,7 +79,7 @@ public class VikingController : MonoBehaviour
     internal float m_bottomBounds;
     private Vector3 m_playerSize;
     private VikingRespawn m_vikingRespawn;
-    private DetectPickup m_detectPickup;    
+    private DetectPickup m_detectPickup;
 
     // Use this for initialization
     void Start()
@@ -312,7 +312,7 @@ public class VikingController : MonoBehaviour
 
     private void GiveContionousScore()
     {
-        if (!m_isCarried && m_gameController.m_currentPhaseState == 2)
+        if (!m_isCarried && m_gameController.m_currentPhaseState == 2 && !m_gameController.goalLine.m_hasReachedValhalla)
             m_gameController.m_scoreManager.AddToScore(ScorePointInfo.vikingContiniousScore, m_thisPlayerIndex);
     } 
  

@@ -103,7 +103,7 @@ public class RumbleManager : MonoBehaviour
 
     private void Update()
     {
-        m_gameEnded = GameController.Instance.goalLine.GetGameOverState();
+        m_gameEnded = GameController.Instance.goalLine.m_hasReachedValhalla;
 
         if(m_gameEnded)
         {

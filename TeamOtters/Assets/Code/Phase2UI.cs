@@ -67,7 +67,7 @@ public class Phase2UI : MonoBehaviour
             }
 
             // Stop scoring at end of game
-            if (GameController.Instance.goalLine.GetGameOverState() == true)
+            if (GameController.Instance.goalLine.m_hasReachedValhalla == true)
             {
                 m_Phase2.gameObject.SetActive(false);
             }

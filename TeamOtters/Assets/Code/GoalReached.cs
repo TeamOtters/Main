@@ -11,7 +11,7 @@ public class GoalReached : MonoBehaviour {
     private ScoreManager m_scoreManager;
     private int m_carryingScoreBonus;
     private int m_normalScoreBonus;
-    public bool m_hasReachedValhalla=false;    
+    public bool m_hasReachedValhalla;    
     public Canvas m_phase2canvas; 
 
     // Use this for initialization
@@ -19,14 +19,10 @@ public class GoalReached : MonoBehaviour {
     {
         m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
+        m_hasReachedValhalla = false;
         /*
         m_normalScoreBonus = m_gameController.firstReachGoal;
         m_carryingScoreBonus = m_gameController.carryingBonus;*/
-	}
-
-    public bool GetGameOverState()
-    {        
-        return m_hasReachedValhalla;
     }
 
     private void OnTriggerEnter(Collider player)

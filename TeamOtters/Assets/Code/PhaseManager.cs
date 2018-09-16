@@ -140,7 +140,7 @@ public class PhaseManager : MonoBehaviour {
     {
         // TODO If camera has panned into position, trigger the valhalla gates effects and then start the celebration.
 
-        if (m_gameController.goalLine.GetGameOverState() == true || (Input.GetKeyDown(KeyCode.Q)))
+        if (m_gameController.goalLine.m_hasReachedValhalla == true || (Input.GetKeyDown(KeyCode.Q)))
         {
             m_gameController.cameraManager.SetCelebrateState(true);
             m_phaseSet = true;
