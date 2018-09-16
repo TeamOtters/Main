@@ -39,6 +39,12 @@ public class DetectPickup : MonoBehaviour {
         else
         {
             m_rumbleManager.GrabbyHandsVibrate(0, transform.parent.GetComponent<PlayerData>().m_PlayerIndex);
+
+            //Julia's hacky fix for not offsetting the viking and the valkyrie
+            if(transform.position != m_carryLocation.position)
+            {
+                transform.position = m_carryLocation.position;
+            }
         }
 
     }
