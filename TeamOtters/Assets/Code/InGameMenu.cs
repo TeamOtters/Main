@@ -19,7 +19,7 @@ public class InGameMenu : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown("joystick button 7") && m_InGameMenu.isActiveAndEnabled)
+        if (Input.GetButtonDown("Pause") && m_InGameMenu.isActiveAndEnabled)
         {
 
             Debug.Log("Hitting pause again");
@@ -29,7 +29,7 @@ public class InGameMenu : MonoBehaviour
 
         }
 
-        else if (Input.GetKeyDown("joystick button 7"))
+        else if (Input.GetButtonDown("Pause"))
         {
 
             Debug.Log("Hitting pause");
