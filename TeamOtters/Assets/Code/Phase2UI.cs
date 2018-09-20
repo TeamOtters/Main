@@ -83,8 +83,6 @@ public class Phase2UI : MonoBehaviour
         Transform scaleV = scaleText.transform.parent;
         scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
 
-        RectTransform CanvasRect = scaleV.GetComponent<RectTransform>();
-
 
         if (i == 0)
         {
@@ -126,7 +124,6 @@ public class Phase2UI : MonoBehaviour
 
         //Julia's position adaptation of the UI based on number of players
         Vector2 viewportPos = new Vector2(0 + (Screen.width / (m_gameController.numberOfPlayers + 1)) * (index + 1), 0 + Screen.height / 9f);
-        
 
         scaleV.position = viewportPos;
 
