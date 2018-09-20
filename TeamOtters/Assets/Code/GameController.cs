@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
             // Keep original instance
             Destroy(gameObject);
         }
-
+        numberOfPlayers = Input.GetJoystickNames().Length;
         CreatePlayers();
 
         SceneManager.LoadScene("MainGame_Level", LoadSceneMode.Additive); 
@@ -146,8 +146,13 @@ public class GameController : MonoBehaviour
             GameObject myTransformParticles = Instantiate(playerComponents.transformParticles, myNewPlayer.transform);
             myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_transformParticles = myTransformParticles;
             myNewPlayer.GetComponent<VikingValkyrieSwitch>().m_particleDuration = playerComponents.transformParticleDuration;
+
+
+            phaseManager.m_players.Add(null);
             phaseManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();
-			m_scoreManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();      
+
+            m_scoreManager.m_players.Add(null);
+            m_scoreManager.m_players[i] = myNewPlayer.GetComponent<PlayerData>();      
 
             snapPositionController.m_positionsZ.Add(myNewVikingCharacter.gameObject);
             snapPositionController.m_positionsZ.Add(myNewValkyrieCharacter.gameObject);

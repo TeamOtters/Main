@@ -43,6 +43,7 @@ public class GoalReached : MonoBehaviour {
                 m_scoreManager.AddToScore(ScorePointInfo.carryingBonus, ID);
 
                 myNewScore = player.gameObject.GetComponentInParent<PlayerData>().m_CurrentScore;
+                player.gameObject.GetComponent<ValkyrieController>().DropPickup();
             }
             else if (player.gameObject.CompareTag("Viking"))
             {
@@ -59,7 +60,6 @@ public class GoalReached : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("I crossed the finish line, my old score was " + myOldScore + "and my new score was " + myNewScore);
 
 
     }

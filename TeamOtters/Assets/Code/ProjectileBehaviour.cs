@@ -50,6 +50,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     {
         yield return new WaitForEndOfFrame();
         m_playerID = m_playerData.m_PlayerIndex;
+        Debug.Log("My player is player " + m_playerID);
     }
 
     IEnumerator ContinouslySetBoundaries()
@@ -140,7 +141,8 @@ public class ProjectileBehaviour : MonoBehaviour {
 
             if (m_scoreManager != null)
             {
-                m_scoreManager.AddToScore( ScorePointInfo.bounceHit, m_playerID); 
+                Debug.Log("I want to give score to player " + m_playerID);
+                m_scoreManager.AddToScore( ScorePointInfo.bounceHit, m_playerID);
             }
 
             if (m_scoreManager == null)

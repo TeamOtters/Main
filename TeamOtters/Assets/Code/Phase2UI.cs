@@ -29,14 +29,13 @@ public class Phase2UI : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
-
+        m_gameController = GameController.Instance;
         StartCoroutine(LateStart());
     }
 
     IEnumerator LateStart()
     {
         yield return new WaitForEndOfFrame();
-        m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
     }
 
@@ -57,9 +56,9 @@ public class Phase2UI : MonoBehaviour
 
     public void Update()
     {
-        if(m_phase2)
+        if(m_gameController.phaseManager.m_isInPhaseOne == false)
         {
-            
+            Debug.Log("Ranks are " + m_scoreManager.m_ranks.Count);
             for (int i = 0; i < m_scoreManager.m_ranks.Count; i++)
             {
                 ScaleByRank(i);
@@ -83,6 +82,7 @@ public class Phase2UI : MonoBehaviour
         Text scaleText = m_scoreManager.m_scoreBoardText[(m_scoreManager.m_ranks[i].playerIndex) - 1];
         Transform scaleV = scaleText.transform.parent;
         scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
+
 
         if (i == 0)
         {
@@ -120,6 +120,12 @@ public class Phase2UI : MonoBehaviour
         Text scaleText = m_scoreManager.m_scoreBoardText[(m_scoreManager.m_ranks[index].playerIndex) - 1];
         Transform scaleV = scaleText.transform.parent;
         scaleV.localScale = new Vector3(targetScale.x, targetScale.y, 1);
+
+
+        //Julia's position adaptation of the UI based on number of players
+        Vector2 viewportPos = new Vector2(0 + (Screen.width / (m_gameController.numberOfPlayers + 1)) * (index + 1), 0 + Screen.height / 9f);
+
+        scaleV.position = viewportPos;
 
         if (index == 0)
         {
