@@ -45,28 +45,40 @@ public class Results : MonoBehaviour {
         }
         
         scores.Sort((b, a) => a.score.CompareTo(b.score));
+
         */
+        foreach(GameObject rankButton in m_rankButtons)
+        {
+            rankButton.SetActive(false);
+        }
+
+        for(int i = 0; i < m_gameController.numberOfPlayers; i++)
+        {
+            m_rankButtons[i].gameObject.SetActive(true);
+        }
+        
+
         for (int i = 0; i < scores.Count; i++)
         {
-            m_rankButtons[i].GetComponent<Text>().text = "P" + scores[i].playerIndex.ToString() + " : " + scores[i].score.ToString();
+            m_rankButtons[i].GetComponentInChildren<Text>().text = "P" + scores[i].playerIndex.ToString() + " : " + scores[i].score.ToString();
             m_rankButtons.OrderByDescending(m_rankButtons => m_rankButtons);
 
             
             if (scores[i].playerIndex == 1)
             {
-                m_rankButtons[i].GetComponent<Text>().color = new Color32(47, 94, 0, 255);
+                m_rankButtons[i].GetComponentInChildren<Text>().color = new Color32(47, 94, 0, 255);
             }
             else if (scores[i].playerIndex == 2)
             {
-                m_rankButtons[i].GetComponent<Text>().color = new Color32(255, 112, 222, 255);
+                m_rankButtons[i].GetComponentInChildren<Text>().color = new Color32(255, 112, 222, 255);
             }
             else if (scores[i].playerIndex == 3)
             {
-                m_rankButtons[i].GetComponent<Text>().color = new Color32(47, 56, 255, 255);
+                m_rankButtons[i].GetComponentInChildren<Text>().color = new Color32(47, 56, 255, 255);
             }
             else if (scores[i].playerIndex == 4)
             {
-                m_rankButtons[i].GetComponent<Text>().color = new Color32(207, 122, 1, 255);
+                m_rankButtons[i].GetComponentInChildren<Text>().color = new Color32(207, 122, 1, 255);
             }
         
         }

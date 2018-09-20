@@ -125,6 +125,8 @@ public class ScoreManager : MonoBehaviour {
             }
 
         }
+
+        Debug.Log(m_ranks[0]);
         
  
 
