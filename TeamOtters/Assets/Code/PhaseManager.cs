@@ -152,6 +152,8 @@ public class PhaseManager : MonoBehaviour {
     //phase 1 setup - called on start
     void PhaseOneSetup()
     {
+        FreezePlayerInput.freezePlayerInput = false;
+
         m_dragon.SetActive(false);
         m_gatesOpening.SetActive(false);
         m_isInPhaseOne = true;
@@ -230,6 +232,7 @@ public class PhaseManager : MonoBehaviour {
         m_isWaiting = true;
         m_phaseTransformationActive = true;
         m_dragon.SetActive(true);
+        AudioManager.Instance.PhaseDragonSound();
         m_rumbleManager.PhaseOneShake();
         GameObject viking;
         foreach (PlayerData player in m_players)

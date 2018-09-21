@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class FreezePlayerInput 
+{
+    public static bool freezePlayerInput;
+}
+
 public class VikingController : MonoBehaviour
 {
+  
+
     private float m_vikingSpeedForce;
     private CharacterController m_vikingcCharacterController;
     private VikingProjectiles m_vikingProjectiles;
@@ -102,6 +109,7 @@ public class VikingController : MonoBehaviour
         m_turnedLeft = true;
 
         m_playerSize = GetComponent<SpriteRenderer>().bounds.extents;
+
         m_boundaryHolder = GameController.Instance.boundaryHolder;
         m_vikingRespawn = GetComponent<VikingRespawn>();
         m_detectPickup = GetComponent<DetectPickup>();
@@ -143,6 +151,8 @@ public class VikingController : MonoBehaviour
     private void Update()
     {
         //Set the boundaries to camera
+        if (FreezePlayerInput.freezePlayerInput)
+            return;
 
         if (Input.GetButtonDown("Fire1_P" + m_playerIndexString) && !m_isStunned)
         {
@@ -319,6 +329,8 @@ public class VikingController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (FreezePlayerInput.freezePlayerInput)
+            return;
 
         if (!m_isStunned)
         {
@@ -506,7 +518,7 @@ public class VikingController : MonoBehaviour
         if (m_fireCooldownOn)
             return;
 
-
+        AudioManager.Instance.PlayerThrowAxeSound();
         //char.transform.eulerAngles = new vector3(char.transform.eulerAngles.x, Mathf.atan2(x, y) * Mathf.rad2deg, char.transform.eulerAngles.z);
 
         //Idle
@@ -633,7 +645,8 @@ public class VikingController : MonoBehaviour
 
         m_currentProjectile.GetComponent<ProjectileBehaviour>().SetRetractingState(true);
 
-        m_isRetracting = true;      
+        m_isRetracting = true;
+        AudioManager.Instance.PlayerRetractAxeSound();
 
     }
 
@@ -687,7 +700,7 @@ public class VikingController : MonoBehaviour
 
         if (m_vikingcCharacterController.isGrounded && !m_isCarried && !m_isStunned && !m_isThrowing && !m_isRetracting)
         {
-            m_isIdle = true;
+            m_isIdle = true;         
         }
 
         if (m_vikingcCharacterController.isGrounded)
@@ -695,7 +708,9 @@ public class VikingController : MonoBehaviour
             m_isGrounded = true;
             m_askForGoundedOffset = false;
 
-			if (m_isWallJumping)
+            if(m_isJumping)
+                AudioManager.Instance.PlayerLandSound();
+            if (m_isWallJumping)
                 m_isWallJumping = false;
 
             if (m_isJumping)
@@ -720,7 +735,8 @@ public class VikingController : MonoBehaviour
                 }
 
                 m_isJumping = true;
-                
+                AudioManager.Instance.PlayerJumpSound();
+
                 // m_rb.AddForce(transform.TransformDirection(0f,1f,0) * 500);
 
                 //  m_rb.AddForce (transform.TransformDirection(transform.position.x, transform.position.y + 1, transform.position.z) * m_vikingJumpSpeed);
@@ -775,6 +791,7 @@ public class VikingController : MonoBehaviour
 
                         m_isJumping = true;
                         m_isWallJumping = true;
+
                     }
                 }
             }

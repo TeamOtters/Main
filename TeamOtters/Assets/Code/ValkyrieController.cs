@@ -5,6 +5,7 @@ using UnityEngine;
 public class ValkyrieController : MonoBehaviour
 {
 
+
     private Animator m_bodyAnimator;
     private Animator m_wingAnimatorNonFlipped;
     private Animator m_wingAnimatorFlipped;        
@@ -103,12 +104,14 @@ public class ValkyrieController : MonoBehaviour
         StartCoroutine("ContinouslySetBoundaries");
 
         m_valkyrieCollisionSize = GetComponent<BoxCollider>().bounds.extents;
+       
     }
 
     private void OnEnable()
     {      
         StartCoroutine("ContiniouslyEvaluateScore");
         StartCoroutine("ContinouslySetBoundaries");
+        AudioManager.Instance.PlayerFlyIdleSound(true);
     }
 
     public void SetFacingDirection(bool rightFacing)
@@ -147,12 +150,16 @@ public class ValkyrieController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (FreezePlayerInput.freezePlayerInput)
+            return;
         //Physics based stuff
         ValkyrieMovement();
     }
 
     private void Update()
     {
+        if (FreezePlayerInput.freezePlayerInput)
+            return;
         //Nothing physics based in here anymore
         StephsOriginalMovement();
 
@@ -283,6 +290,7 @@ public class ValkyrieController : MonoBehaviour
             m_player.angularVelocity = Vector3.zero;
             m_player.AddForce(Vector3.up * Mathf.Sqrt(m_valkyriePhysicsJumpSpeed * -2f * Physics.gravity.y), ForceMode.VelocityChange);
             isFlapping = true;
+            AudioManager.Instance.PlayerFlapSound();
         }
 
         // attack up
@@ -329,6 +337,7 @@ public class ValkyrieController : MonoBehaviour
             isAttacking = true;
             isDiving = true;
             isGliding = false;
+            AudioManager.Instance.PlayerDiveSound();
         }
         /*else if (Input.GetButtonDown("Fire1_P" + m_playerIndex.ToString()))
         {

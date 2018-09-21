@@ -89,6 +89,8 @@ public class GameController : MonoBehaviour
     // A function that creates a complete player for each player in "number of players" int
    void CreatePlayers()
     {
+        FreezePlayerInput.freezePlayerInput = false;
+
         m_playerSpawnPoints = GetComponentsInChildren<PlayerSpawnPoint>();
         m_tempGameObject = new GameObject("MyTempGameObject");
 
@@ -194,6 +196,8 @@ public class GameController : MonoBehaviour
 
     void SetPlayersActive()
     {
+        FreezePlayerInput.freezePlayerInput = false;
+
         foreach (GameObject player in m_players)
         {
             player.SetActive(true);

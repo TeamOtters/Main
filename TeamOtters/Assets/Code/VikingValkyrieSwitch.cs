@@ -98,6 +98,8 @@ public class VikingValkyrieSwitch : MonoBehaviour {
             //deactivate valkyrie
             m_valkyrieCharacter.GetComponent<ValkyrieController>().DropPickup();
             m_valkyrieCharacter.SetActive(false);
+            AudioManager.Instance.PlayerFlyIdleSound(false);
+            AudioManager.Instance.PlayerIdentitySwitchSound();
         }
 
 
@@ -155,6 +157,8 @@ public class VikingValkyrieSwitch : MonoBehaviour {
 
             //deactivate viking
             m_vikingCharacter.SetActive(false);
+            AudioManager.Instance.PlayerFlyIdleSound(true);
+            AudioManager.Instance.PlayerIdentitySwitchSound();
         }
 
         
