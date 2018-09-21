@@ -12,6 +12,7 @@ public class Results : MonoBehaviour {
     private ScoreManager m_scoreManager;
 
 
+
 	// Use this for initialization
 	void Start () {
         m_gameController = GameController.Instance;
@@ -33,6 +34,9 @@ public class Results : MonoBehaviour {
 
     public void ShowResults ()
     {
+        FreezePlayerInput.freezePlayerInput = true;
+           
+
         m_gameController = GameController.Instance;
         m_scoreManager = m_gameController.m_scoreManager;
         List<ScoreRanking> scores = new List<ScoreRanking>();

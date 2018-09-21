@@ -687,6 +687,20 @@ MonoBehaviour:
   - _UnSet_
   - Ambience/Forest
   - Score/AddScore
+  - Ambience/Heaven
+  - Player/Jump
+  - Player/Walk
+  - Player/Fire
+  - Player/Retract
+  - Player/FlyIdle
+  - Egg/Crack
+  - Egg/Crush
+  - Egg/Bounce
+  - Cinematic/Dragon
+  - UI/GoScreen
+  - UI/Select
+  - UI/ResultScreen
+  - Score/PickUps
   _eventEditor:
     _eventNames: []
     _eventList: []

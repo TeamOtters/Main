@@ -19,7 +19,7 @@ public class ScoreItem : MonoBehaviour {
         if (collisionInfo.gameObject.layer == 10 || collisionInfo.gameObject.layer == 11)
         {
              m_scoringPlayer = collisionInfo.gameObject.GetComponentInParent<PlayerData>().m_PlayerIndex;
-
+            AudioManager.Instance.ScoreItemSound();
             m_scoreManagerCloud.AddToScore(ScorePointInfo.scoreItem, m_scoringPlayer);
             Debug.Log("Player" + m_scoringPlayer + "Scored 10 points for  touching Cloud");
             Destroy(gameObject);

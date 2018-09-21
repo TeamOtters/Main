@@ -143,7 +143,7 @@ public class BouncingBall : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collisionInfo)
-     {
+    {
 
         //Stun players touching bouncingBall.
         if (collisionInfo.gameObject.CompareTag("Player") || collisionInfo.gameObject.CompareTag("Viking"))
@@ -153,8 +153,9 @@ public class BouncingBall : MonoBehaviour
 
         else
         {
+            AudioManager.Instance.EggBounceSound();
         }
-       }
+     }
 
 
     /*if (collisionInfo.gameObject.CompareTag("Projectile"))
@@ -177,6 +178,7 @@ public class BouncingBall : MonoBehaviour
         m_healthBar.fillAmount = m_currentHealth / m_startHealth;
 
         GameController.Instance.rumbleManager.BallHitShake();
+        AudioManager.Instance.EggCrackSound();
 
         if (m_currentHealth <= 0)
         {
@@ -192,8 +194,10 @@ public class BouncingBall : MonoBehaviour
 
     public void IsDead()
     {
+
         m_isAlive = false;
         GameObject effect = (GameObject)Instantiate(m_ballDeathEffect, transform.position, Quaternion.identity);
+        AudioManager.Instance.EggCrushedSound();
         m_hpThreeHitLeft.SetActive(false);
         m_has3HitLeftEffect = false;
         gameObject.SetActive(false);
