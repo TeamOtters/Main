@@ -965,11 +965,6 @@ MonoBehaviour:
   m_Phase1UI: {fileID: 0}
   m_Results: {fileID: 0}
   m_restart: {fileID: 0}
-  m_players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_destinationScreenPos: {fileID: 4298621543461332}
   m_hasReachedValhalla: 0
 --- !u!114 &114358465408991534

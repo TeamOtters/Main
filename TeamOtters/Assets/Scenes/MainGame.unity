@@ -157,51 +157,61 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: cameraManager
+      propertyPath: m_scoreBoardText.Array.data[0]
       value: 
-      objectReference: {fileID: 1044509515}
-    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 859347628}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: logicLayer
+      propertyPath: m_scoreBoardText.Array.data[1]
       value: 
-      objectReference: {fileID: 1072945318}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 865004026}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      propertyPath: m_scoreBoardText.Array.data[2]
       value: 
-      objectReference: {fileID: 745602360}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1492536817}
+    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      propertyPath: m_scoreBoardText.Array.data[3]
       value: 
-      objectReference: {fileID: 1275545076}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1991005356}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      propertyPath: m_bouncingBall
       value: 
-      objectReference: {fileID: 206101138}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 382614073}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[3].m_Target
+      propertyPath: m_Level
       value: 
-      objectReference: {fileID: 911055826}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1666476305}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[4].m_Target
+      propertyPath: m_phase2UI
       value: 
-      objectReference: {fileID: 704002638}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1337124447}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[5].m_Target
+      propertyPath: m_Phase1UI
       value: 
-      objectReference: {fileID: 1595539332}
-    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1784358455}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[6].m_Target
+      propertyPath: m_Results
       value: 
-      objectReference: {fileID: 1694802282}
+      objectReference: {fileID: 1618360006}
+    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_restart
+      value: 
+      objectReference: {fileID: 1459275910}
+    - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
+        type: 2}
+      propertyPath: m_scoreBall
+      value: 
+      objectReference: {fileID: 344618011}
     - target: {fileID: 114599340204666550, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
       propertyPath: canvasRect
@@ -247,65 +257,51 @@ Prefab:
       propertyPath: m_gainScoreTexts.Array.data[3]
       value: 
       objectReference: {fileID: 364696545}
-    - target: {fileID: 114358465408991534, guid: e20e45fb9d1d2614880dedcc69da8323,
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_scoreBall
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 344618011}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 745602360}
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_bouncingBall
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 382614073}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1275545076}
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_Level
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1666476305}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 206101138}
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_phase2UI
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 1337124447}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 911055826}
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_Phase1UI
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
-      objectReference: {fileID: 1784358455}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 704002638}
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_Results
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
-      objectReference: {fileID: 1618360006}
-    - target: {fileID: 114319279279604970, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1595539332}
+    - target: {fileID: 114810446788750820, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_restart
+      propertyPath: PhaseOneTreeShakes.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
-      objectReference: {fileID: 815141858}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1694802282}
+    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_scoreBoardText.Array.data[0]
+      propertyPath: cameraManager
       value: 
-      objectReference: {fileID: 859347628}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
+      objectReference: {fileID: 1044509515}
+    - target: {fileID: 114836898664233470, guid: e20e45fb9d1d2614880dedcc69da8323,
         type: 2}
-      propertyPath: m_scoreBoardText.Array.data[1]
+      propertyPath: logicLayer
       value: 
-      objectReference: {fileID: 865004026}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[2]
-      value: 
-      objectReference: {fileID: 1492536817}
-    - target: {fileID: 114275491395381406, guid: e20e45fb9d1d2614880dedcc69da8323,
-        type: 2}
-      propertyPath: m_scoreBoardText.Array.data[3]
-      value: 
-      objectReference: {fileID: 1991005356}
-    - target: {fileID: 1079985458198934, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1072945318}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e20e45fb9d1d2614880dedcc69da8323, type: 2}
   m_IsPrefabParent: 0
