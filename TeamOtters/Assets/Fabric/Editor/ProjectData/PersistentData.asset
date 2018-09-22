@@ -14,7 +14,7 @@ MonoBehaviour:
   _eventLogFilterEventActions: 010100000000000000000000000000000000000000000000
   _displayEventMonitorSceneInfo: 1
   _displayAudioClipWaveform: 0
-  _playmodePersistance: 0
+  _playmodePersistance: 1
   _audioAssetImporter: 0
   _maxRandomization3DDistance: 1000
   _enableHiearchyIcons: 0

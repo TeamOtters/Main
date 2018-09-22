@@ -105,7 +105,14 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(m_retracting)
+        if (!m_retracting && !collision.collider.CompareTag("Viking") && !collision.collider.CompareTag("Valkyrie") && !collision.collider.CompareTag("Scoreable") && !collision.collider.CompareTag("BouncingBall"))
+            AudioManager.Instance.PlayerAxeHitSound();
+
+        if(collision.collider.CompareTag("Viking") && collision.collider.CompareTag("Valkyrie"))
+            AudioManager.Instance.PlayerGotHitSound();
+
+
+        if (m_retracting)
         {
             if (collision.collider.gameObject.layer == m_platformLayer)
             {
@@ -182,16 +189,21 @@ public class ProjectileBehaviour : MonoBehaviour {
 
         }
     }
+
+
      public void DisableRagdoll()
     {
         if (m_rigidBody != null && !m_retracting)
         {
+            if(!m_hit)
+             AudioManager.Instance.PlayerAxeHitSound();
             m_rigidBody.isKinematic = true;
             m_rigidBody.detectCollisions = false;
             // StartCoroutine("DestroyProjectileTimer");
             m_collider.enabled = false;
             
             m_hit = true;
+           
         }
     }
 

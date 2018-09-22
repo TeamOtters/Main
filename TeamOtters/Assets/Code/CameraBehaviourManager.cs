@@ -59,6 +59,7 @@ public class CameraBehaviourManager : MonoBehaviour {
     {
         m_valkyrieRaceState = enable;
         m_shouldSidewaysPan = true;
+        
     }
 
     public void SetCelebrateState(bool enable)
@@ -66,6 +67,7 @@ public class CameraBehaviourManager : MonoBehaviour {
         m_celebrateState = enable;
         m_shouldSidewaysPan = false;
         m_valkyrieRaceState = false;
+       
     }
 
     // Update is called once per frame
@@ -98,6 +100,7 @@ public class CameraBehaviourManager : MonoBehaviour {
                 if (Mathf.Clamp(pos.x, targetXMoving - 0.05f, targetXMoving + 0.055f) == pos.x)
                     targetXMoving = -targetXMoving;
 
+
                 //Stop Camera pan when we reached goal
                 if (Mathf.Clamp(pos.y, target.y - 0.5f, target.y + 0.5f) == pos.y)
                     m_valkyrieRaceState = false;
@@ -117,14 +120,16 @@ public class CameraBehaviourManager : MonoBehaviour {
         {
             target = m_celebrateTarget.transform.position;
             move = new Vector3(target.x, target.y * 0.5f * Time.deltaTime, 0);
-
+         
             //Vector3 celebratePos = new Vector3(m_celebrateTarget.transform.position.x, m_celebrateTarget.transform.position.y * 1f * Time.deltaTime, 0);
-            
+
             transform.Translate(move, Space.World);
 
             if (transform.position.y >= m_celebrateTarget.transform.position.y)
             {
-                m_celebrateState = false;                
+                m_celebrateState = false;
+                AudioManager.Instance.PhaseEnd();
+                Debug.Log("goFaster?");
                 //transform.position.y = m_celebrateTarget.transform.position.y;
                 transform.position = new Vector3(m_celebrateTarget.transform.position.x, m_celebrateTarget.transform.position.y, transform.position.z);
             }

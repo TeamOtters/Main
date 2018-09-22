@@ -11,55 +11,84 @@ public static class AudioEvents
     public static string m_playerFire = "Player/Fire";
     public static string m_playerRetract = "Player/Retract";
     public static string m_playerFlyIdle = "Player/FlyIdle";
-    public static string m_playerIdentitySwitch = "Player/IdentitySwitch";
+    public static string m_playerIdentitySwitch = "Player/Transform";
+    public static string m_playerLand = "Player/Land";
+    public static string m_playerHit = "Player/Hit";
+    public static string m_playerVOAction = "Player/VO/Action";
+    public static string m_axeHit = "Axe/Hit";
     public static string m_eggCrack = "Egg/Crack";
     public static string m_eggCrushed = "Egg/Crush";
     public static string m_eggBounce = "Egg/Bounce";
-    public static string m_dragon = "Cinematic/Dragon";
+    public static string m_dragon = "RTF/Dragon";
     public static string m_uiGoScreen = "UI/GoScreen";
     public static string m_uiSelect = "UI/Select";
     public static string m_uiResultScreen = "UI/ResultScreen";
     public static string m_scorePickUps = "Score/PickUps";
+
+    public static string m_musicEvent = "Music/Game";
+    public static string m_musicSwitchIdle = "Idle";
+    public static string m_musicSwitchDragon = "DragonPhase";
+    public static string m_musicSwitchEnd = "End";
+
 
 }
 
 public class AudioManager : MonoBehaviour {
 
     private static AudioManager instance;
+    void Awake()
+    {
+        //Check if instance already exists
+        if (instance == null)
+            instance = this;
 
+        else if (instance != this)
+            Destroy(gameObject);
+    }
     public static AudioManager Instance
     {
         // Here we use the ?? operator, to return 'instance' if 'instance' does not equal null
         // otherwise we assign instance to a new component and return that
-        get { return instance ?? (instance = new GameObject("AudioManager").AddComponent<AudioManager>()); }
+       get { return instance ?? (instance = new GameObject("AudioManager").AddComponent<AudioManager>()); }
     }
 
     // Use this for initialization
     void Start () {
 
         Fabric.EventManager.Instance.PostEvent(AudioEvents.m_forestAmbience, gameObject);
-        Debug.Log("Ambience");
+
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_musicEvent, gameObject);
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_musicEvent, Fabric.EventAction.SetSwitch, AudioEvents.m_musicSwitchIdle, gameObject);
     }
 
-    public void StartAmbience ()
-    { }
+    public void SwitchToHeavenAmb ()
+    {
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_forestAmbience, Fabric.EventAction.StopSound, gameObject);
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_heavenAmbience, gameObject);
+    }
+    public void SwitchToForestAmb()
+    {
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_heavenAmbience, Fabric.EventAction.StopSound, gameObject);
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_forestAmbience, gameObject);
+    }
+
 
     public void PlayerJumpSound()
-    { Debug.Log("JumpS"); }
+    { Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerJump, gameObject); }
     public void PlayerLandSound()
-    { Debug.Log("Lands"); }
+    {Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerLand, gameObject); }
     public void PlayerThrowAxeSound()
-    { Debug.Log("ThrowAxeS"); }
+    { Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerFire, gameObject); }
     public void PlayerRetractAxeSound()
-    {Debug.Log("RetractS");}
+    { Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerRetract, gameObject); }
     public void PlayerAxeHitSound()
-    { Debug.Log("AxeHitSound"); }
+    {  Fabric.EventManager.Instance.PostEvent(AudioEvents.m_axeHit, gameObject); }
     public void PlayerGotHitSound()
-    { Debug.Log("PlayerGotHiSound"); }
+    {  Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerHit, gameObject); }
     public void PlayerFlapSound()
-    { Debug.Log("FlapS"); }
+    { PlayerJumpSound(); }
     public void PlayerDiveSound()
-    { Debug.Log("DiveS"); }
+    { Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerVOAction, gameObject); }
     public void PlayerFlyIdleSound(bool enable)
     {
         if (enable)
@@ -68,18 +97,38 @@ public class AudioManager : MonoBehaviour {
             Debug.Log("StopFlyIdleS");
     }
     public void PlayerIdentitySwitchSound()
-    { Debug.Log("SwitchSou"); }
+    { Fabric.EventManager.Instance.PostEvent(AudioEvents.m_playerIdentitySwitch, gameObject); }
+
     public void PhaseDragonSound ()
-    { Debug.Log("Dragons"); }
+    {
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_dragon, gameObject);
+        Invoke("SwitchToHeavenAmb", 25f);
+       
+    }
+    public void PhaseOne()
+    {
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_musicEvent, Fabric.EventAction.SetSwitch, AudioEvents.m_musicSwitchIdle, gameObject);
+    }
+    public void PhaseEnd ()
+    {
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_musicEvent, Fabric.EventAction.SetSwitch, AudioEvents.m_musicSwitchEnd, gameObject);
+    }
     public void EggBounceSound()
-    { Debug.Log("EggBounceS"); }
+    { Debug.Log("EggBounceS"); Fabric.EventManager.Instance.PostEvent(AudioEvents.m_eggBounce, gameObject); }
     public void EggCrackSound()
-    { Debug.Log("EggCrackSou"); }	
+    { Debug.Log("EggCrackSou"); Fabric.EventManager.Instance.PostEvent(AudioEvents.m_eggCrack, gameObject); }	
     public void EggCrushedSound()
-    { Debug.Log("EggCrushedSou"); }
+    {
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_eggCrushed, gameObject);
+        Fabric.EventManager.Instance.PostEvent(AudioEvents.m_musicEvent, Fabric.EventAction.SetSwitch, AudioEvents.m_musicSwitchDragon, gameObject);
+    }
     public void EggTakesDamageSound()
     { Debug.Log("EggDamageS"); }
     public void ScoreItemSound()
-    { Debug.Log("ScoreItemSou"); }
+    { Debug.Log("ScoreItemSou"); Fabric.EventManager.Instance.PostEvent(AudioEvents.m_scorePickUps, gameObject); }
+
+    public void UIStartScreen()
+    { Fabric.EventManager.Instance.PostEvent(AudioEvents.m_uiGoScreen, gameObject); }
+    
 
 }

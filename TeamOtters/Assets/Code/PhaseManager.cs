@@ -153,6 +153,7 @@ public class PhaseManager : MonoBehaviour {
     void PhaseOneSetup()
     {
         FreezePlayerInput.freezePlayerInput = false;
+        AudioManager.Instance.PhaseOne();
 
         m_dragon.SetActive(false);
         m_gatesOpening.SetActive(false);

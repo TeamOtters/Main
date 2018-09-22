@@ -166,6 +166,7 @@ public class VikingValkyrieSwitch : MonoBehaviour {
 
     void TransformationEffect()
     {
+        AudioManager.Instance.PlayerIdentitySwitchSound();
         ParticleSystem [] particles = m_transformParticles.GetComponentsInChildren<ParticleSystem>();
         foreach(ParticleSystem particle in particles)
         {
